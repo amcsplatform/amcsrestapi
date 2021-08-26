@@ -2,12 +2,7 @@
     "swagger": "2.0",
     "info": {
         "version": "8.6",
-        "title": "AMCS Platform REST API",
-        "x-logo": {
-            "url": "https://amcsrestapi.github.io/logo.png",
-            "backgroundColor": "#FFFFFF",
-            "altText": "AMCS"
-          }
+        "title": "AMCS Platform REST API"
     },
     "host": "i1-dev-svc-core.amcsplatform.com",
     "basePath": "/erp/api",
