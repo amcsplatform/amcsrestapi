@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AMCS REST API 8.6</title>
+    <!-- needed for adaptive design -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+
+    <!--
+    ReDoc doesn't change outer page styles
+    -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img{
+            position:absolute;
+            left:0px;
+            top:0px;
+        }
+
+        select {
+            font-size: 1em;
+            border: 0px;
+            color: darkslategrey;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
+    <script>
+        function intRedoc(specuri) {
+            Redoc.init(
+                "http://amcsrestapi.github.io/swagger" + specuri + ".json",
+                {
+                    scrollYOffset: 79
+                },
+                document.getElementById('redoc-container')
+            );
+            console.log(specuri);
+        }
+    </script>
+</head>
+
+<body onload="intRedoc('8-6-0');">
+    <img id="logo" src="logo.png"/>
+    <div id="redoc-container"></div>
+</body>
+
+</html>
