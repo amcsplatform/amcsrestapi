@@ -3,15 +3,15 @@
     "info": {
         "version": "8.6",
         "title": "AMCS Platform REST API",
-        "description":"desc will apear here"
+        "description":"Dowload the User Manual: [Download](https://amcsrestapi.github.io/AMCS_Platform_REST_AP_User_Guide.pdf)"
     },
     "host": "i1-dev-svc-core.amcsplatform.com",
-    "basePath": "/erp/api",
+    "basePath": "/erp/api/integrator/erp",
     "schemes": [
         "https"
     ],
     "paths": {
-        "/integrator/erp/lists/accessGroups/{id}": {
+        "/lists/accessGroups/{id}": {
             "get": {
                 "tags": [
                     "AccessGroups"
