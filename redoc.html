@@ -23,6 +23,11 @@
             color: darkslategrey;
         }
     </style>
+
+</head>
+
+<body>
+    <div id="redoc-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
     <script>
         function intRedoc(specuri) {
@@ -35,11 +40,8 @@
             );
             console.log(specuri);
         }
+        intRedoc('8-6-0');
     </script>
-</head>
-
-<body onload="intRedoc('8-6-0');">
-    <div id="redoc-container"></div>
 </body>
 
 </html>
