@@ -3,7 +3,7 @@
     "info": {
         "version": "8.6",
         "title": "AMCS Platform REST API",
-        "description":"Dowload the User Manual: [Download](https://amcsrestapi.github.io/AMCS_Platform_REST_AP_User_Guide.pdf)"
+        "description":"Dowload User Manual: [Download](https://amcsrestapi.github.io/AMCS_Platform_REST_API_User_Guide.pdf)"
     },
     "host": "i1-dev-svc-core.amcsplatform.com",
     "basePath": "/erp/api/integrator/erp",
