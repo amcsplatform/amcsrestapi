@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>AMCS REST API 8.6</title>
+    <title>AMCS REST API documentation</title>
     <!-- needed for adaptive design -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,7 @@
         body {
             margin: 0;
             padding: 0;
+            font-family:Montserrat;
         }
 
         #menu{
@@ -22,8 +23,12 @@
             top:0;
             left:0;
             height:50px;
-            width:200px;
-            background-color:green;
+            width:260px;
+            padding-left:20px;
+        }
+
+        #version{
+            margin-top:0;
         }
 
         select {
@@ -43,7 +48,7 @@
             Redoc.init(
                 "https://amcsrestapi.github.io/swagger" + specuri + ".json",
                 {
-                    scrollYOffset: 0
+                    scrollYOffset: 120
                 },
                 document.getElementById('redoc-container')
             );
@@ -51,7 +56,8 @@
         }
         intRedoc('8-6-0');
     </script>
-    <div id="menu">Float</div>
+    <div id="menu"><img src="logo.png"/><br/>
+    <p id="version">Platform Version <select><option value="8-6-0">8.6</option></select></p></div>
 </body>
 
 </html>

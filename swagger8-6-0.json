@@ -2,7 +2,8 @@
     "swagger": "2.0",
     "info": {
         "version": "8.6",
-        "title": "AMCS Platform REST API"
+        "title": "AMCS Platform REST API",
+        "description":"desc will apear here"
     },
     "host": "i1-dev-svc-core.amcsplatform.com",
     "basePath": "/erp/api",
