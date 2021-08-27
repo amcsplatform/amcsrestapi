@@ -48,7 +48,30 @@
             Redoc.init(
                 "https://amcsrestapi.github.io/swagger" + specuri + ".json",
                 {
-                    scrollYOffset: 120
+                    scrollYOffset: 120,
+                    expandResponses: "200",
+                    expandSingleSchemaField:true,
+                    jsonSampleExpandLevel:5,
+                    generateCodeSamples: {
+                        languages:[
+                            {
+                                label:"curl cmd",
+                                lang:"curl"
+                            },
+                            {
+                                label:"C#",
+                                lang:"JavaScript"
+                            },
+                            {
+                                label:"Node",
+                                lang:"Node.js"
+                            },
+                            {
+                                label:"JavaScript",
+                                lang:"JavaScript"
+                            }
+                        ]
+                    }
                 },
                 document.getElementById('redoc-container')
             );

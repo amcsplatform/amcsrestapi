@@ -257,7 +257,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ApiResourceId"
+                            "$ref": "#/definitions/ApiIntegratorAccessGroupResource"
                         }
                     }
                 ],
