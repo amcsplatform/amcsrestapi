@@ -257,7 +257,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ApiIntegratorAccessGroupResource"
+                            "$ref": "#/definitions/ApiIntegratorAccountCustomerResource"
                         }
                     }
                 ],
@@ -15246,7 +15246,8 @@
             "properties": {
                 "Description": {
                     "type": "string",
-                    "desription":"some stuff about this property"
+                    "desription":"some stuff about this property",
+                    "required":true
                 },
                 "IsDeleted": {
                     "type": "boolean"
