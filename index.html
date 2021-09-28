@@ -80,7 +80,10 @@
         intRedoc('8-6-0');
     </script>
     <div id="menu"><img src="logo.png"/><br/>
-    <p id="version">Platform Version <select><option value="8-6-0">8.6</option></select></p></div>
+    <p id="version">Platform Version <select onchange="intRedoc(this.value)">
+        <option value="8-6-0">8.6</option>
+        <option value="8-5-3-1">8.5.3.1</option>
+    </select></p></div>
 </body>
 
 </html>
