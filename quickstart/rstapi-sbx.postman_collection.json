@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "6e2358e4-41ee-4a26-ab75-e7a5c9d931af",
+		"name": "rstapi-sbx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PAT token auth",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://rstapi-sbx-svc-core.amcsplatform.com/erp/api/AuthTokens?PrivateKey=SQKvCseqeoKsBaGR2gRWZuAd5XyjwDtb",
+					"protocol": "https",
+					"host": [
+						"rstapi-sbx-svc-core",
+						"amcsplatform",
+						"com"
+					],
+					"path": [
+						"erp",
+						"api",
+						"AuthTokens"
+					],
+					"query": [
+						{
+							"key": "PrivateKey",
+							"value": "SQKvCseqeoKsBaGR2gRWZuAd5XyjwDtb"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET All Customers",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rstapi-sbx-svc-core.amcsplatform.com/erp/api/integrator/erp/directory/Customers",
+					"protocol": "https",
+					"host": [
+						"rstapi-sbx-svc-core",
+						"amcsplatform",
+						"com"
+					],
+					"path": [
+						"erp",
+						"api",
+						"integrator",
+						"erp",
+						"directory",
+						"Customers"
+					],
+					"query": [
+						{
+							"key": "links",
+							"value": "self",
+							"disabled": true
+						},
+						{
+							"key": "includecount",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "max",
+							"value": "100",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
