@@ -5,7 +5,7 @@
 In this quick start walkthrough we're going to cover the basics in terms of authentication, and retrieving a resource.
 
 For [this example](./example1.js) we're going to use Node.js and the standard https module.
-You can also hcek out this [Postman Colleciton](./rstapi-sbx.postman_collection.json) for datails of the calls involved.
+You can also check out this [Postman Collection](./rstapi-sbx.postman_collection.json) for details of the calls involved.
 
 #### Set-up
 
