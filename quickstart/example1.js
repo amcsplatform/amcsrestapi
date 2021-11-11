@@ -1,61 +1,99 @@
 const client = require( 'https' );
 
-authenticate( "SQKvCseqeoKsBaGR2gRWZuAd5XyjwDtb", ( session, error ) => 
-    error ? console.error( error ) : 
-getAllFromSession( "/directory/customers", session, ( response, error ) => 
-    error ? console.error( error ) : 
-console.log( response )
-) );
+//----------------------------------------------------------
 
-function authenticate( pat, callBack )
-{   
-    const request = 
-    {
-        method : 'POST',
-        hostname : "rstapi-sbx-svc-core.amcsplatform.com",
-        path : "/erp/api/authTokens?PrivateKey=" + pat,
-    };
-
-    var data = "";
-    function onResponse( response )
-    {
-        response.on( 'data', chunk => data += chunk );
-
-        response.on( 'end', () =>
+promiseToStartSession = ( pat ) => //( session )
+    new Promise( ( resolve, reject ) =>
+    {   
+        const request = 
         {
-            if( response.statusCode != 200 ) callBack( null, Error( `Auth request status: ${response.statusCode}` ) );
-            const body = JSON.parse( data );
-            if( body.authResult != "ok" ) callBack( null, Error( `Auth request result: ${body.authResult}` ) );
-            callBack( response.headers['set-cookie'], null );
-        });
+            method : 'POST',
+            hostname : "rstapi-sbx-svc-core.amcsplatform.com",
+            path : "/erp/api/authTokens?PrivateKey=" + pat,
+        };
+
+        var data = "";
+        onResponse = ( response ) =>
+        {
+            response.on( 'data', chunk => data += chunk );
+
+            response.on( 'end', () =>
+            {
+                if( response.statusCode != 200 ) 
+                    reject( `Auth request status: ${response.statusCode}` );
+                else if( JSON.parse( data ).authResult != "ok" ) 
+                    reject( `Auth request result: unAuthorised` );
+                else resolve( response.headers['set-cookie'] );
+            });
+        }
+
+        console.log( "Authenticating");
+        client.request( request, onResponse ).end();
+    } );
+
+promiseToGetAllFromSession = ( endPoint, session ) => //( resources )
+    new Promise( ( resolve, reject ) =>
+    { 
+        const request = 
+        {
+            method : 'GET',
+            hostname : "rstapi-sbx-svc-core.amcsplatform.com",
+            path : "/erp/api/integrator/erp" + endPoint,
+            headers: { 'Cookie': session }
+        };
+
+        var data = "";
+        onResponse = ( response ) =>
+        {
+            response.on( 'data', chunk => data += chunk );
+
+            response.on( 'end', () =>
+            {
+                if( response.statusCode != 200 ) 
+                    reject( `Request status: ${response.statusCode}` );
+                else resolve( JSON.parse( data ) );
+            });
+        }
+
+        console.log( "Getting " + endPoint);
+        client.request( request, onResponse ).end();
+    } );
+
+promiseExample = () =>
+    promiseToStartSession( "SQKvCseqeoKsBaGR2gRWZuAd5XyjwDtb" )
+    .then( ( session ) => 
+        promiseToGetAllFromSession( "/directory/customers", session ) )
+    .then( ( resources ) => console.log( resources ) )
+    .catch( ( error ) => console.error( error ) );
+
+//----------------------------------------------------------
+
+startSession = async ( pat ) => promiseToStartSession( pat );
+getAllFromSession = async ( endPoint, session ) => promiseToGetAllFromSession( endPoint, session );
+
+asyncExample = async () =>
+    {
+        try
+        {
+            session = await startSession( "SQKvCseqeoKsBaGR2gRWZuAd5XyjwDtb" );
+            resources = await getAllFromSession( "/directory/customers", session );
+            console.log( resources );
+        }
+        catch( error )
+        {
+            console.error( error );
+        }
     }
 
-    console.log( "Authenticating");
-    client.request( request, onResponse ).end();
-}
+//----------------------------------------------------------
 
-function getAllFromSession( endPoint, session, callBack )
-{   
-    const request = 
+example1 = async () =>
     {
-        method : 'GET',
-        hostname : "rstapi-sbx-svc-core.amcsplatform.com",
-        path : "/erp/api/integrator/erp" + endPoint,
-        headers: { 'Cookie': session }
-    };
+        console.log( "\nWith async/await\n" );
+        await asyncExample();
 
-    var data = "";
-    function onResponse( response )
-    {
-        response.on( 'data', chunk => data += chunk );
-
-        response.on( 'end', () =>
-        {
-            if( response.statusCode != 200 ) callBack( null, Error( `Request status: ${response.statusCode}` ) );
-            callBack( JSON.parse( data ), null );
-        });
+        console.log( "\nWith promises\n" );
+        promiseExample();
     }
 
-    console.log( "Getting " + endPoint);
-    client.request( request, onResponse ).end();
-}
+example1();
