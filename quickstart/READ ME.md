@@ -32,7 +32,7 @@ example1 = async () =>
 
 example1();
 ```
-For the Promise exmaple we'll need a couple of Promises. Once to do the authenticaiton and a second to get the first page of customers.
+For the Promise example we'll need a couple of Promises. Once to do the authentication and a second to get the first page of customers.
 ```js
 promiseToStartSession = ( pat ) => //( session )
     new Promise( ( resolve, reject ) => {} );
@@ -75,7 +75,7 @@ We're going to use the REST API sandbox with the latest release of Platform inst
 
 https://rstapi-sbx-svc-core.amcsplatform.com/erp/api/
 
-We're going to authenticate via a PAT token. The authentication needs to be made as a POST request to the authTaokens end point.
+We're going to authenticate via a PAT token. The authentication needs to be made as a POST request to the authTokens end point.
 
 ```js
 //example1.js > promiseToStartSession
