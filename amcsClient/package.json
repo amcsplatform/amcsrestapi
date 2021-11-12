@@ -1,0 +1,12 @@
+{
+    "name": "amcsClient",
+    "version": "0.0.1",
+    "description": "Node.js client for the AMCS Platform REST API",
+    "main": "emanple.js",
+    "author": {
+      "name": "Ric Morris",
+      "email": "richard.morris@amcsgroup.com"
+    },
+    "dependencies": {
+    }
+}
