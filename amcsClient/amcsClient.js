@@ -1,69 +1,60 @@
 const client = require( 'https' );
 
-var hostToAccess = "";
-
 // Promises ------------------------------------------------
 
-module.exports.promiseToStartSession = ( host, pat ) => //( session )
+module.exports.promiseToRequest = ( request ) =>
     new Promise( ( resolve, reject ) =>
-    {   
-        hostToAccess = host;
-        
-        const request = 
-        {
-            method : 'POST',
-            hostname : hostToAccess,
-            path : "/erp/api/authTokens?PrivateKey=" + pat,
-        };
-
+    {
         var data = "";
         onResponse = ( response ) =>
         {
-            response.on( 'data', chunk => data += chunk );
+            if( response.statusCode != 200 ) 
+                reject( `Auth request status: ${response.statusCode}` );
 
-            response.on( 'end', () =>
-            {
-                if( response.statusCode != 200 ) 
-                    reject( `Auth request status: ${response.statusCode}` );
-                else if( JSON.parse( data ).authResult != "ok" ) 
-                    reject( `Auth request result: unAuthorised` );
-                else resolve( response.headers['set-cookie'] );
-            });
+            response.on( 'data', chunk => data += chunk );
+            response.on( 'end', () => resolve( JSON.parse( data ) ) );
         }
 
         console.log( "Authenticating");
         client.request( request, onResponse ).end();
     } );
 
-module.exports.promiseToGetAllFromSession = ( endPoint, session ) => //( resources )
+module.exports.promiseToStartSession = ( host, pat ) => //( session )
     new Promise( ( resolve, reject ) =>
-    { 
+    {   
         const request = 
         {
-            method : 'GET',
-            hostname : hostToAccess,
-            path : "/erp/api/integrator/erp" + endPoint,
-            headers: { 'Cookie': session }
+            method : 'POST',
+            hostname : host,
+            path : "/erp/api/authTokens?PrivateKey=" + pat,
         };
 
-        var data = "";
-        onResponse = ( response ) =>
-        {
-            response.on( 'data', chunk => data += chunk );
-
-            response.on( 'end', () =>
+        this.promiseToRequest( request )
+            .then( ( data ) =>
             {
-                if( response.statusCode != 200 ) 
-                    reject( `Request status: ${response.statusCode}` );
-                else resolve( JSON.parse( data ) );
-            });
-        }
-
-        console.log( "Getting " + endPoint);
-        client.request( request, onResponse ).end();
+                if( data.authResult != "ok" ) 
+                    reject( `Auth request result: unAuthorised` );
+                else resolve(
+                    {
+                        cookie : response.headers['set-cookie'],
+                        hostToAccess : host,
+                        authAt : DateTime.Now()
+                    } );
+            } )
+            .catch( ( e ) => reject( e ) );
     } );
+
+module.exports.getAllRequest = ( endPoint, session ) =>
+    {
+        return {
+            method : 'GET',
+            hostname : session.hostToAccess,
+            path : "/erp/api/integrator/erp" + endPoint,
+            headers: { 'Cookie': session.cookie }
+        };
+    }
 
 // Asyn functions ------------------------------------------
 
 module.exports.startSession = async ( host, pat ) => this.promiseToStartSession( host, pat );
-module.exports.getAllFromSession = async ( endPoint, session ) => this.promiseToGetAllFromSession( endPoint, session );
+module.exports.getAllFromSession = async ( endPoint, session ) => this.promiseToRequest( getAllRequest( endPoint, session ) );
