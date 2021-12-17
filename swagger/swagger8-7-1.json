@@ -2467,7 +2467,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiIntegratorCustomerBlobResource"
+            "$ref":"#/definitions/ApiIntegratorCustomerBlobHashesResource"
           }
         }],
         "responses":
@@ -2572,7 +2572,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiIntegratorCustomerReportBlobResource"
+            "$ref":"#/definitions/ApiIntegratorCustomerReportBlobHashesResource"
           }
         }],
         "responses":
@@ -2604,7 +2604,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiIntegratorCustomerSiteHealthAndSafetyBlobResource"
+            "$ref":"#/definitions/ApiIntegratorCustomerSiteHealthAndSafetyBlobHashesResource"
           }
         }],
         "responses":
@@ -4502,7 +4502,7 @@
             "description":"OK",
             "schema":
             {
-              "$ref":"#/definitions/ApiResourceChanges[ApiIntegratorMasterCustomerResource]"
+              "$ref":"#/definitions/ApiResourceChanges[ApiIntegratorAccountCustomerResource]"
             }
           }
         }
@@ -4529,7 +4529,7 @@
             "description":"OK",
             "schema":
             {
-              "$ref":"#/definitions/ApiResourceResultEntity[ApiIntegratorMasterCustomerResource]"
+              "$ref":"#/definitions/ApiResourceResultEntity[ApiIntegratorAccountCustomerResource]"
             }
           }
         }
@@ -4611,7 +4611,7 @@
             "description":"OK",
             "schema":
             {
-              "$ref":"#/definitions/ApiResourceResultCollection[ApiIntegratorMasterCustomerResource]"
+              "$ref":"#/definitions/ApiResourceResultCollection[ApiIntegratorAccountCustomerResource]"
             }
           }
         }
@@ -17565,7 +17565,7 @@
         }
       }
     },
-    "ApiResourceChanges[ApiIntegratorMasterCustomerResource]":
+    "ApiResourceChanges[ApiIntegratorAccountCustomerResource]":
     {
       "type":"object",
       "properties":
@@ -17575,7 +17575,7 @@
           "type":"array",
           "items":
           {
-            "$ref":"#/definitions/ApiIntegratorMasterCustomerResource"
+            "$ref":"#/definitions/ApiIntegratorAccountCustomerResource"
           }
         },
         "extra":
@@ -17592,7 +17592,7 @@
         }
       }
     },
-    "ApiIntegratorMasterCustomerResource":
+    "ApiIntegratorAccountCustomerResource":
     {
       "type":"object",
       "properties":
@@ -17621,14 +17621,14 @@
         }
       }
     },
-    "ApiResourceResultEntity[ApiIntegratorMasterCustomerResource]":
+    "ApiResourceResultEntity[ApiIntegratorAccountCustomerResource]":
     {
       "type":"object",
       "properties":
       {
         "resource":
         {
-          "$ref":"#/definitions/ApiIntegratorMasterCustomerResource"
+          "$ref":"#/definitions/ApiIntegratorAccountCustomerResource"
         },
         "links":
         {
@@ -17648,7 +17648,7 @@
         }
       }
     },
-    "ApiResourceResultCollection[ApiIntegratorMasterCustomerResource]":
+    "ApiResourceResultCollection[ApiIntegratorAccountCustomerResource]":
     {
       "type":"object",
       "properties":
@@ -17658,7 +17658,7 @@
           "type":"array",
           "items":
           {
-            "$ref":"#/definitions/ApiIntegratorMasterCustomerResource"
+            "$ref":"#/definitions/ApiIntegratorAccountCustomerResource"
           }
         },
         "extra":
@@ -23841,7 +23841,7 @@
           "type":"array",
           "items":
           {
-            "$ref":"#/definitions/ApiIntegratorSiteHealthAndSafetyBlobResource"
+            "$ref":"#/definitions/ApiIntegratorSiteHealthAndSafetyBlobHashesResource"
           }
         },
         "RelatedTradingNameGuidFilter":
@@ -23956,7 +23956,7 @@
         }
       }
     },
-    "ApiIntegratorSiteHealthAndSafetyBlobResource":
+    "ApiIntegratorSiteHealthAndSafetyBlobHashesResource":
     {
       "type":"object",
       "properties":
