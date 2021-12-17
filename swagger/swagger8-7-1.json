@@ -23841,7 +23841,7 @@
           "type":"array",
           "items":
           {
-            "$ref":"#/definitions/ApiIntegratorSiteHealthAndSafetyBlobHashesResource"
+            "$ref":"#/definitions/ApiIntegratorCustomerSiteHealthAndSafetyBlobHashesResource"
           }
         },
         "RelatedTradingNameGuidFilter":
@@ -23956,7 +23956,7 @@
         }
       }
     },
-    "ApiIntegratorSiteHealthAndSafetyBlobHashesResource":
+    "ApiIntegratorCustomerSiteHealthAndSafetyBlobHashesResource":
     {
       "type":"object",
       "properties":
