@@ -1,3 +1,4 @@
+
 {
   "swagger":"2.0",
   "info":
@@ -162,7 +163,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorAccountCustomerResource"
           }
         }],
         "responses":
@@ -237,7 +238,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorAccountCustomerResource"
           }
         }],
         "responses":
@@ -551,7 +552,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorAppliedCostResource"
           }
         }],
         "responses":
@@ -626,7 +627,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorAppliedCostResource"
           }
         }],
         "responses":
@@ -841,7 +842,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorChargeResource"
           }
         }],
         "responses":
@@ -1055,7 +1056,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorContactResource"
           }
         }],
         "responses":
@@ -1130,7 +1131,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorContactResource"
           }
         }],
         "responses":
@@ -1339,7 +1340,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorContainerResource"
           }
         }],
         "responses":
@@ -1414,7 +1415,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorContainerResource"
           }
         }],
         "responses":
@@ -1623,7 +1624,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorContractResource"
           }
         }],
         "responses":
@@ -1698,7 +1699,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorContractResource"
           }
         }],
         "responses":
@@ -1866,7 +1867,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorCostAgreementResource"
           }
         }],
         "responses":
@@ -1941,7 +1942,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorCostAgreementResource"
           }
         }],
         "responses":
@@ -2360,7 +2361,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorCustomerResource"
           }
         }],
         "responses":
@@ -2435,7 +2436,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorCustomerResource"
           }
         }],
         "responses":
@@ -2467,7 +2468,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorCustomerBlobResource"
           }
         }],
         "responses":
@@ -2572,7 +2573,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorCustomerReportBlobResource"
           }
         }],
         "responses":
@@ -2604,7 +2605,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorCustomerSiteHealthAndSafetyBlobResource"
           }
         }],
         "responses":
@@ -3470,7 +3471,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorExternalVehicleResource"
           }
         }],
         "responses":
@@ -3545,7 +3546,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorExternalVehicleResource"
           }
         }],
         "responses":
@@ -4142,7 +4143,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorJobResource"
           }
         }],
         "responses":
@@ -4217,7 +4218,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorJobResource"
           }
         }],
         "responses":
@@ -4312,7 +4313,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorLocationResource"
           }
         }],
         "responses":
@@ -4387,7 +4388,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorLocationResource"
           }
         }],
         "responses":
@@ -4555,7 +4556,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorMasterAccountResource"
           }
         }],
         "responses":
@@ -4630,7 +4631,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorMasterAccountResource"
           }
         }],
         "responses":
@@ -5236,7 +5237,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorOneOffActionResource"
           }
         }],
         "responses":
@@ -5311,7 +5312,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorOneOffActionResource"
           }
         }],
         "responses":
@@ -5406,7 +5407,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorOrderResource"
           }
         }],
         "responses":
@@ -5481,7 +5482,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorOrderResource"
           }
         }],
         "responses":
@@ -5795,7 +5796,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorPaymentResource"
           }
         }],
         "responses":
@@ -5870,7 +5871,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorPaymentResource"
           }
         }],
         "responses":
@@ -6628,7 +6629,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorPurchaseOrderNumberChainResource"
           }
         }],
         "responses":
@@ -6703,7 +6704,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorPurchaseOrderNumberChainResource"
           }
         }],
         "responses":
@@ -7236,7 +7237,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteResource"
           }
         }],
         "responses":
@@ -7311,7 +7312,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteResource"
           }
         }],
         "responses":
@@ -7374,7 +7375,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteAssignmentResource"
           }
         }],
         "responses":
@@ -7449,7 +7450,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteAssignmentResource"
           }
         }],
         "responses":
@@ -7690,7 +7691,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitResource"
           }
         }],
         "responses":
@@ -7765,7 +7766,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitResource"
           }
         }],
         "responses":
@@ -7828,7 +7829,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitJobResource"
           }
         }],
         "responses":
@@ -7903,7 +7904,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitJobResource"
           }
         }],
         "responses":
@@ -7998,7 +7999,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorScheduleResource"
           }
         }],
         "responses":
@@ -8073,7 +8074,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorScheduleResource"
           }
         }],
         "responses":
@@ -8565,7 +8566,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSiteResource"
           }
         }],
         "responses":
@@ -8640,7 +8641,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSiteResource"
           }
         }],
         "responses":
@@ -8808,7 +8809,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSupplierResource"
           }
         }],
         "responses":
@@ -8883,7 +8884,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSupplierResource"
           }
         }],
         "responses":
@@ -8978,7 +8979,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSupplierBillResource"
           }
         }],
         "responses":
@@ -9053,7 +9054,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSupplierBillResource"
           }
         }],
         "responses":
@@ -9148,7 +9149,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSupplierSiteResource"
           }
         }],
         "responses":
@@ -9223,7 +9224,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorSupplierSiteResource"
           }
         }],
         "responses":
@@ -10080,7 +10081,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorWeighingResource"
           }
         }],
         "responses":
@@ -10155,7 +10156,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"#/definitions/ApiResourceId"
+            "$ref":"#/defintions/ApiIntegratorWeighingResource"
           }
         }],
         "responses":
@@ -11131,16 +11132,7 @@
         }
       }
     },
-    "ApiResourceId":
-    {
-      "type":"object",
-      "properties":
-      {
-        "resource":
-        {
-          "format":"int32",
-          "type":"integer"
-        },
+    "ApiResourceId":{"type":"object","properties":{"resource":{"format":"uuid","type":"string"},
         "errors":
         {
           "$ref":"#/definitions/ApiResourceErrors"
