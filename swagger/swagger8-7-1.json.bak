@@ -26258,50 +26258,6 @@
           "$ref":"#/definitions/ApiResourceStatus"
         }
       }
-    },
-    "ApiIntegratorZoneResource":
-    {
-      "type":"object",
-      "properties":
-      {
-        "Description":
-        {
-          "type":"string"
-        },
-        "GUID":
-        {
-          "format":"uuid",
-          "type":"string",
-          "example":"00000000-0000-0000-0000-000000000000"
-        }
-      }
-    },
-    "ApiResourceResultCollection[ApiIntegratorZoneResource]":
-    {
-      "type":"object",
-      "properties":
-      {
-        "resource":
-        {
-          "type":"array",
-          "items":
-          {
-            "$ref":"#/definitions/ApiIntegratorZoneResource"
-          }
-        },
-        "extra":
-        {
-          "$ref":"#/definitions/ApiResourceResultCollectionExtra"
-        },
-        "errors":
-        {
-          "$ref":"#/definitions/ApiResourceErrors"
-        },
-        "status":
-        {
-          "$ref":"#/definitions/ApiResourceStatus"
-        }
-      }
     }
   }
 }
