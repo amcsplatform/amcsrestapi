@@ -27,7 +27,7 @@
         ],
         "responses":
         {
-          ApiIntegratorAccessGroupResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -55,7 +55,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorAccessGroupResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -105,7 +105,7 @@
         ],
         "responses":
         {
-          ApiIntegratorAccountCustomerResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -132,7 +132,7 @@
         ],
         "responses":
         {
-          ApiIntegratorAccountCustomerResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -163,7 +163,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorAccountCustomerResource"
+            "$ref":"#/defintions/ApiIntegratorAccountCustomerResource"
           }
         }],
         "responses":
@@ -196,7 +196,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorAccountCustomerResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -238,7 +238,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorAccountCustomerResource"
+            "$ref":"#/defintions/ApiIntegratorAccountCustomerResource"
           }
         }],
         "responses":
@@ -270,7 +270,7 @@
         ],
         "responses":
         {
-          ApiIntegratorAccountingPeriodResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -298,7 +298,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorAccountingPeriodResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -343,7 +343,7 @@
         ],
         "responses":
         {
-          ApiIntegratorActionResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -371,7 +371,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorActionResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -416,7 +416,7 @@
         ],
         "responses":
         {
-          ApiIntegratorActionTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -444,7 +444,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorActionTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -494,7 +494,7 @@
         ],
         "responses":
         {
-          ApiIntegratorAppliedCostResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -521,7 +521,7 @@
         ],
         "responses":
         {
-          ApiIntegratorAppliedCostResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -552,7 +552,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorAppliedCostResource"
+            "$ref":"#/defintions/ApiIntegratorAppliedCostResource"
           }
         }],
         "responses":
@@ -585,7 +585,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorAppliedCostResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -627,7 +627,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorAppliedCostResource"
+            "$ref":"#/defintions/ApiIntegratorAppliedCostResource"
           }
         }],
         "responses":
@@ -659,7 +659,7 @@
         ],
         "responses":
         {
-          ApiIntegratorAreaOfOriginResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -687,7 +687,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorAreaOfOriginResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -735,7 +735,7 @@
         ],
         "responses":
         {
-          ApiIntegratorBusinessTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -766,7 +766,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorBusinessTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -811,7 +811,7 @@
         ],
         "responses":
         {
-          ApiIntegratorChargeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -842,7 +842,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorChargeResource"
+            "$ref":"#/defintions/ApiIntegratorChargeResource"
           }
         }],
         "responses":
@@ -875,7 +875,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorChargeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -920,7 +920,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCompanyResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -948,7 +948,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCompanyResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -998,7 +998,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContactResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1025,7 +1025,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContactResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1056,7 +1056,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorContactResource"
+            "$ref":"#/defintions/ApiIntegratorContactResource"
           }
         }],
         "responses":
@@ -1089,7 +1089,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContactResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1131,7 +1131,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorContactResource"
+            "$ref":"#/defintions/ApiIntegratorContactResource"
           }
         }],
         "responses":
@@ -1163,7 +1163,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContactRegistrationStatusResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1191,7 +1191,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContactRegistrationStatusResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1236,7 +1236,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContactTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1264,7 +1264,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContactTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1309,7 +1309,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContainerResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1340,7 +1340,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorContainerResource"
+            "$ref":"#/defintions/ApiIntegratorContainerResource"
           }
         }],
         "responses":
@@ -1373,7 +1373,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContainerResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1415,7 +1415,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorContainerResource"
+            "$ref":"#/defintions/ApiIntegratorContainerResource"
           }
         }],
         "responses":
@@ -1447,7 +1447,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContainerCategoryResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1475,7 +1475,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContainerCategoryResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1520,7 +1520,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContainerTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1548,7 +1548,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContainerTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1593,7 +1593,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContractResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1624,7 +1624,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorContractResource"
+            "$ref":"#/defintions/ApiIntegratorContractResource"
           }
         }],
         "responses":
@@ -1657,7 +1657,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContractResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1699,7 +1699,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorContractResource"
+            "$ref":"#/defintions/ApiIntegratorContractResource"
           }
         }],
         "responses":
@@ -1731,7 +1731,7 @@
         ],
         "responses":
         {
-          ApiIntegratorContractStatusResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1759,7 +1759,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorContractStatusResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1809,7 +1809,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCostAgreementResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1836,7 +1836,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCostAgreementResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -1867,7 +1867,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorCostAgreementResource"
+            "$ref":"#/defintions/ApiIntegratorCostAgreementResource"
           }
         }],
         "responses":
@@ -1900,7 +1900,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCostAgreementResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -1942,7 +1942,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorCostAgreementResource"
+            "$ref":"#/defintions/ApiIntegratorCostAgreementResource"
           }
         }],
         "responses":
@@ -1974,7 +1974,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCostCentreResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2002,7 +2002,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCostCentreResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2047,7 +2047,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCountryResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2075,7 +2075,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCountryResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2125,7 +2125,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCreditNoteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2152,7 +2152,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCreditNoteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2180,7 +2180,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCreditNoteResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2225,7 +2225,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCurrencyResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2253,7 +2253,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCurrencyResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2303,7 +2303,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCustomerResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2330,7 +2330,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCustomerResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2361,7 +2361,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorCustomerResource"
+            "$ref":"#/defintions/ApiIntegratorCustomerResource"
           }
         }],
         "responses":
@@ -2394,7 +2394,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCustomerResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2436,7 +2436,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorCustomerResource"
+            "$ref":"#/defintions/ApiIntegratorCustomerResource"
           }
         }],
         "responses":
@@ -2468,7 +2468,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorCustomerBlobResource"
+            "$ref":"#/defintions/ApiIntegratorCustomerBlobResource"
           }
         }],
         "responses":
@@ -2500,7 +2500,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCustomerGroupResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2528,7 +2528,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCustomerGroupResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2573,7 +2573,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorCustomerReportBlobResource"
+            "$ref":"#/defintions/ApiIntegratorCustomerReportBlobResource"
           }
         }],
         "responses":
@@ -2605,7 +2605,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorCustomerSiteHealthAndSafetyBlobResource"
+            "$ref":"#/defintions/ApiIntegratorCustomerSiteHealthAndSafetyBlobResource"
           }
         }],
         "responses":
@@ -2637,7 +2637,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCustomerSiteStateResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2665,7 +2665,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCustomerSiteStateResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2710,7 +2710,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCustomerStateResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2738,7 +2738,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCustomerStateResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2783,7 +2783,7 @@
         ],
         "responses":
         {
-          ApiIntegratorCustomerTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2811,7 +2811,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorCustomerTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2856,7 +2856,7 @@
         ],
         "responses":
         {
-          ApiIntegratorDayOfOccurrenceInMonthResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2884,7 +2884,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorDayOfOccurrenceInMonthResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -2929,7 +2929,7 @@
         ],
         "responses":
         {
-          ApiIntegratorDayOfWeekResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -2957,7 +2957,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorDayOfWeekResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3002,7 +3002,7 @@
         ],
         "responses":
         {
-          ApiIntegratorDefaultActionResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3030,7 +3030,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorDefaultActionResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3075,7 +3075,7 @@
         ],
         "responses":
         {
-          ApiIntegratorDepartmentResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3103,7 +3103,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorDepartmentResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3148,7 +3148,7 @@
         ],
         "responses":
         {
-          ApiIntegratorDirectDebitAccountTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3176,7 +3176,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorDirectDebitAccountTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3221,7 +3221,7 @@
         ],
         "responses":
         {
-          ApiIntegratorDocumentDeliveryTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3249,7 +3249,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorDocumentDeliveryTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3294,7 +3294,7 @@
         ],
         "responses":
         {
-          ApiIntegratorEwcCodeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3322,7 +3322,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorEwcCodeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3367,7 +3367,7 @@
         ],
         "responses":
         {
-          ApiIntegratorExclusionTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3395,7 +3395,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorExclusionTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3440,7 +3440,7 @@
         ],
         "responses":
         {
-          ApiIntegratorExternalVehicleResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3471,7 +3471,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorExternalVehicleResource"
+            "$ref":"#/defintions/ApiIntegratorExternalVehicleResource"
           }
         }],
         "responses":
@@ -3504,7 +3504,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorExternalVehicleResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3546,7 +3546,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorExternalVehicleResource"
+            "$ref":"#/defintions/ApiIntegratorExternalVehicleResource"
           }
         }],
         "responses":
@@ -3578,7 +3578,7 @@
         ],
         "responses":
         {
-          ApiIntegratorFacilityTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3606,7 +3606,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorFacilityTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3656,7 +3656,7 @@
         ],
         "responses":
         {
-          ApiIntegratorGLJournalResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3683,7 +3683,7 @@
         ],
         "responses":
         {
-          ApiIntegratorGLJournalResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3711,7 +3711,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorGLJournalResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3756,7 +3756,7 @@
         ],
         "responses":
         {
-          ApiIntegratorHealthAndSafetyDocumentTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3784,7 +3784,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorHealthAndSafetyDocumentTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3834,7 +3834,7 @@
         ],
         "responses":
         {
-          ApiIntegratorInvoiceResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3861,7 +3861,7 @@
         ],
         "responses":
         {
-          ApiIntegratorInvoiceResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3889,7 +3889,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorInvoiceResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -3934,7 +3934,7 @@
         ],
         "responses":
         {
-          ApiIntegratorInvoiceCycleResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -3962,7 +3962,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorInvoiceCycleResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4007,7 +4007,7 @@
         ],
         "responses":
         {
-          ApiIntegratorInvoiceFrequencyResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4035,7 +4035,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorInvoiceFrequencyResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4085,7 +4085,7 @@
         ],
         "responses":
         {
-          ApiIntegratorJobResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4112,7 +4112,7 @@
         ],
         "responses":
         {
-          ApiIntegratorJobResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4143,7 +4143,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorJobResource"
+            "$ref":"#/defintions/ApiIntegratorJobResource"
           }
         }],
         "responses":
@@ -4176,7 +4176,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorJobResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4218,7 +4218,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorJobResource"
+            "$ref":"#/defintions/ApiIntegratorJobResource"
           }
         }],
         "responses":
@@ -4255,7 +4255,7 @@
         ],
         "responses":
         {
-          ApiIntegratorLocationResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4282,7 +4282,7 @@
         ],
         "responses":
         {
-          ApiIntegratorLocationResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4313,7 +4313,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorLocationResource"
+            "$ref":"#/defintions/ApiIntegratorLocationResource"
           }
         }],
         "responses":
@@ -4346,7 +4346,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorLocationResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4388,7 +4388,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorLocationResource"
+            "$ref":"#/defintions/ApiIntegratorLocationResource"
           }
         }],
         "responses":
@@ -4420,7 +4420,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMarketResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4448,7 +4448,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMarketResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4498,7 +4498,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMasterAccountResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4525,7 +4525,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMasterAccountResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4556,7 +4556,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorMasterAccountResource"
+            "$ref":"#/defintions/ApiIntegratorMasterAccountResource"
           }
         }],
         "responses":
@@ -4589,7 +4589,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMasterAccountResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4631,7 +4631,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorMasterAccountResource"
+            "$ref":"#/defintions/ApiIntegratorMasterAccountResource"
           }
         }],
         "responses":
@@ -4663,7 +4663,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMaterialResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4691,7 +4691,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMaterialResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4736,7 +4736,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMaterialClassResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4764,7 +4764,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMaterialClassResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4809,7 +4809,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMaterialClassGroupResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4837,7 +4837,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMaterialClassGroupResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4882,7 +4882,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMaterialProducerTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4910,7 +4910,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMaterialProducerTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -4955,7 +4955,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMaterialStateResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -4983,7 +4983,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMaterialStateResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5028,7 +5028,7 @@
         ],
         "responses":
         {
-          ApiIntegratorMobileSettingsProfileListResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5056,7 +5056,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorMobileSettingsProfileListResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5101,7 +5101,7 @@
         ],
         "responses":
         {
-          ApiIntegratorNotificationResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5129,7 +5129,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorNotificationResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5179,7 +5179,7 @@
         ],
         "responses":
         {
-          ApiIntegratorOneOffActionResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5206,7 +5206,7 @@
         ],
         "responses":
         {
-          ApiIntegratorOneOffActionResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5237,7 +5237,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorOneOffActionResource"
+            "$ref":"#/defintions/ApiIntegratorOneOffActionResource"
           }
         }],
         "responses":
@@ -5270,7 +5270,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorOneOffActionResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5312,7 +5312,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorOneOffActionResource"
+            "$ref":"#/defintions/ApiIntegratorOneOffActionResource"
           }
         }],
         "responses":
@@ -5349,7 +5349,7 @@
         ],
         "responses":
         {
-          ApiIntegratorOrderResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5376,7 +5376,7 @@
         ],
         "responses":
         {
-          ApiIntegratorOrderResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5407,7 +5407,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorOrderResource"
+            "$ref":"#/defintions/ApiIntegratorOrderResource"
           }
         }],
         "responses":
@@ -5440,7 +5440,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorOrderResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5482,7 +5482,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorOrderResource"
+            "$ref":"#/defintions/ApiIntegratorOrderResource"
           }
         }],
         "responses":
@@ -5514,7 +5514,7 @@
         ],
         "responses":
         {
-          ApiIntegratorOutletResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5542,7 +5542,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorOutletResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5587,7 +5587,7 @@
         ],
         "responses":
         {
-          ApiIntegratorOutletTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5615,7 +5615,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorOutletTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5660,7 +5660,7 @@
         ],
         "responses":
         {
-          ApiIntegratorParcelBoundaryResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5688,7 +5688,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorParcelBoundaryResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5738,7 +5738,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPaymentResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5765,7 +5765,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPaymentResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5796,7 +5796,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorPaymentResource"
+            "$ref":"#/defintions/ApiIntegratorPaymentResource"
           }
         }],
         "responses":
@@ -5829,7 +5829,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPaymentResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5871,7 +5871,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorPaymentResource"
+            "$ref":"#/defintions/ApiIntegratorPaymentResource"
           }
         }],
         "responses":
@@ -5906,7 +5906,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPaymentHandlingCodeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -5937,7 +5937,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPaymentHandlingCodeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -5982,7 +5982,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPaymentPointResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6010,7 +6010,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPaymentPointResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6055,7 +6055,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPaymentTermResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6083,7 +6083,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPaymentTermResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6128,7 +6128,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPaymentTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6156,7 +6156,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPaymentTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6201,7 +6201,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPickupIntervalResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6229,7 +6229,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPickupIntervalResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6274,7 +6274,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPostTownResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6302,7 +6302,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPostTownResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6347,7 +6347,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPriceModifierResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6375,7 +6375,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPriceModifierResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6420,7 +6420,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPricingBasisResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6448,7 +6448,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPricingBasisResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6493,7 +6493,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPurchaseOrderAmountTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6521,7 +6521,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPurchaseOrderAmountTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6571,7 +6571,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPurchaseOrderNumberChainResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6598,7 +6598,7 @@
         ],
         "responses":
         {
-          ApiIntegratorPurchaseOrderNumberChainResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6629,7 +6629,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorPurchaseOrderNumberChainResource"
+            "$ref":"#/defintions/ApiIntegratorPurchaseOrderNumberChainResource"
           }
         }],
         "responses":
@@ -6662,7 +6662,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorPurchaseOrderNumberChainResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6704,7 +6704,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorPurchaseOrderNumberChainResource"
+            "$ref":"#/defintions/ApiIntegratorPurchaseOrderNumberChainResource"
           }
         }],
         "responses":
@@ -6736,7 +6736,7 @@
         ],
         "responses":
         {
-          ApiIntegratorReasonResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6764,7 +6764,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorReasonResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6809,7 +6809,7 @@
         ],
         "responses":
         {
-          ApiIntegratorReasonCategoryResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6837,7 +6837,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorReasonCategoryResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6882,7 +6882,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRegionResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6910,7 +6910,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRegionResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -6955,7 +6955,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRegionCodeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -6983,7 +6983,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRegionCodeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7028,7 +7028,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRentalQuantityAttributeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7056,7 +7056,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRentalQuantityAttributeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7101,7 +7101,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRentTermResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7129,7 +7129,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRentTermResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7179,7 +7179,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7206,7 +7206,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7237,7 +7237,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteResource"
+            "$ref":"#/defintions/ApiIntegratorRouteResource"
           }
         }],
         "responses":
@@ -7270,7 +7270,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRouteResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7312,7 +7312,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteResource"
+            "$ref":"#/defintions/ApiIntegratorRouteResource"
           }
         }],
         "responses":
@@ -7344,7 +7344,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteAssignmentResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7375,7 +7375,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteAssignmentResource"
+            "$ref":"#/defintions/ApiIntegratorRouteAssignmentResource"
           }
         }],
         "responses":
@@ -7408,7 +7408,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRouteAssignmentResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7450,7 +7450,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteAssignmentResource"
+            "$ref":"#/defintions/ApiIntegratorRouteAssignmentResource"
           }
         }],
         "responses":
@@ -7482,7 +7482,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteManagementTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7510,7 +7510,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRouteManagementTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7560,7 +7560,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteTemplateResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7587,7 +7587,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteTemplateResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7615,7 +7615,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRouteTemplateResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7660,7 +7660,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteVisitResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7691,7 +7691,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteVisitResource"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitResource"
           }
         }],
         "responses":
@@ -7724,7 +7724,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRouteVisitResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7766,7 +7766,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteVisitResource"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitResource"
           }
         }],
         "responses":
@@ -7798,7 +7798,7 @@
         ],
         "responses":
         {
-          ApiIntegratorRouteVisitJobResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7829,7 +7829,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteVisitJobResource"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitJobResource"
           }
         }],
         "responses":
@@ -7862,7 +7862,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorRouteVisitJobResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -7904,7 +7904,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorRouteVisitJobResource"
+            "$ref":"#/defintions/ApiIntegratorRouteVisitJobResource"
           }
         }],
         "responses":
@@ -7941,7 +7941,7 @@
         ],
         "responses":
         {
-          ApiIntegratorScheduleResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7968,7 +7968,7 @@
         ],
         "responses":
         {
-          ApiIntegratorScheduleResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -7999,7 +7999,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorScheduleResource"
+            "$ref":"#/defintions/ApiIntegratorScheduleResource"
           }
         }],
         "responses":
@@ -8032,7 +8032,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorScheduleResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8074,7 +8074,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorScheduleResource"
+            "$ref":"#/defintions/ApiIntegratorScheduleResource"
           }
         }],
         "responses":
@@ -8106,7 +8106,7 @@
         ],
         "responses":
         {
-          ApiIntegratorServiceResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8134,7 +8134,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorServiceResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8184,7 +8184,7 @@
         ],
         "responses":
         {
-          ApiIntegratorServiceAgreementResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8211,7 +8211,7 @@
         ],
         "responses":
         {
-          ApiIntegratorServiceAgreementResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8239,7 +8239,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorServiceAgreementResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8284,7 +8284,7 @@
         ],
         "responses":
         {
-          ApiIntegratorServiceCategoryResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8312,7 +8312,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorServiceCategoryResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8357,7 +8357,7 @@
         ],
         "responses":
         {
-          ApiIntegratorServiceFrequencyResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8385,7 +8385,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorServiceFrequencyResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8430,7 +8430,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSicCodeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8458,7 +8458,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorSicCodeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8508,7 +8508,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSiteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8535,7 +8535,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSiteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8566,7 +8566,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSiteResource"
+            "$ref":"#/defintions/ApiIntegratorSiteResource"
           }
         }],
         "responses":
@@ -8599,7 +8599,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorSiteResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8641,7 +8641,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSiteResource"
+            "$ref":"#/defintions/ApiIntegratorSiteResource"
           }
         }],
         "responses":
@@ -8673,7 +8673,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSiteTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8701,7 +8701,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorSiteTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8751,7 +8751,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSupplierResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8778,7 +8778,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSupplierResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8809,7 +8809,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSupplierResource"
+            "$ref":"#/defintions/ApiIntegratorSupplierResource"
           }
         }],
         "responses":
@@ -8842,7 +8842,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorSupplierResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -8884,7 +8884,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSupplierResource"
+            "$ref":"#/defintions/ApiIntegratorSupplierResource"
           }
         }],
         "responses":
@@ -8921,7 +8921,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSupplierBillResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8948,7 +8948,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSupplierBillResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -8979,7 +8979,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSupplierBillResource"
+            "$ref":"#/defintions/ApiIntegratorSupplierBillResource"
           }
         }],
         "responses":
@@ -9012,7 +9012,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorSupplierBillResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9054,7 +9054,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSupplierBillResource"
+            "$ref":"#/defintions/ApiIntegratorSupplierBillResource"
           }
         }],
         "responses":
@@ -9091,7 +9091,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSupplierSiteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9118,7 +9118,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSupplierSiteResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9149,7 +9149,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSupplierSiteResource"
+            "$ref":"#/defintions/ApiIntegratorSupplierSiteResource"
           }
         }],
         "responses":
@@ -9182,7 +9182,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorSupplierSiteResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9224,7 +9224,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorSupplierSiteResource"
+            "$ref":"#/defintions/ApiIntegratorSupplierSiteResource"
           }
         }],
         "responses":
@@ -9256,7 +9256,7 @@
         ],
         "responses":
         {
-          ApiIntegratorSupplierTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9284,7 +9284,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorSupplierTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9329,7 +9329,7 @@
         ],
         "responses":
         {
-          ApiIntegratorTaxTemplateCollectionResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9357,7 +9357,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorTaxTemplateCollectionResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9402,7 +9402,7 @@
         ],
         "responses":
         {
-          ApiIntegratorTradingNameTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9430,7 +9430,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorTradingNameTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9480,7 +9480,7 @@
         ],
         "responses":
         {
-          ApiIntegratorTrailerResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9507,7 +9507,7 @@
         ],
         "responses":
         {
-          ApiIntegratorTrailerResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9535,7 +9535,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorTrailerResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9580,7 +9580,7 @@
         ],
         "responses":
         {
-          ApiIntegratorUnitOfMeasureResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9608,7 +9608,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorUnitOfMeasureResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9653,7 +9653,7 @@
         ],
         "responses":
         {
-          ApiIntegratorUserResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9681,7 +9681,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorUserResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9726,7 +9726,7 @@
         ],
         "responses":
         {
-          ApiIntegratorVatResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9754,7 +9754,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorVatResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9799,7 +9799,7 @@
         ],
         "responses":
         {
-          ApiIntegratorVehicleResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9827,7 +9827,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorVehicleResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9872,7 +9872,7 @@
         ],
         "responses":
         {
-          ApiIntegratorVehicleTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9900,7 +9900,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorVehicleTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -9945,7 +9945,7 @@
         ],
         "responses":
         {
-          ApiIntegratorVisitStatusResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -9973,7 +9973,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorVisitStatusResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -10023,7 +10023,7 @@
         ],
         "responses":
         {
-          ApiIntegratorWeighingResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -10050,7 +10050,7 @@
         ],
         "responses":
         {
-          ApiIntegratorWeighingResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -10081,7 +10081,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorWeighingResource"
+            "$ref":"#/defintions/ApiIntegratorWeighingResource"
           }
         }],
         "responses":
@@ -10114,7 +10114,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorWeighingResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -10156,7 +10156,7 @@
           "required":true,
           "schema":
           {
-            "$ref":"ApiIntegratorWeighingResource"
+            "$ref":"#/defintions/ApiIntegratorWeighingResource"
           }
         }],
         "responses":
@@ -10188,7 +10188,7 @@
         ],
         "responses":
         {
-          ApiIntegratorWeighingTypeResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -10216,7 +10216,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorWeighingTypeResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -10261,7 +10261,7 @@
         ],
         "responses":
         {
-          ApiIntegratorWriteOffReasonResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -10289,7 +10289,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorWriteOffReasonResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
@@ -10334,7 +10334,7 @@
         ],
         "responses":
         {
-          ApiIntegratorZoneResource"200":
+          "200":
           {
             "description":"OK",
             "schema":
@@ -10362,7 +10362,7 @@
           "in":"query",
           "required":false,
           "type":"integer",
-          "format":ApiIntegratorZoneResource"int32"
+          "format":"int32"
         },
         {
           "name":"page",
