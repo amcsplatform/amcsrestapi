@@ -4502,7 +4502,7 @@
             "description":"OK",
             "schema":
             {
-              "$ref":"#/definitions/ApiResourceChanges[ApiIntegratorAccountCustomerResource]"
+              "$ref":"#/definitions/ApiResourceChanges[ApiIntegratorMasterAccountResource]"
             }
           }
         }
@@ -4529,7 +4529,7 @@
             "description":"OK",
             "schema":
             {
-              "$ref":"#/definitions/ApiResourceResultEntity[ApiIntegratorAccountCustomerResource]"
+              "$ref":"#/definitions/ApiResourceResultEntity[ApiIntegratorMasterAccountResource]"
             }
           }
         }
@@ -4611,7 +4611,7 @@
             "description":"OK",
             "schema":
             {
-              "$ref":"#/definitions/ApiResourceResultCollection[ApiIntegratorAccountCustomerResource]"
+              "$ref":"#/definitions/ApiResourceResultCollection[ApiIntegratorMasterAccountResource]"
             }
           }
         }
@@ -17565,7 +17565,7 @@
         }
       }
     },
-    "ApiResourceChanges[ApiIntegratorAccountCustomerResource]":
+    "ApiResourceChanges[ApiIntegratorMasterAccountResource]":
     {
       "type":"object",
       "properties":
@@ -17575,7 +17575,7 @@
           "type":"array",
           "items":
           {
-            "$ref":"#/definitions/ApiIntegratorAccountCustomerResource"
+            "$ref":"#/definitions/ApiIntegratorMasterAccountResource"
           }
         },
         "extra":
@@ -17592,7 +17592,7 @@
         }
       }
     },
-    "ApiIntegratorAccountCustomerResource":
+    "ApiIntegratorMasterAccountResource":
     {
       "type":"object",
       "properties":
@@ -17621,14 +17621,14 @@
         }
       }
     },
-    "ApiResourceResultEntity[ApiIntegratorAccountCustomerResource]":
+    "ApiResourceResultEntity[ApiIntegratorMasterAccountResource]":
     {
       "type":"object",
       "properties":
       {
         "resource":
         {
-          "$ref":"#/definitions/ApiIntegratorAccountCustomerResource"
+          "$ref":"#/definitions/ApiIntegratorMasterAccountResource"
         },
         "links":
         {
@@ -17648,7 +17648,7 @@
         }
       }
     },
-    "ApiResourceResultCollection[ApiIntegratorAccountCustomerResource]":
+    "ApiResourceResultCollection[ApiIntegratorMasterAccountResource]":
     {
       "type":"object",
       "properties":
@@ -17658,7 +17658,7 @@
           "type":"array",
           "items":
           {
-            "$ref":"#/definitions/ApiIntegratorAccountCustomerResource"
+            "$ref":"#/definitions/ApiIntegratorMasterAccountResource"
           }
         },
         "extra":
