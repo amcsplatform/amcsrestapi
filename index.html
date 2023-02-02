@@ -26,6 +26,11 @@
             padding-left:20px;
         }
 
+        #menu p{
+            margin:0;
+            padding:0;
+        }
+
         #version{
             margin-top:0;
         }
@@ -71,9 +76,9 @@
     <div id="redoc-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
     <script>
-        function intRedoc(specuri) {
+        function intRedoc(component,version) {
             Redoc.init(
-                "https://amcsrestapi.github.io/swagger/swagger" + specuri + ".json",
+                "./swagger" + component + "/" + component + "swagger" + version + ".json",
                 {
                     scrollYOffset: 120,
                     expandResponses: "200",
@@ -104,10 +109,25 @@
             );
             console.log(specuri);
         }
-        intRedoc('8-10-0');
+
+        function switchvers( component )
+        {
+            document.getElementById( component === "erp" ? "payversions" : "erpversions" ).style.display = "none";
+            document.getElementById( component + "versions" ).style.display = "block";
+            intRedoc( component, component === "erp" ? "8-10-0" : "8-12-0" ); // <<<< edit default version here
+        }
+
+        intRedoc('erp','8-10-0'); // <<<< edit default version here
     </script>
     <div id="menu"><img src="logo.png"/><br/>
-    <p id="version">Platform Version <select onchange="intRedoc(this.value)">
+    <p>Component <select id="componentselect" onchange="switchvers( this.value )">
+        <option value="erp">ERP</option>
+        <option value="pay">Pay</option>
+    </select></p>
+    <p id="payversions" style="display:none">Pay Version <select onchange="intRedoc( 'pay', this.value )">
+        <option value="8-12-0">8.12</option>
+    </select></p>
+    <p id="erpversions">Platform Version <select onchange="intRedoc( 'erp', this.value )">
         <option value="8-10-0">8.10</option>
         <option value="8-9-0">8.9</option>
         <option value="8-8-2">8.8.2</option>
@@ -117,7 +137,8 @@
         <option value="8-7-2">8.7.2</option>
         <option value="8-7-1">8.7.1</option>
         <option value="8-6-0">8.6.X</option>
-    </select></p></div>
+    </select></p>
+    </div>
 </body>
 
 </html>
