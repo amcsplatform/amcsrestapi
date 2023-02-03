@@ -107,17 +107,16 @@
                 },
                 document.getElementById('redoc-container')
             );
-            console.log(specuri);
         }
 
         function switchvers( component )
         {
             document.getElementById( component === "erp" ? "payversions" : "erpversions" ).style.display = "none";
             document.getElementById( component + "versions" ).style.display = "block";
-            intRedoc( component, component === "erp" ? "8-10-0" : "8-12-0" ); // <<<< edit default version here
+            intRedoc( component, component === "erp" ? "8-11-0" : "8-12-0" ); // <<<< edit default version here
         }
 
-        intRedoc('erp','8-10-0'); // <<<< edit default version here
+        intRedoc('erp','8-11-0'); // <<<< edit default version here
     </script>
     <div id="menu"><img src="logo.png"/><br/>
     <p>Component <select id="componentselect" onchange="switchvers( this.value )">
@@ -128,6 +127,7 @@
         <option value="8-12-0">8.12</option>
     </select></p>
     <p id="erpversions">Platform Version <select onchange="intRedoc( 'erp', this.value )">
+        <option value="8-11-0">8.11</option>
         <option value="8-10-0">8.10</option>
         <option value="8-9-0">8.9</option>
         <option value="8-8-2">8.8.2</option>
