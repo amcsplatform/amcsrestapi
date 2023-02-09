@@ -113,10 +113,10 @@
         {
             document.getElementById( component === "erp" ? "payversions" : "erpversions" ).style.display = "none";
             document.getElementById( component + "versions" ).style.display = "block";
-            intRedoc( component, component === "erp" ? "8-11-0" : "8-12-0" ); // <<<< edit default version here
+            intRedoc( component, component === "erp" ? "latest" : "latest" );
         }
 
-        intRedoc('erp','8-11-0'); // <<<< edit default version here
+        intRedoc('erp','latest');
     </script>
     <div id="menu"><img src="logo.png"/><br/>
     <p>Component <select id="componentselect" onchange="switchvers( this.value )">
@@ -124,10 +124,11 @@
         <option value="pay">Pay</option>
     </select></p>
     <p id="payversions" style="display:none">Pay Version <select onchange="intRedoc( 'pay', this.value )">
-        <option value="8-12-0">8.12</option>
+        <option value="latest">latest (8.12)</option>
     </select></p>
     <p id="erpversions">Platform Version <select onchange="intRedoc( 'erp', this.value )">
-        <option value="8-11-0">8.11</option>
+        <option value="latest">latest (8.11)</option>
+        <!-- make a new row for the current latest and update the latest version number -->
         <option value="8-10-0">8.10</option>
         <option value="8-9-0">8.9</option>
         <option value="8-8-2">8.8.2</option>
