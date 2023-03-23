@@ -180,6 +180,36 @@
           }
         }
       }
+    },
+    "Payment/getCustomerInvoiceDetails": {
+        "post":{"tags":[
+         "Mobills IVR"
+        ],
+        "summary":"Mobills IVR",
+        "description": "| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerId                      | The account code used for Accounts Receivable.        (AMCS will provide the account ARCode)                             |\r\n| ExternalChannel               | External Channel can be only MOBILL OR IVR                         |\r\n| CustomerGuid                 | The GUID associated to the customer.        |\r\n| CustomerName               |The customer's name.        |\r\n| CustomerBalance               |The amount associated to the payment.        |\r\n| CustomerCurrency               | Customer Currency associated with the Customer account.        |\r\n| InvoiceDetails               |It will show all the invoices associated with the account               |\r\n| InvoiceNumber                   |The invoice number associated to the invoice. Filterable.        |\r\n| InvoiceGUID                     |The GUID associated to the invoice.        |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| ZipCode                         |Zip code is associated with the account               |\r\n| InvoiceDueDate                  |The dueDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| UnallocatedAmount               |The Unallocated Amount on the customers account.        |\r\n| InvoiceCurrency                 |Invoice Currency asscoaited with the customer account             |\r\n| TransactionReference            |Transaction Reference associated with account                 |\r\n| ZipCode                         |ZipCode associated with the account address                                |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| LastPaymentDate                 |When the last payment was made                     |\r\n| MakePaymentLink                 |It shows the payment link (if any invoice available)                     |\r\n| IsActive                 |Whether the customer is active              |\r\n| MobillsEnrollment               |Whether the mobills enrollment is active.              |\r\n| GUID         |Guid associated with the account",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayMobillsIvrResponse"
+                }
+              }
+            }
+          }
+        },
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSMobillsIvrRequest"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -261,6 +291,22 @@
           }
         ]
       },
+      "AMCSMobillsIvrRequest": {
+        "type": "object",
+        "properties": {
+          "CustomerId": {
+            "type": "string",
+            "example": "ACC1007",
+            "nullable": false
+          },
+          "ExternalChannel": {
+            "type": "string",
+            "example": "MOBILL / IVR",
+            "nullable": false
+          }
+        },
+        "additionalProperties": false
+      },
       "AMCSPayCallback": {
         "type": "object",
         "allOf": [
@@ -341,6 +387,16 @@
           }
         }
       },
+      "AMCSPayMobillsIvrResponse": {
+        "type": "object",
+        "properties": {
+          "Details": {
+            "$ref": "#/components/schemas/AMCSPayMobillsIvrResponseDetail"
+          }
+        },
+        "additionalProperties": false
+      },
+
       "AMCSPayHeader": {
         "required": [
           "ClientProvidedGuid",
@@ -1761,6 +1817,22 @@
           }
         }
       },
+      "AMCSPayMobillsIvrRequestDetail": {
+        "required": [
+          "CustomerId",
+          "ExternalChannel"
+        ],
+        "type": "object",
+        "properties": {
+          "CustomerId": {
+            "minLength": 7,
+            "type": "string"
+          },
+          "ExternalChannel": {
+            "type": "string"
+          }
+        }
+      },
       "AMCSPayTerminalTransaction": {
         "required": [
           "amountsReq"
@@ -1998,6 +2070,131 @@
             "nullable": true
           }
         }
+      },
+      "AMCSPayMobillsIvrResponseDetail": {
+        "type": "object",
+        "properties": {
+          "CustomerGuid": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "nullable": false
+          },
+          "CustomerName": {
+            "type": "string",
+            "example": "Mark Smith",
+            "nullable": false
+          },
+          "CustomerBalance": {
+            "type": "integer",
+            "example": "120.95",
+            "nullable": true
+          },
+          "CustomerCurrency": {
+            "type": "string",
+            "example": "EUR"
+          },
+          "InvoiceDetails": {
+            "type": "array",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmcsInvoiceDetails"
+              }
+            ]
+          },
+          "TransactionReference": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "nullable": true
+          },
+          "ZipCode": {
+            "type": "string",
+            "example": "00501",
+            "nullable": true
+          },
+          "DueDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD",
+            "nullable": true
+          },
+          "InvoiceDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD",
+            "nullable": true
+          },
+          "LastPaymentDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD",
+            "nullable": true
+          },
+          "LastPaymentAmount": {
+            "type": "string",
+            "example": "155.50",
+            "nullable": true
+          },
+          "MakePaymentLink": {
+            "format": "url",
+            "type": "string",
+            "example":"https://https://p2-dev-svc-core.amcsplatform.com/paybylink?key=092159d8-9e57-41a5-af6c-745bd45ff2f7",
+            "nullable": true
+          },
+          "IsActive": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "MobillsEnrollment": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "GUID": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "nullable": true
+          }
+        }
+      },
+      "AmcsInvoiceDetails": {
+        "required": [
+          "Customer Account Invoice Details"
+        ],
+        "type": "object",
+        "properties": {
+          "InvoiceNumber": {
+            "type": "string",
+            "example": "INV001"
+          },
+          "InvoiceGUID": {
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "type": "string"
+          },
+          "InvoiceDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "ZipCode": {
+            "type": "string",
+            "example": "00501"
+          },
+          "InvoiceDueDate": {
+            "type": "string",
+            "example": "YYYY-MM-DD"
+          },
+          "UnallocatedAmount": {
+            "type": "integer",
+            "example": "120.95"
+
+          },
+          "InvoiceCurrency": {
+            "type": "string",
+            "example": "EUR"
+
+          }
+        },
+        "additionalProperties": false
       },
       "AMCSPoiData": {
         "required": [
