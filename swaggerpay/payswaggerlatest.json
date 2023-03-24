@@ -17,7 +17,7 @@
           "/authenticate"
         ],
 		  "summary": "Authenticate by Tenant PrivateKey ",
-		  "description": "Authorizing AMCSPay using the created PrivateKey\n\nThis endpoint accepts the **privatekey** as the input from the calling application for authentication.  \n_On successful authorization, Platform.PAY.SessionToken_ will be added to the cookie on successful authorization.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| privateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| authResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\". |\n| username | The username assigned to the user (usually what they use to log-in). |\n| userIdentity | The user identity. |\n| sysUserId | The ID of the sysuser. |\n| userGuid | The GUID associated to the user. |\n| companyoutletid | The ID of the Company outlet. |\n| companyOutletGuid | The GUID associated to the Company outlet. |\n| stayLoggedIn | The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox) |",
+		  "description": "Authorizing AMCSPay using the created PrivateKey\n\nThis endpoint accepts the **privatekey** as the input from the calling application for authentication.  \n_On successful authorization, Platform.PAY.SessionToken_ will be added to the cookie on successful authorization.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| privateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| authResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\". |\n| username | The username assigned to the default tenant user. |\n| userIdentity | The user identity associated to the user. |\n| sysUserId | The ID associated to the user. |\n| userGuid | The GUID associated to the user. |\n| companyoutletid | The ID associated to the Company outlet. |\n| companyOutletGuid | The GUID associated to the Company outlet. |\n| stayLoggedIn | The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox) |",
 	    "security": [],
         "requestBody": {
           "content": {
@@ -241,44 +241,45 @@
           "authResult": {
             "type": "string",
             "nullable": true,
-			      "example": "ok"
+			"example": "ok"
           },
           "userName": {
             "type": "string",
             "nullable": true,
-			      "example": "ADMIN01"
+			"example": "ADMIN01"
           },
           "userIdentity": {
             "type": "string",
             "nullable": true,
-			      "example": null
+			"example": "ADMIN"
           },
           "sysUserId": {
             "type": "integer",
             "format": "int32",
             "nullable": true,
-			      "example": 3
+			"example": 3
           },
           "userGuid": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-			      "example": null
+			"example": "607e37cd-4f51-4148-af23-4459b74fc3b2"
           },
           "companyOutletId": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
+            "nullable": true,
+			"example": 10
           },
           "companyOutletGuid": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-			      "example": null
+			"example": "5feaaae5-7733-4e45-ac39-87d46cf138e0"
           },
           "stayLoggedIn": {
-            "type": "boolean",
-			      "example":false
+        	"type": "boolean",
+			"example":false
           }
         }
       },
