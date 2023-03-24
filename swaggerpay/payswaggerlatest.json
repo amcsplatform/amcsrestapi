@@ -3,7 +3,7 @@
   "info": {
     "title": "AMCS Pay External API",
     "version": "external",
-	  "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThis document contains a technical description of the AMCS Pay REST API endpoints. The purpose of this document is to provide readers with details on how to integrate into the AMCS Pay REST API.\n\n## About AMCS Pay\n\nAMCS Pay offers waste & recycling operators feature rich payment services that broaden their ability to compete in a rapidly evolving marketplace. The services include card payments, ACH payments, Google Pay, Apple Pay and many alternative payment methods. AMCS Pay supports multiple recognized industry partners such as Global Payments, ACI Worldwide etc.\n\n## Communicating to AMCS Pay API\n\nFirst, a calling application will have to register as a Tenant. Upon successful registration a PrivateKey is generated which will serve as the Personal Acess Token (PAT).\n\nThe Tenant PrivateKey will be provided during authentication through the (\"/authenticate\") endpoint. This creates a cookie, which needs to be tracked in a cookie container. Subsequent calls will use the cookie to authenticate requests.\n\n<img src=\"diagram/amcspay_multitenant.png\" width=\"689\" height=\"265\">"
+	  "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThis document contains a technical description of the AMCS Pay REST API endpoints. The purpose of this document is to provide readers with details on how to integrate into the AMCS Pay REST API.\n\n## About AMCS Pay\n\nAMCS Pay offers waste & recycling operators feature rich payment services that broaden their ability to compete in a rapidly evolving marketplace. The services include card payments, ACH payments, Google Pay, Apple Pay and many alternative payment methods. AMCS Pay supports multiple recognized industry partners such as Global Payments, ACI Worldwide etc.\n\n## Communicating to AMCS Pay API\n\nFirst, a calling application will have to register as a Tenant. Upon successful registration a PrivateKey is generated which will serve as the Personal Acess Token (PAT).\n\nThe Tenant PrivateKey will be provided during authentication through the (\"/authTokens\") endpoint. This creates a cookie, which needs to be tracked in a cookie container. Subsequent calls will use the cookie to authenticate requests.\n\n<img src=\"diagram/amcspay_multitenant.png\" width=\"689\" height=\"265\">"
   },
   "security": [
     {
@@ -11,10 +11,10 @@
     }
   ],
   "paths": {
-    "/authenticate": {
+    "/authTokens": {
       "post": {
         "tags": [
-          "/authenticate"
+          "/authTokens"
         ],
 		  "summary": "Authenticate by Tenant PrivateKey ",
 		  "description": "Authorizing AMCSPay using the created PrivateKey\n\nThis endpoint accepts the **privatekey** as the input from the calling application for authentication.  \n_On successful authorization, Platform.PAY.SessionToken_ will be added to the cookie on successful authorization.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| privateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| authResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\". |\n| username | The username assigned to the default tenant user. |\n| userIdentity | The user identity associated to the user. |\n| sysUserId | The ID associated to the user. |\n| userGuid | The GUID associated to the user. |\n| companyoutletid | The ID associated to the Company outlet. |\n| companyOutletGuid | The GUID associated to the Company outlet. |\n| stayLoggedIn | The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox) |",
