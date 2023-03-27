@@ -57,7 +57,7 @@
           "ExternalTransaction"
         ],
         "summary": "OneOff Payment",
-        "description": "This endpoint is used to initiate the iframe payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"OneOffPaymentAndTokenization\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The CallerIdentifier associated to the Payment request.             |\r\n| CallerTransactionId               | The CallerTransactionId associated to the Payment request.        |\r\n| CallerIPAddress               |CallerIP Address associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProvideType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| HPPTransactionRequest                         | The HPPTransaction Request associated to the customer.                |\r\n| CallerTransactionId                 |The CallerTransactionId associated with the Payment response.        |\r\n| AmcsPayReference               | The  Amcs Pay Reference associated to the payment response.        |\r\n| ResponseTimestamp                 |The ResponseTimestamp associated to the payment response in ISO format (YYYY-MM-DD).            |\r\n| TransactionStatus           |Transaction Status can be any of \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\"|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayUrl | The iframe url to load. | AmcsPayTransactionGuid | The GUID associated to the Iframe payment request. |\n| StatusCode | The status associated to the payment.",
+        "description": "This endpoint is used to initiate the iframe payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"OneOffPaymentAndTokenization\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| CallerTransactionId               | The caller supplied GUID associated to the Payment request.        |\r\n| CallerIPAddress               |Caller IPAddress associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| HPPTransactionRequest                         | The HPPTransaction Request associated to the customer.",
         "responses": {
           "200": {
             "description": "Success",
@@ -87,7 +87,7 @@
           "ExternalTransaction"
         ],
         "summary": "Poll Payment",
-        "description": "This endpoint is used to poll the payment initiated after interaction through an iframe.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayTransactionGuid | The GUID associated to the Iframe payment request. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| AmcsPayReference | The ID associated to the payment reference sent by the provider in the payload response. |\n| ResponseCode | The response code associated to the response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The timestamp of the payment response payload. |\n| StatusCode | The status associated to the payment.",
+        "description": "This endpoint is used to poll the payment initiated after interaction through an iframe.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayTransactionGuid | The AMCS generated GUID associated to the Iframe payment request. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| AmcsPayReference | The ID associated to the payment reference sent by the provider in the payload response. |\n| ResponseCode | The response code associated to the response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The timestamp of the payment response payload. |\n| StatusCode | The status associated to the payment.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -235,8 +235,8 @@
         "required": [
           "requestType",
           "paymentType",
-          "transctionOriginEnum",
-          "provideType",
+          "transactionOrigin",
+          "providerType",
           "transactionAmount",
           "callerIdentifier",
           "callerTransactionId"
@@ -261,7 +261,7 @@
             ],
             "nullable": false
           },
-          "transctionOriginEnum": {
+          "transactionOrigin": {
             "type": "string",
             "enum": [
               "MOTO",
@@ -285,7 +285,7 @@
             "type": "Date-time",
             "nullable": false
           },
-          "provideType": {
+          "providerType": {
             "type": "string",
             "enum": [
               "ACICards",
@@ -344,7 +344,7 @@
             "format": "uuid",
             "nullable": false
           },
-          "requestTypeEnum": {
+          "requestType": {
             "type": "string",
             "enum": [
               "Payment",
@@ -358,7 +358,7 @@
             ],
             "nullable": false
           },
-          "statusCodeEnum": {
+          "statusCode": {
             "type": "string",
             "enum": [
               "Initiated",
@@ -599,17 +599,6 @@
         },
         "additionalProperties": false
       },
-      "AMCSResponseStatusEnum": {
-        "type": "string",
-        "enum": [
-          "Initiated",
-          "Success",
-          "Failure",
-          "Timeout",
-          "Cancelled"
-        ],
-        "example": "Success"
-      },
       "AMCSInitiatePaymentResponse": {
         "type": "object",
         "properties": {
@@ -626,12 +615,15 @@
             "nullable": false
           },
           "statusCode": {
-            "type": "object",
-            "properties": {
-              "ResponseStatusEnum": {
-                "$ref": "#/components/schemas/AMCSResponseStatusEnum"
-              }
-            },
+            "type": "string",
+            "enum": [
+              "Initiated",
+              "Success",
+              "Failure",
+              "Timeout",
+              "Cancelled"
+            ],
+            "example": "Success",
             "nullable": false
           }
         }
@@ -736,7 +728,6 @@
         "properties": {
           "amcsPayTransactionGuid": {
             "type": "string",
-            "description": "The GUID associated to the payment request.",
             "format": "uuid",
             "example": "204ba071-1e75-48c6-8a08-aedf00b3b648"
           }
@@ -749,57 +740,52 @@
           "callerTransactionId": {
             "type": "string",
             "format": "uuid",
-            "description": "The GUID associated to the payment request.",
             "example": "204ba071-1e75-48c6-8a08-aedf00b3b648"
           },
           "providerReference": {
             "type": "string",
-            "description": "The reference number associated to the payment provider.",
             "nullable": true,
             "example": ""
           },
           "amcsPayReference": {
             "type": "string",
-            "description": "The ID associated to the payment reference sent by the provider in the payload response.",
             "nullable": true,
             "example": ""
           },
           "responseCode": {
             "type": "string",
-            "description": "The status code associated to the response.",
             "nullable": true,
             "example": "OK"
           },
           "notes": {
             "type": "string",
-            "description": "More information associated to the payment.",
             "nullable": true,
             "example": ""
           },
           "providerAuthCode": {
             "type": "string",
-            "description": "The authorization code associated to the payment provider.",
             "nullable": true,
             "example": ""
           },
           "additionalProviderData": {
             "type": "object",
-            "description": "More information associated to the payment provider.",
             "additionalProperties": true
           },
           "responseTimeStamp": {
             "type": "string",
-            "description": "The timestamp of the payment response payload.",
             "format": "datetime",
             "example": "2022-07-27 18:54:18.6767965 +08:00"
           },
           "statusCode": {
-            "type": "object",
-            "properties": {
-              "ResponseStatusEnum": {
-                "$ref": "#/components/schemas/AMCSResponseStatusEnum"
-              }
-            },
+            "type": "string",
+            "enum": [
+              "Initiated",
+              "Success",
+              "Failure",
+              "Timeout",
+              "Cancelled"
+            ],
+            "example": "Success",
             "nullable": false
           }
         },
