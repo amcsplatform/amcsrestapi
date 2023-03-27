@@ -74,7 +74,7 @@
 
 <body>
     <div id="redoc-container"></div>
-    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script> 
     <script>
         function intRedoc(component,version) {
             Redoc.init(
@@ -83,7 +83,7 @@
                     scrollYOffset: 120,
                     expandResponses: "200",
                     expandSingleSchemaField:true,
-                    jsonSampleExpandLevel:5,
+                    jsonSampleExpandLevel:5, 
                     generateCodeSamples: {
                         languages:[
                             {
@@ -124,7 +124,7 @@
         <option value="pay">Pay</option>
     </select></p>
     <p id="payversions" style="display:none">Pay Version <select onchange="intRedoc( 'pay', this.value )">
-        <option value="latest">9.0</option>
+        <option value="latest">latest (9.0)</option>
     </select></p>
     <p id="erpversions">Platform Version <select onchange="intRedoc( 'erp', this.value )">
         <option value="latest">latest (8.11)</option>
