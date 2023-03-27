@@ -3,7 +3,7 @@
   "info": {
     "title": "AMCS Pay External API",
     "version": "external",
-	  "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThis document contains a technical description of the AMCS Pay REST API endpoints. The purpose of this document is to provide readers with details on how to integrate into the AMCS Pay REST API.\n\n## About AMCS Pay\n\nAMCS Pay offers waste & recycling operators feature-rich payment services that broaden their ability to compete in a rapidly evolving marketplace. The services include card payments, ACH payments, Google Pay, Apple Pay, and many alternative payment methods. AMCS Pay supports multiple recognized industry partners such as Global Payments, ACI Worldwide etc.\n\n## Communicating to AMCS Pay API\n\nFirst, a calling application will have to register as a Tenant. Upon successful registration a private key is generated which will serve as the Personal Access Token (PAT).\n\nThe Tenant Private Key is then supplied during authentication and authorization through the (\"/authTokens\") endpoint. This creates a cookie, which needs to be tracked in a cookie container. Subsequent calls to the REST API will then use this cookie to authenticate and authorize requests.\n\n<img src=\"diagram/amcspay_multitenant.png\" width=\"689\" height=\"265\">"
+    "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe AMCS Pay REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the AMCS Pay REST API.\n\n## About AMCS Pay\n\nAMCS Pay offers waste & recycling operators feature-rich payment services that broaden their ability to compete in a rapidly evolving marketplace. The services include card payments, ACH payments, Google Pay, Apple Pay, and many alternative payment methods. AMCS Pay supports multiple recognized industry partners such as Global Payments, ACI Worldwide etc.\n\n## Communicating to AMCS Pay API\n\nA calling application must first sign up as a Tenant. A private key is created after successful registration and will be used as the Personal Access Token (PAT).\n\nThe Tenant Private Key is then supplied during authentication and authorization through the (\"/authTokens\") endpoint. This creates a cookie, which needs to be tracked in a cookie container. Subsequent calls to the REST API will then use this cookie to authenticate and authorize requests.\n\n<img src=\"diagram/amcspay_multitenant.png\" width=\"689\" height=\"265\">"
   },
   "security": [
     {
@@ -14,11 +14,11 @@
     "/authTokens": {
       "post": {
         "tags": [
-          "/authTokens"
+          "Auth"
         ],
-		  "summary": "Authenticate by Tenant Private Key ",
-		  "description": "This endpoint is used for authentication and authorization of a calling application by supplying the **Tenant Private Key** in the **privateKey** property. When successful, _Platform.PAY.SessionToken_ is added to the cookie.",
-	    "security": [],
+        "summary": "Auth by Private Key",
+        "description": "This endpoint is used for authentication and authorisation of a calling application by supplying the Tenant Private Key in the privateKey property. When successful, Platform.PAY.SessionToken is added to the cookie.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| PrivateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AuthResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\". |\n| Username | The username assigned to the default tenant user. |\n| UserIdentity | The user identity associated to the user. |\n| SysUserId | The ID associated to the user. |\n| UserGuid | The GUID associated to the user. |\n| Companyoutletid | The ID associated to the Company outlet. |\n| CompanyOutletGuid | The GUID associated to the Company outlet. |\n| StayLoggedIn | The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox) |",
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -51,13 +51,13 @@
         }
       }
     },
-    "Payment/InitiatePayment": {
+    "ExternalTransaction/OneOff": {
       "post": {
         "tags": [
-          "Amcs Pay"
+          "ExternalTransaction"
         ],
-        "summary": "Initiate Payment",
-        "description": "| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be  \"OneOffPayment\" \"OneOffPaymentAndTokenization\" \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be \"Card\" \"ACH \" \"GooglePay\" \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be \"Moto\" \"Ecom\"        |\r\n| CallerIdentifier               | The CallerIdentifier associated to the Payment request.             |\r\n| CallerTransactionId               | The CallerTransactionId associated to the Payment request.        |\r\n| CallerIPAddress               |CallerIP Address associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProvideType                   |Provide Type can be \"ACICards\" \"ACIElectronic\" \"Heartland\" \"MerchantPartners\"  \"Payment Express\" \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| HPPTransactionRequest                         | The HPPTransaction Request associated to the customer.                |\r\n| CallerTransactionId                 |The CallerTransactionId associated with the Payment response.        |\r\n| AmcsPayReference               | The  Amcs Pay Reference associated to the payment response.        |\r\n| ResponseTimestamp                 |The ResponseTimestamp associated to the payment response in ISO format (YYYY-MM-DD).            |\r\n| TransactionStatus           |Transaction Status can be \"Initiated\" \"Success\" \"Failure\" \"Timeout\" Or \"Cancelled\"",
+        "summary": "OneOff Payment",
+        "description": "This endpoint is used to initiate the iframe payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"OneOffPaymentAndTokenization\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The CallerIdentifier associated to the Payment request.             |\r\n| CallerTransactionId               | The CallerTransactionId associated to the Payment request.        |\r\n| CallerIPAddress               |CallerIP Address associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProvideType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| HPPTransactionRequest                         | The HPPTransaction Request associated to the customer.                |\r\n| CallerTransactionId                 |The CallerTransactionId associated with the Payment response.        |\r\n| AmcsPayReference               | The  Amcs Pay Reference associated to the payment response.        |\r\n| ResponseTimestamp                 |The ResponseTimestamp associated to the payment response in ISO format (YYYY-MM-DD).            |\r\n| TransactionStatus           |Transaction Status can be any of \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\"|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayUrl | The iframe url to load. | AmcsPayTransactionGuid | The GUID associated to the Iframe payment request. |\n| StatusCode | The status associated to the payment.",
         "responses": {
           "200": {
             "description": "Success",
@@ -81,13 +81,13 @@
         }
       }
     },
-    "/pay/PollPayment": {
+    "ExternalTransaction/Poll": {
       "post": {
         "tags": [
-          "Amcs Pay"
+          "ExternalTransaction"
         ],
         "summary": "Poll Payment",
-        "security": [],
+        "description": "This endpoint is used to poll the payment initiated after interaction through an iframe.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayTransactionGuid | The GUID associated to the Iframe payment request. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| AmcsPayReference | The ID associated to the payment reference sent by the provider in the payload response. |\n| ResponseCode | The response code associated to the response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The timestamp of the payment response payload. |\n| StatusCode | The status associated to the payment.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -111,13 +111,13 @@
         }
       }
     },
-    "mobills/ivr/pay/getCustomerInvoiceDetails": {
+    "Mobills/Ivr/Pay/GetCustomerInvoiceDetails": {
       "post": {
         "tags": [
           "Mobills IVR"
         ],
-        "summary": "Mobills IVR",
-        "description": "Get Customer Invoice Details API create the record in payment transaction table\n\n.\n\n## Request And Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerARCode                      | The account code used for Accounts Receivable.        (AMCS will provide the account ARCode)                             |\r\n| Channel               | Channel can be only MOBILL OR IVR                         |\r\n| CustomerGuid                 | The GUID associated to the customer.        |\r\n| CustomerName               |The customer's name.        |\r\n| CustomerBalance               |The amount associated to the payment.        |\r\n| CustomerCurrency               | Customer Currency associated with the Customer account.        |\r\n| InvoiceDetails               |It will show all the invoices associated with the account               |\r\n| InvoiceNumber                   |The invoice number associated to the invoice. Filterable.        |\r\n| InvoiceGUID                     |The GUID associated to the invoice.        |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| ZipCode                         |Zip code is associated with the account               |\r\n| InvoiceDueDate                  |The dueDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| UnallocatedAmount               |The Unallocated Amount on the customers account.        |\r\n| InvoiceCurrency                 |Invoice Currency asscoaited with the customer account             |\r\n| TransactionReference            |Transaction Reference associated with account                 |\r\n| ZipCode                         |ZipCode associated with the account address                                |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| LastPaymentDate                 |When the last payment was made                     |\r\n| MakePaymentLink                 |It shows the payment link (if any invoice available)                     |\r\n| IsActive                 |Whether the customer is active              |\r\n| MobillsEnrollment               |Whether the mobills enrollment is active.              |\r\n| GUID         |Guid associated with the account",
+        "summary": "Get Customer Invoice Details",
+        "description": "This endpoint creates a record in payment transaction table.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerARCode                      | The account code used for Accounts Receivable.        (AMCS will provide the account ARCode)                             |\r\n| Channel               | Channel can be only MOBILL OR IVR                         | \n\n ## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerGuid                 | The GUID associated to the customer.        |\r\n| CustomerName               |The customer's name.        |\r\n| CustomerBalance               |The amount associated to the payment.        |\r\n| CustomerCurrency               | Customer Currency associated with the Customer account.        |\r\n| InvoiceDetails               |It will show all the invoices associated with the account               |\r\n| InvoiceNumber                   |The invoice number associated to the invoice. Filterable.        |\r\n| InvoiceGUID                     |The GUID associated to the invoice.        |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| ZipCode                         |Zip code is associated with the account               |\r\n| InvoiceDueDate                  |The dueDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| UnallocatedAmount               |The Unallocated Amount on the customers account.        |\r\n| InvoiceCurrency                 |Invoice Currency asscoaited with the customer account             |\r\n| TransactionReference            |Transaction Reference associated with account                 |\r\n| ZipCode                         |ZipCode associated with the account address                                |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| LastPaymentDate                 |When the last payment was made                     |\r\n| MakePaymentLink                 |It shows the payment link (if any invoice available)                     |\r\n| IsActive                 |Whether the customer is active              |\r\n| MobillsEnrollment               |Whether the mobills enrollment is active.              |\r\n| GUID         |Guid associated with the account",
         "responses": {
           "200": {
             "description": "Success",
@@ -140,35 +140,6 @@
           }
         }
       }
-    },
-    "/TerminalPayments": {
-      "post": {
-        "tags": [
-          "Terminal payments"
-        ],
-        "summary": "Initiate a terminal payment",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayTerminalResponse"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AMCSPayTerminalRequest"
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -186,8 +157,7 @@
           "privateKey": {
             "type": "string",
             "nullable": true,
-            "example": "1zEFtwJQE0cmKUE3AvnzBbm5",
-            "description": "This is a Personal Access Token (PAT) associated to the tenant."
+            "example": "1zEFtwJQE0cmKUE3AvnzBbm5"
           }
         },
         "additionalProperties": false
@@ -198,71 +168,47 @@
           "authResult": {
             "type": "string",
             "nullable": true,
-			      "example": "ok",
-            "description": "The authentication result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\"."
+            "example": "ok"
           },
           "userName": {
             "type": "string",
             "nullable": true,
-			      "example": "ADMIN01",
-            "description": "The username assigned to the default tenant user."
+            "example": "ADMIN01"
           },
           "userIdentity": {
             "type": "string",
             "nullable": true,
-			      "example": "ADMIN",
-            "description": "The user identity associated to the user."
+            "example": "ADMIN"
           },
           "sysUserId": {
             "type": "integer",
             "format": "int32",
             "nullable": true,
-			      "example": 3,
-            "description": "The ID associated to the user."
+            "example": 3
           },
           "userGuid": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-			      "example": "607e37cd-4f51-4148-af23-4459b74fc3b2",
-            "description": "The GUID associated to the user."
+            "example": "607e37cd-4f51-4148-af23-4459b74fc3b2"
           },
           "companyOutletId": {
             "type": "integer",
             "format": "int32",
             "nullable": true,
-			      "example": 10,
-            "description": "The ID associated to the Company outlet."
+            "example": 10
           },
           "companyOutletGuid": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-			      "example": "5feaaae5-7733-4e45-ac39-87d46cf138e0",
-            "description": "The GUID associated to the Company outlet."
+            "example": "5feaaae5-7733-4e45-ac39-87d46cf138e0"
           },
           "stayLoggedIn": {
-        	  "type": "boolean",
-			      "example":false,
-            "description": "The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox)"
+            "type": "boolean",
+            "example": false
           }
         }
-      },
-      "AMCSPayRequest": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayHeader"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "Details": {
-                "$ref": "#/components/schemas/AMCSPayRequestDetail"
-              }
-            }
-          }
-        ]
       },
       "AMCSMobillsIvrRequest": {
         "type": "object",
@@ -301,10 +247,7 @@
             "enum": [
               "oneOffPayment",
               "oneOffPaymentAndTokenization",
-              "Tokenization",
-              "ValutOrAutoPayment",
-              "Refund",
-              "DeleteToken"
+              "Tokenization"
             ],
             "nullable": false
           },
@@ -334,7 +277,7 @@
             "type": "string",
             "nullable": false
           },
-          "callerIPAddresss": {
+          "callerIPAddress": {
             "type": "string",
             "nullable": false
           },
@@ -362,12 +305,7 @@
               }
             ]
           },
-          "IsRequestValid": {
-            "type": "boolean",
-            "nullable": false,
-            "example": true
-          },
-          "HPPTransactionRequest": {
+          "hPPTransactionRequest": {
             "type": "array",
             "nullable": false,
             "allOf": [
@@ -378,98 +316,10 @@
           }
         }
       },
-      "AMCSInitiatePaymentResponse": {
-        "type": "object",
-        "properties": {
-          "Response Details": {
-            "$ref": "#/components/schemas/AmcsPayInitiateTransactionResponseDetails"
-          }
-        }
-      },
-      "AMCSPayCallback": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayHeader"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "Details": {
-                "$ref": "#/components/schemas/AMCSPayResponseDetail"
-              }
-            }
-          }
-        ]
-      },
-      "AMCSPayResponse": {
-        "type": "object",
-        "properties": {
-          "resources": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/AMCSPayHeader"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "Details": {
-                      "$ref": "#/components/schemas/AMCSPayResponseDetail"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      "AMCSPayTerminalRequest": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayHeader"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "Details": {
-                "$ref": "#/components/schemas/AMCSPayTerminalRequestDetail"
-              }
-            }
-          }
-        ]
-      },
-      "AMCSPayTerminalResponse": {
-        "type": "object",
-        "properties": {
-          "resources": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/AMCSPayHeader"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "Details": {
-                      "$ref": "#/components/schemas/AMCSPayTerminalResponseDetail"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
       "AMCSPayMobillsIvrResponse": {
         "type": "object",
         "properties": {
-          "Details": {
+          "details": {
             "$ref": "#/components/schemas/AMCSPayMobillsIvrResponseDetail"
           }
         },
@@ -525,1288 +375,6 @@
             "nullable": false
           }
         }
-      },
-      "AMCSPayRequestDetail": {
-        "required": [
-          "Details"
-        ],
-        "type": "object",
-        "properties": {
-          "callerCompletionURL": {
-            "type": "string",
-            "format": "url",
-            "nullable": false
-          },
-          "callerAuthenticationURL": {
-            "type": "string"
-          },
-          "callerIdentifier": {
-            "type": "string"
-          },
-          "paymentChannelEnum": {
-            "type": "string",
-            "enum": [
-              "Test",
-              "Realex",
-              "Heartland",
-              "MerchantPartners",
-              "ACICards",
-              "ACIElectronic",
-              "AptPay",
-              "PaymentExpress",
-              "EftCanada",
-              "TerminalPay"
-            ]
-          },
-          "payPortalConfigurationMessage": {
-            "$ref": "#/components/schemas/AMCSPortalConfigurationMessage"
-          }
-        }
-      },
-      "AMCSPayResponseDetail": {
-        "oneOf": [
-          {
-            "type": "object",
-            "properties": {
-              "payPortalResponseMessage": {
-                "$ref": "#/components/schemas/AMCSPortalConfigurationMessage"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "properties": {
-              "payportalCreditCardVaultResponseMessage": {
-                "$ref": "#/components/schemas/AMCSPortalConfigurationMessage"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      },
-      "AMCSPortalConfigurationMessage": {
-        "type": "object",
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalACICardsRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalACICardsResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalACICardsVaultResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalACIElectronicRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalACIElectronicResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalACIElectronicVaultResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalACIIVRResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalEftCanadaRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalHeartlandInitialResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalHeartlandRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalHeartlandResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalHeartlandVaultResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMerchantPartnersRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMerchantPartnersResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMerchantPartnersVaultResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalPaymentExpressRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalPaymentExpressResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalPaymentExpressVaultResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalRealexCreditCardVaultResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalRealexRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalRealexResponseMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalTestRequestMessage"
-          },
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalTestResponseMessage"
-          }
-        ]
-      },
-      "AMCSPayPortalACICardsRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "postUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "entityId": {
-            "type": "string",
-            "nullable": true
-          },
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "testMode": {
-            "type": "string",
-            "nullable": true
-          },
-          "referenceId": {
-            "type": "string",
-            "nullable": true
-          },
-          "addressDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCSAddress"
-            },
-            "nullable": true
-          },
-          "customerEmail": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerPhoneMobile": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerId": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerIp": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerStatus": {
-            "type": "string",
-            "nullable": true
-          },
-          "websiteUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "brandType": {
-            "enum": [
-              "CARD",
-              "GOOGLEPAY",
-              "APPLEPAY"
-            ],
-            "type": "string"
-          },
-          "googlePayMerchantId": {
-            "type": "string",
-            "nullable": true
-          },
-          "googlePayMerchantName": {
-            "type": "string",
-            "nullable": true
-          },
-          "schemeReferenceData": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalACICardsResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          },
-          "reference": {
-            "type": "string",
-            "nullable": true
-          },
-          "payType": {
-            "type": "string",
-            "nullable": true
-          },
-          "maskedCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "authCode": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalACICardsVaultResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "creditCardExpiryDate": {
-            "type": "string",
-            "format": "dateTime",
-            "nullable": true,
-            "example": "2000-01-01 00:00:00.000"
-          },
-          "maskedCreditCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "isACH": {
-            "type": "boolean"
-          },
-          "cardHolderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardType": {
-            "type": "string",
-            "nullable": true
-          },
-          "schemeReferenceData": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalACIElectronicRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "customerId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "postUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "apiAuthKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "apiClientId": {
-            "type": "string",
-            "nullable": true
-          },
-          "apiClientSecret": {
-            "type": "string",
-            "nullable": true
-          },
-          "apiPostUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "iFrameClientId": {
-            "type": "string",
-            "nullable": true
-          },
-          "iFrameClientSecret": {
-            "type": "string",
-            "nullable": true
-          },
-          "iFrameConfigurationId": {
-            "type": "string",
-            "nullable": true
-          },
-          "billerAccountId": {
-            "type": "string",
-            "nullable": true
-          },
-          "billerId": {
-            "type": "string",
-            "nullable": true
-          },
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "refundAmount": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "addressDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCSAddress"
-            },
-            "nullable": true
-          },
-          "customerEmail": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerPhoneMobile": {
-            "type": "string",
-            "nullable": true
-          },
-          "isTokenForMultipleUse": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalACIElectronicResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          },
-          "confirmationCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "accountType": {
-            "type": "string",
-            "nullable": true
-          },
-          "maskedAccountNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "routingNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "accountHolderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerKind": {
-            "type": "string",
-            "nullable": true
-          },
-          "originatorKind": {
-            "type": "string",
-            "nullable": true
-          },
-          "paymentOptionKind": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalACIElectronicVaultResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "tokenId": {
-            "type": "string",
-            "nullable": true
-          },
-          "confirmationCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "maskedAccountNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "maskedRoutingNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "accountHolderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "accountType": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalACIIVRResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "confirmationNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          },
-          "fundingType": {
-            "type": "string",
-            "nullable": true
-          },
-          "fundingAccount": {
-            "type": "string",
-            "nullable": true
-          },
-          "creditDebitIndicator": {
-            "type": "string",
-            "nullable": true
-          },
-          "notificationType": {
-            "type": "string",
-            "nullable": true
-          },
-          "paymentFee": {
-            "type": "string",
-            "nullable": true
-          },
-          "billingAccountNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "billingAccountHolderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalEftCanadaRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "url": {
-            "type": "string",
-            "nullable": true
-          },
-          "authorization": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalHeartlandInitialResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "guid": {
-            "type": "string",
-            "nullable": true
-          },
-          "isSuccessful": {
-            "type": "string",
-            "nullable": true
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalHeartlandRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "merchantName": {
-            "type": "string",
-            "nullable": true
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "billTypeName": {
-            "type": "string",
-            "nullable": true
-          },
-          "postURL": {
-            "type": "string",
-            "nullable": true
-          },
-          "redirectURL": {
-            "type": "string",
-            "nullable": true
-          },
-          "billDataService": {
-            "type": "string",
-            "nullable": true
-          },
-          "applicationId": {
-            "type": "string",
-            "nullable": true
-          },
-          "maxFuturePaymentDays": {
-            "type": "string",
-            "nullable": true
-          },
-          "identifier1": {
-            "type": "string",
-            "nullable": true
-          },
-          "identifier2": {
-            "type": "string",
-            "nullable": true
-          },
-          "identifier3": {
-            "type": "string",
-            "nullable": true
-          },
-          "identifier4": {
-            "type": "string",
-            "nullable": true
-          },
-          "isBankPayment": {
-            "type": "boolean"
-          },
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalHeartlandResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "isExistingPayer": {
-            "type": "boolean"
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          },
-          "reference": {
-            "type": "string",
-            "nullable": true
-          },
-          "authCode": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalHeartlandVaultResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "creditCardExpiryDate": {
-            "type": "string",
-            "format": "dateTime",
-            "nullable": true,
-            "example": "2000-01-01 00:00:00.000"
-          },
-          "maskedCreditCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "isACH": {
-            "type": "boolean"
-          },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalMerchantPartnersRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "postURL": {
-            "type": "string",
-            "nullable": true
-          },
-          "merchantAccountNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "merchantEncryptionKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "merchantPin": {
-            "type": "string",
-            "nullable": true
-          },
-          "merchantSubAccountId": {
-            "type": "string",
-            "nullable": true
-          },
-          "ccSaleFormId": {
-            "type": "string",
-            "nullable": true
-          },
-          "ccProfileAddFormId": {
-            "type": "string",
-            "nullable": true
-          },
-          "ccAuthorizationFormId": {
-            "type": "string",
-            "nullable": true
-          },
-          "profileSaleFormId": {
-            "type": "string",
-            "nullable": true
-          },
-          "extendedACHSaleFormId": {
-            "type": "string",
-            "nullable": true
-          },
-          "extendedACHProfileAddFormId": {
-            "type": "string",
-            "nullable": true
-          },
-          "sessionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "isElectronic": {
-            "type": "boolean"
-          },
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "maskedCreditCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerReference": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalMerchantPartnersResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "isExistingPayer": {
-            "type": "boolean"
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          },
-          "reference": {
-            "type": "string",
-            "nullable": true
-          },
-          "authCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "userProfileId": {
-            "type": "string",
-            "nullable": true
-          },
-          "historyId": {
-            "type": "string",
-            "nullable": true
-          },
-          "isElectronicTransfer": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalMerchantPartnersVaultResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "creditCardExpiryDate": {
-            "type": "string",
-            "format": "dateTime",
-            "nullable": true,
-            "example": "2000-01-01 00:00:00.000"
-          },
-          "maskedCreditCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardholderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardType": {
-            "type": "string",
-            "nullable": true
-          },
-          "isElectronicTransfer": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalMessage": {
-        "type": "object",
-        "properties": {
-          "payPortalMessageDiscriminator": {
-            "enum": [
-              "Test",
-              "Realex",
-              "Heartland",
-              "MerchantPartners",
-              "ACICards",
-              "ACIElectronic",
-              "AptPay",
-              "PaymentExpress",
-              "EftCanada",
-              "TerminalPay"
-            ],
-            "type": "string",
-            "nullable": true
-          },
-          "remitLocationId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "refundPaymentId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "currency": {
-            "type": "string",
-            "nullable": true
-          },
-          "amount": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "paymentType": {
-            "type": "string",
-            "nullable": true
-          },
-          "requestType": {
-            "enum": [
-              "Payment",
-              "CardAuthentication",
-              "Refund",
-              "Ivr",
-              "AutoPay",
-              "Test",
-              "DeleteProfile"
-            ],
-            "type": "string"
-          },
-          "displayStoreProfile": {
-            "type": "boolean"
-          },
-          "canStoreProfile": {
-            "type": "boolean"
-          },
-          "emailAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerName": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalPaymentExpressRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "postUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "contactId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "merchantReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "postPassword": {
-            "type": "string",
-            "nullable": true
-          },
-          "postUsername": {
-            "type": "string",
-            "nullable": true
-          },
-          "pxPayKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "pxPayUserId": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalPaymentExpressResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "callerTransactionIdentifier": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "authCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "transactionReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerId": {
-            "type": "string",
-            "nullable": true
-          },
-          "merchantReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "isExistingPayer": {
-            "type": "boolean"
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalPaymentExpressVaultResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "creditCardExpiryDate": {
-            "type": "string",
-            "format": "dateTime",
-            "nullable": true,
-            "example": "2000-01-01 00:00:00.000"
-          },
-          "maskedCreditCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardType": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardholderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "authCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalRealexCreditCardVaultResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "creditCardExpiryDate": {
-            "type": "string",
-            "format": "dateTime",
-            "nullable": true,
-            "example": "2000-01-01 00:00:00.000"
-          },
-          "maskedCreditCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardType": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardholderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "schemeReferenceData": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalRealexRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "merchantId": {
-            "type": "string",
-            "nullable": true
-          },
-          "sharedSecret": {
-            "type": "string",
-            "nullable": true
-          },
-          "account": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "postURL": {
-            "type": "string",
-            "nullable": true
-          },
-          "refundPassword": {
-            "type": "string",
-            "nullable": true
-          },
-          "authCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "addressDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCSAddress"
-            },
-            "nullable": true
-          },
-          "customerEmail": {
-            "type": "string",
-            "nullable": true
-          },
-          "customerPhoneMobile": {
-            "type": "string",
-            "nullable": true
-          },
-          "is3dsEnabled": {
-            "type": "boolean"
-          },
-          "schemeReferenceData": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalRealexResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "callerTransactionIdentifier": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "payerReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "isExistingPayer": {
-            "type": "boolean"
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          },
-          "reference": {
-            "type": "string",
-            "nullable": true
-          },
-          "authCode": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalTestRequestMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "postURL": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayPortalTestResponseMessage": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AMCSPayPortalMessage"
-          }
-        ],
-        "properties": {
-          "paymentReference": {
-            "type": "string",
-            "nullable": true
-          },
-          "responseCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "cardType": {
-            "type": "string",
-            "nullable": true
-          },
-          "maskedCardNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "reference": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "AMCSAddress": {
         "type": "object",
@@ -1864,37 +432,6 @@
           }
         }
       },
-      "AMCSPayTerminalRequestDetail": {
-        "required": [
-          "paymentTransaction",
-          "payPortalConfigurationMessage",
-          "saleId",
-          "poiId"
-        ],
-        "type": "object",
-        "properties": {
-          "poiId": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "AmcsSalesOutletListItem": {
-            "$ref": "#/components/schemas/AMCSListItem"
-          },
-          "ExternalSalesOutletName": {
-            "type": "string"
-          },
-          "emailAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "payPortalConfigurationMessage": {
-            "$ref": "#/components/schemas/AMCSPortalConfigurationMessage"
-          },
-          "paymentTransaction": {
-            "$ref": "#/components/schemas/AMCSPayTerminalTransaction"
-          }
-        }
-      },
       "AMCSPayMobillsIvrRequestDetail": {
         "required": [
           "CustomerId",
@@ -1911,268 +448,30 @@
           }
         }
       },
-      "AMCSPayTerminalTransaction": {
-        "required": [
-          "amountsReq"
-        ],
-        "type": "object",
-        "properties": {
-          "amountsReq": {
-            "$ref": "#/components/schemas/AMCSPayAmountsReq"
-          }
-        }
-      },
-      "AMCSPayAmountsReq": {
-        "required": [
-          "currency"
-        ],
-        "type": "object",
-        "properties": {
-          "requestedAmount": {
-            "type": "string",
-            "nullable": true
-          },
-          "currency": {
-            "enum": [
-              "Aed",
-              "Afn",
-              "All",
-              "Amd",
-              "Ang",
-              "Aoa",
-              "Ars",
-              "Aud",
-              "Awg",
-              "Azn",
-              "Bam",
-              "Bbd",
-              "Bdt",
-              "Bgn",
-              "Bhd",
-              "Bif",
-              "Bmd",
-              "Bnd",
-              "Bob",
-              "Bov",
-              "Brl",
-              "Bsd",
-              "Btn",
-              "Bwp",
-              "Byr",
-              "Bzd",
-              "Cad",
-              "Cdf",
-              "Che",
-              "Chf",
-              "Chw",
-              "Clf",
-              "Clp",
-              "Cny",
-              "Cop",
-              "Cou",
-              "Crc",
-              "Cuc",
-              "Cup",
-              "Cve",
-              "Czk",
-              "Djf",
-              "Dkk",
-              "Dop",
-              "Dzd",
-              "Egp",
-              "Ern",
-              "Etb",
-              "Eur",
-              "Fjd",
-              "Fkp",
-              "Frf",
-              "Gbp",
-              "Gel",
-              "Ghs",
-              "Gip",
-              "Gmd",
-              "Gnf",
-              "Gtq",
-              "Gyd",
-              "Hkd",
-              "Hnl",
-              "Hrk",
-              "Htg",
-              "Huf",
-              "Idr",
-              "Ils",
-              "Inr",
-              "Iqd",
-              "Irr",
-              "Isk",
-              "Jmd",
-              "Jod",
-              "Jpy",
-              "Kes",
-              "Kgs",
-              "Khr",
-              "Kmf",
-              "Kpw",
-              "Krw",
-              "Kwd",
-              "Kyd",
-              "Kzt",
-              "Lak",
-              "Lbp",
-              "Lkr",
-              "Lrd",
-              "Lsl",
-              "Ltl",
-              "Lvl",
-              "Lyd",
-              "Mad",
-              "Mdl",
-              "Mga",
-              "Mkd",
-              "Mmk",
-              "Mnt",
-              "Mop",
-              "Mro",
-              "Mur",
-              "Mvr",
-              "Mwk",
-              "Mxn",
-              "Mxv",
-              "Myr",
-              "Mzn",
-              "Nad",
-              "Ngn",
-              "Nio",
-              "Nok",
-              "Npr",
-              "Nzd",
-              "Omr",
-              "Pab",
-              "Pen",
-              "Pgk",
-              "Php",
-              "Pkr",
-              "Pln",
-              "Pyg",
-              "Qar",
-              "Ron",
-              "Rsd",
-              "Rub",
-              "Rwf",
-              "Sar",
-              "Sbd",
-              "Scr",
-              "Sdg",
-              "Sek",
-              "Sgd",
-              "Shp",
-              "Sll",
-              "Sos",
-              "Srd",
-              "Ssp",
-              "Std",
-              "Svc",
-              "Syp",
-              "Szl",
-              "Thb",
-              "Tjs",
-              "Tmt",
-              "Tnd",
-              "Top",
-              "Try",
-              "Ttd",
-              "Twd",
-              "Tzs",
-              "Uah",
-              "Ugx",
-              "Usd",
-              "Usn",
-              "Uss",
-              "Uyi",
-              "Uyu",
-              "Uzs",
-              "Vef",
-              "Vnd",
-              "Vuv",
-              "Wst",
-              "Xaf",
-              "Xag",
-              "Xau",
-              "Xba",
-              "Xbb",
-              "Xbc",
-              "Xbd",
-              "Xcd",
-              "Xdr",
-              "Xof",
-              "Xpd",
-              "Xpf",
-              "Xpt",
-              "Xts",
-              "Xxx",
-              "Yer",
-              "Zar",
-              "Zmk",
-              "Zmw",
-              "Btc"
-            ],
-            "type": "string"
-          }
-        }
-      },
-      "AMCSPayTerminalResponseDetail": {
-        "type": "object",
-        "properties": {
-          "errorCondition": {
-            "type": "string",
-            "nullable": true
-          },
-          "additionalResponse": {
-            "type": "string",
-            "nullable": true
-          },
-          "poiData": {
-            "$ref": "#/components/schemas/AMCSPoiData"
-          },
-          "saleData": {
-            "$ref": "#/components/schemas/AMCSSaleData"
-          },
-          "paymentAcquirerData": {
-            "$ref": "#/components/schemas/AMCSPaymentAcquirerData"
-          },
-          "amountsResp": {
-            "$ref": "#/components/schemas/AMCSAmountsResp"
-          },
-          "tokenValue": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "AMCSPayMobillsIvrResponseDetail": {
         "type": "object",
         "properties": {
-          "CustomerGuid": {
+          "customerGuid": {
             "format": "uuid",
             "type": "string",
             "example": "00000000-0000-0000-0000-000000000000",
             "nullable": false
           },
-          "CustomerName": {
+          "customerName": {
             "type": "string",
             "example": "Mark Smith",
             "nullable": false
           },
-          "CustomerBalance": {
+          "customerBalance": {
             "type": "integer",
             "example": "120.95",
             "nullable": true
           },
-          "CustomerCurrency": {
+          "customerCurrency": {
             "type": "string",
             "example": "EUR"
           },
-          "InvoiceDetails": {
+          "invoiceDetails": {
             "type": "array",
             "nullable": true,
             "allOf": [
@@ -2181,52 +480,52 @@
               }
             ]
           },
-          "TransactionReference": {
+          "transactionReference": {
             "type": "string",
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
             "nullable": true
           },
-          "ZipCode": {
+          "zipCode": {
             "type": "string",
             "example": "00501",
             "nullable": true
           },
-          "DueDate": {
+          "dueDate": {
             "type": "string",
             "example": "YYYY-MM-DD",
             "nullable": true
           },
-          "InvoiceDate": {
+          "invoiceDate": {
             "type": "string",
             "example": "YYYY-MM-DD",
             "nullable": true
           },
-          "LastPaymentDate": {
+          "lastPaymentDate": {
             "type": "string",
             "example": "YYYY-MM-DD",
             "nullable": true
           },
-          "LastPaymentAmount": {
+          "lastPaymentAmount": {
             "type": "string",
             "example": "155.50",
             "nullable": true
           },
-          "MakePaymentLink": {
+          "makePaymentLink": {
             "format": "url",
             "type": "string",
             "example": "https://localhost/paybylink?key=092159d8-9e57-41a5-af6c-745bd45ff2f7",
             "nullable": true
           },
-          "IsActive": {
+          "isActive": {
             "type": "boolean",
             "example": "true"
           },
-          "MobillsEnrollment": {
+          "mobillsEnrollment": {
             "type": "boolean",
             "example": "true"
           },
-          "GUID": {
+          "guid": {
             "format": "uuid",
             "type": "string",
             "example": "00000000-0000-0000-0000-000000000000",
@@ -2237,13 +536,13 @@
       "AmcsHPPTransactionRequest": {
         "type": "object",
         "properties": {
-          "CompletionURL": {
+          "completionURL": {
             "type": "string",
             "format": "url",
             "example": "",
             "nullable": false
           },
-          "Address": {
+          "address": {
             "type": "Arrays",
             "allOf": [
               {
@@ -2266,108 +565,36 @@
         }
       },
       "AmcsInvoiceDetails": {
-        "required": [
-          "Customer Account Invoice Details"
-        ],
         "type": "object",
         "properties": {
-          "InvoiceNumber": {
+          "invoiceNumber": {
             "type": "string",
             "example": "INV001"
           },
-          "InvoiceGUID": {
+          "invoiceGUID": {
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
             "type": "string"
           },
-          "InvoiceDate": {
+          "invoiceDate": {
             "type": "string",
             "example": "YYYY-MM-DD"
           },
-          "ZipCode": {
+          "zipCode": {
             "type": "string",
             "example": "00501"
           },
-          "InvoiceDueDate": {
+          "invoiceDueDate": {
             "type": "string",
             "example": "YYYY-MM-DD"
           },
-          "UnallocatedAmount": {
+          "unallocatedAmount": {
             "type": "integer",
             "example": "120.95"
           },
-          "InvoiceCurrency": {
+          "invoiceCurrency": {
             "type": "string",
             "example": "EUR"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPoiData": {
-        "required": [
-          "poiTransactionId"
-        ],
-        "type": "object",
-        "properties": {
-          "poiTransactionId": {
-            "$ref": "#/components/schemas/AMCSTransactionIdentificationType"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSSaleData": {
-        "required": [
-          "poiTransactionId"
-        ],
-        "type": "object",
-        "properties": {
-          "SaleTransactionId": {
-            "$ref": "#/components/schemas/AMCSTransactionIdentificationType"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPaymentAcquirerData": {
-        "type": "object",
-        "properties": {
-          "acquirerTransactionId": {
-            "$ref": "#/components/schemas/AMCSTransactionIdentificationType"
-          },
-          "approvalCode": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSAmountsResp": {
-        "type": "object",
-        "properties": {
-          "currency": {
-            "type": "string",
-            "nullable": true
-          },
-          "authorizedAmount": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSTransactionIdentificationType": {
-        "required": [
-          "timeStamp",
-          "transactionId"
-        ],
-        "type": "object",
-        "properties": {
-          "transactionId": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "timeStamp": {
-            "minLength": 1,
-            "type": "string"
           }
         },
         "additionalProperties": false
@@ -2383,7 +610,7 @@
         ],
         "example": "Success"
       },
-      "AmcsPayInitiateTransactionResponseDetails": {
+      "AMCSInitiatePaymentResponse": {
         "type": "object",
         "properties": {
           "amcsPayUrl": {
@@ -2396,11 +623,6 @@
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
             "type": "string",
-            "nullable": false
-          },
-          "message": {
-            "type": "string",
-            "example": "YYYY-MM-DD",
             "nullable": false
           },
           "statusCode": {
@@ -2417,13 +639,13 @@
       "AMCSPayContact": {
         "type": "object",
         "properties": {
-          "ContactType": {
+          "contactType": {
             "enum": [
               "Email",
               "Mobile"
             ]
           },
-          "ContactValue": {
+          "contactValue": {
             "type": "string",
             "example": "089748588788",
             "nullable": false
@@ -2433,17 +655,17 @@
       "AMCSPayAmount": {
         "type": "object",
         "properties": {
-          "PrincipalAmount": {
+          "principalAmount": {
             "type": "Decimal",
             "example": "40",
             "nullable": false
           },
-          "ServiceFeeAmount": {
+          "serviceFeeAmount": {
             "type": "Decimal",
             "example": "10.20",
             "nullable": false
           },
-          "Currency": {
+          "currency": {
             "type": "string",
             "example": "EUR",
             "nullable": false
@@ -2453,43 +675,43 @@
       "AMCSPayAddress": {
         "type": "object",
         "properties": {
-          "AddressType": {
+          "addressType": {
             "enum": [
               "Billing",
               "Shipping"
             ]
           },
-          "ContactValue": {
+          "contactValue": {
             "type": "string",
             "example": "089789999999",
             "nullable": true
           },
-          "AddressLine1": {
+          "addressLine1": {
             "type": "string",
             "example": "27, Longwood Avenue",
             "nullable": true
           },
-          "AddressLine2": {
+          "addressLine2": {
             "type": "string",
             "example": "South Circular",
             "nullable": true
           },
-          "AddressLine3": {
+          "addressLine3": {
             "type": "string",
             "example": "Road Dublin-08",
             "nullable": true
           },
-          "City": {
+          "city": {
             "type": "string",
             "example": "Dublin",
             "nullable": true
           },
-          "CountryOrState": {
+          "countryOrState": {
             "type": "string",
             "example": "Munster",
             "nullable": true
           },
-          "PostCode": {
+          "postCode": {
             "type": "string",
             "example": "12345",
             "nullable": true
@@ -2499,7 +721,7 @@
             "example": "Ireland",
             "nullable": true
           },
-          "CountryCallingCode": {
+          "countryCallingCode": {
             "type": "string",
             "example": "+353",
             "nullable": true
