@@ -3,7 +3,7 @@
   "info": {
     "title": "AMCS Pay External API",
     "version": "external",
-	  "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThis document contains a technical description of the AMCS Pay REST API endpoints. The purpose of this document is to provide readers with details on how to integrate into the AMCS Pay REST API.\n\n## About AMCS Pay\n\nAMCS Pay offers waste & recycling operators feature rich payment services that broaden their ability to compete in a rapidly evolving marketplace. The services include card payments, ACH payments, Google Pay, Apple Pay and many alternative payment methods. AMCS Pay supports multiple recognized industry partners such as Global Payments, ACI Worldwide etc.\n\n## Communicating to AMCS Pay API\n\nFirst, a calling application will have to register as a Tenant. Upon successful registration a PrivateKey is generated which will serve as the Personal Acess Token (PAT).\n\nThe Tenant PrivateKey will be provided during authentication through the (\"/authTokens\") endpoint. This creates a cookie, which needs to be tracked in a cookie container. Subsequent calls will use the cookie to authenticate requests.\n\n<img src=\"diagram/amcspay_multitenant.png\" width=\"689\" height=\"265\">"
+	  "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThis document contains a technical description of the AMCS Pay REST API endpoints. The purpose of this document is to provide readers with details on how to integrate into the AMCS Pay REST API.\n\n## About AMCS Pay\n\nAMCS Pay offers waste & recycling operators feature-rich payment services that broaden their ability to compete in a rapidly evolving marketplace. The services include card payments, ACH payments, Google Pay, Apple Pay, and many alternative payment methods. AMCS Pay supports multiple recognized industry partners such as Global Payments, ACI Worldwide etc.\n\n## Communicating to AMCS Pay API\n\nFirst, a calling application will have to register as a Tenant. Upon successful registration a private key is generated which will serve as the Personal Access Token (PAT).\n\nThe Tenant Private Key is then supplied during authentication and authorization through the (\"/authTokens\") endpoint. This creates a cookie, which needs to be tracked in a cookie container. Subsequent calls to the REST API will then use this cookie to authenticate and authorize requests.\n\n<img src=\"diagram/amcspay_multitenant.png\" width=\"689\" height=\"265\">"
   },
   "security": [
     {
@@ -16,8 +16,8 @@
         "tags": [
           "/authTokens"
         ],
-		  "summary": "Authenticate by Tenant PrivateKey ",
-		  "description": "Authorizing AMCSPay using the created PrivateKey\n\nThis endpoint accepts the **privatekey** as the input from the calling application for authentication.  \n_On successful authorization, Platform.PAY.SessionToken_ will be added to the cookie on successful authorization.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| privateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| authResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\". |\n| username | The username assigned to the default tenant user. |\n| userIdentity | The user identity associated to the user. |\n| sysUserId | The ID associated to the user. |\n| userGuid | The GUID associated to the user. |\n| companyoutletid | The ID associated to the Company outlet. |\n| companyOutletGuid | The GUID associated to the Company outlet. |\n| stayLoggedIn | The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox) |",
+		  "summary": "Authenticate by Tenant Private Key ",
+		  "description": "This endpoint is used for authentication and authorization of a calling application by supplying the **Tenant Private Key** in the **privateKey** property. When successful, _Platform.PAY.SessionToken_ is added to the cookie.",
 	    "security": [],
         "requestBody": {
           "content": {
@@ -35,7 +35,8 @@
               "Set-Cookie": {
                 "schema": {
                   "type": "string",
-                  "example": "Platform.PAY.SessionToken=abcde12345; Path=/; HttpOnly"
+                  "example": "Platform.PAY.SessionToken=abcde12345; Path=/; HttpOnly",
+                  "description": "Subsequent calls to the REST API will use this cookie to authenticate and authorize requests."
                 }
               }
             },
@@ -230,7 +231,8 @@
           "privateKey": {
             "type": "string",
             "nullable": true,
-            "example": "1zEFtwJQE0cmKUE3AvnzBbm5"
+            "example": "1zEFtwJQE0cmKUE3AvnzBbm5",
+            "description": "This is a Personal Access Token (PAT) associated to the tenant."
           }
         },
         "additionalProperties": false
@@ -241,45 +243,53 @@
           "authResult": {
             "type": "string",
             "nullable": true,
-			"example": "ok"
+			      "example": "ok",
+            "description": "The authentication result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\"."
           },
           "userName": {
             "type": "string",
             "nullable": true,
-			"example": "ADMIN01"
+			      "example": "ADMIN01",
+            "description": "The username assigned to the default tenant user."
           },
           "userIdentity": {
             "type": "string",
             "nullable": true,
-			"example": "ADMIN"
+			      "example": "ADMIN",
+            "description": "The user identity associated to the user."
           },
           "sysUserId": {
             "type": "integer",
             "format": "int32",
             "nullable": true,
-			"example": 3
+			      "example": 3,
+            "description": "The ID associated to the user."
           },
           "userGuid": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-			"example": "607e37cd-4f51-4148-af23-4459b74fc3b2"
+			      "example": "607e37cd-4f51-4148-af23-4459b74fc3b2",
+            "description": "The GUID associated to the user."
           },
           "companyOutletId": {
             "type": "integer",
             "format": "int32",
             "nullable": true,
-			"example": 10
+			      "example": 10,
+            "description": "The ID associated to the Company outlet."
           },
           "companyOutletGuid": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-			"example": "5feaaae5-7733-4e45-ac39-87d46cf138e0"
+			      "example": "5feaaae5-7733-4e45-ac39-87d46cf138e0",
+            "description": "The GUID associated to the Company outlet."
           },
           "stayLoggedIn": {
-        	"type": "boolean",
-			"example":false
+        	  "type": "boolean",
+			      "example":false,
+            "description": "The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox)"
           }
         }
       },
