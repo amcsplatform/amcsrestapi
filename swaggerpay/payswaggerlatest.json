@@ -17,20 +17,20 @@
           "Auth"
         ],
         "summary": "Auth by Private Key",
-        "description": "This endpoint is used for authentication and authorisation of a calling application by supplying the Tenant Private Key in the privateKey property. When successful, Platform.PAY.SessionToken is added to the cookie.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| PrivateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AuthResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\". |\n| Username | The username assigned to the default tenant user. |\n| UserIdentity | The user identity associated to the user. |\n| SysUserId | The ID associated to the user. |\n| UserGuid | The GUID associated to the user. |\n| Companyoutletid | The ID associated to the Company outlet. |\n| CompanyOutletGuid | The GUID associated to the Company outlet. |\n| StayLoggedIn | The boolean flag used when user opts to stay logged in. (usually set in a 'Remember me' checkbox) |",
+        "description": "This endpoint is used for authentication and authorisation of a calling application by supplying the Tenant Private Key in the privateKey property. When successful, Platform.PAY.SessionToken is added to the cookie. \n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| PrivateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\nAdditional fields from the response, other from the one below, can be disregarded.\n\n| **Property** | **Description** |\n| --- | --- |\n| AuthResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\".",
         "security": [],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AMCSUserCredentials"
+                "$ref": "#/components/schemas/AMCSPayUserCredentials"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Ok",
             "headers": {
               "Set-Cookie": {
                 "schema": {
@@ -43,7 +43,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AMCSLoginResponse"
+                  "$ref": "#/components/schemas/AMCSPayLoginResponse"
                 }
               }
             }
@@ -57,24 +57,64 @@
           "ExternalTransaction"
         ],
         "summary": "OneOff Payment",
-        "description": "This endpoint is used to initiate the iframe payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"OneOffPaymentAndTokenization\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| CallerTransactionId               | The caller supplied GUID associated to the Payment request.        |\r\n| CallerIPAddress               |Caller IPAddress associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| HPPTransactionRequest                         | The HPPTransaction Request associated to the customer.        |\r\n| HPPTransactionRequest.CompletionURL                         | The Completion URL Request associated to the customer.        |\r\n| HPPTransactionRequest.Address                         | The Address associated to the customer.        |\r\n| HPPTransactionRequest.Contact                         | The Contact associated to the customer.",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSInitiatePaymentResponse"
-                }
-              }
-            }
-          }
-        },
+        "description": "This endpoint is used to initiate the iframe payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffOnly\", \"OneOffAndTokenization\", \"TokenizationOnly\", \"VaultOrAutoPayment\", \"Refund\", \"DeleteToken\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| CallerTransactionId               | The Caller supplied GUID associated to the Payment request.        |\r\n| CallerIPAddress               |Caller IPAddress associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CompletionURL                         | The Completion URL Request associated to the customer mandate for webhooks.        |\r\n| Addresses                         | The Addresses associated to the customer mandate for 3ds transaction.        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for 3ds transaction.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AMCSInitiatePaymentRequest"
+                "$ref": "#/components/schemas/AMCSPayInitiatePaymentRequest"
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayInitiatePaymentResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayErrorResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayErrorResponse"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayErrorResponse"
               }
             }
           }
@@ -87,7 +127,7 @@
           "ExternalTransaction"
         ],
         "summary": "Poll Payment",
-        "description": "This endpoint is used to poll the payment initiated after interaction through an iframe.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayTransactionGuid | The AMCS generated GUID associated to the Iframe payment request. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| AmcsPayReference | The ID associated to the payment reference sent by the provider in the payload response. |\n| ResponseCode | The response code associated to the response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The timestamp of the payment response payload. |\n| StatusCode | The status associated to the payment.",
+        "description": "This endpoint is used to poll the payment initiated after interaction through an iframe.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayTransactionId | The AMCS generated GUID associated to the Iframe payment request. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The Caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| AMCSPayReferenceId | The ID associated to the payment reference sent by the provider in the payload response. |\n| ResponseCode | The response code associated to the response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| StatusCode | The status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\".",
         "requestBody": {
           "content": {
             "application/json": {
@@ -99,11 +139,51 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AMCSPayPollPaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
                 }
               }
             }
@@ -118,9 +198,18 @@
         ],
         "summary": "Get Customer Invoice Details",
         "description": "This endpoint creates a record in payment transaction table.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerARCode                      | The account code used for Accounts Receivable.        (AMCS will provide the account ARCode)                             |\r\n| Channel               | Channel can be only MOBILL OR IVR                         | \n\n ## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerGuid                 | The GUID associated to the customer.        |\r\n| CustomerName               |The customer's name.        |\r\n| CustomerBalance               |The amount associated to the payment.        |\r\n| CustomerCurrency               | Customer Currency associated with the Customer account.        |\r\n| InvoiceDetails               |It will show all the invoices associated with the account               |\r\n| InvoiceNumber                   |The invoice number associated to the invoice. Filterable.        |\r\n| InvoiceGUID                     |The GUID associated to the invoice.        |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| ZipCode                         |Zip code is associated with the account               |\r\n| InvoiceDueDate                  |The dueDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| UnallocatedAmount               |The Unallocated Amount on the customers account.        |\r\n| InvoiceCurrency                 |Invoice Currency asscoaited with the customer account             |\r\n| TransactionReference            |Transaction Reference associated with account                 |\r\n| ZipCode                         |ZipCode associated with the account address                                |\r\n| InvoiceDate                     |The invoiceDate associated to the invoice in ISO format (YYYY-MM-DD).        |\r\n| LastPaymentDate                 |When the last payment was made                     |\r\n| MakePaymentLink                 |It shows the payment link (if any invoice available)                     |\r\n| IsActive                 |Whether the customer is active              |\r\n| MobillsEnrollment               |Whether the mobills enrollment is active.              |\r\n| GUID         |Guid associated with the account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayMobillsIvrRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
@@ -128,13 +217,84 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayMobillsIvrResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
           }
-        },
+        }
+      }
+    },
+    "ExternalTransaction/Terminal": {
+      "post": {
+        "tags": [
+          "ExternalTransaction"
+        ],
+        "summary": "Terminal Payment",
+        "description": "This endpoint is used to make a terminal payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| CallerTransactionId               | The Caller supplied GUID associated to the Payment request.        |\r\n| TerminalId               | The Terminal Id associated to the payment request.        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CardEntryMode                         | The Card Entry Mode can be any of \"Keyed\", \"Manual\", \"MagneticStripe\", \"Contactless\", \"Tapped\". |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| StatusCode               | The status associated to the payment can be any of type \"Success\", \"Failure\". |\n| AmcsPayTransactionId | The Transaction Guid associated to AMCSPay. |\n| ProviderTransactionId               | The Transaction Id associated to the payment provider. |\n| ApprovalCode               | The Approval code associated to the payment provider. |\n| TokenValue               | The Token value associated to the card. |\n| TokenExpiry | The Expiry Date and Time associated to the token value. |\n| ResponseTimeStamp               | The Timestamp of the payment response payload.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AMCSMobillsIvrRequest"
+                "$ref": "#/components/schemas/AMCSPayTerminalRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayTerminalResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
               }
             }
           }
@@ -151,8 +311,11 @@
       }
     },
     "schemas": {
-      "AMCSUserCredentials": {
+      "AMCSPayUserCredentials": {
         "type": "object",
+        "required": [
+          "privateKey"
+        ],
         "properties": {
           "privateKey": {
             "type": "string",
@@ -162,7 +325,7 @@
         },
         "additionalProperties": false
       },
-      "AMCSLoginResponse": {
+      "AMCSPayLoginResponse": {
         "type": "object",
         "properties": {
           "authResult": {
@@ -210,7 +373,7 @@
           }
         }
       },
-      "AMCSMobillsIvrRequest": {
+      "AMCSPayMobillsIvrRequest": {
         "type": "object",
         "required": [
           "customerARCode",
@@ -230,7 +393,60 @@
         },
         "additionalProperties": false
       },
-      "AMCSInitiatePaymentRequest": {
+      "AMCSPayTerminalRequest": {
+        "type": "object",
+        "required": [
+          "callerTransactionId",
+          "callerIdentifier",
+          "terminalId",
+          "cardEntryMode",
+          "requestTimestamp",
+          "transactionAmount"
+        ],
+        "properties": {
+          "callerTransactionId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "nullable": false
+          },
+          "callerIdentifier": {
+            "type": "string",
+            "example": "client-name",
+            "nullable": false
+          },
+          "terminalId": {
+            "type": "string",
+            "example": "450-829-523",
+            "nullable": false
+          },
+          "requestTimestamp": {
+            "type": "string",
+            "format": "datetime",
+            "pattern": "yyyy-MM-dd'T'HH:mm:ss.SSSz",
+            "example": "2030-01-01T10:10:00.000Z",
+            "nullable": false
+          },
+          "transactionAmount": {
+            "type": "object",
+            "nullable": false,
+            "$ref": "#/components/schemas/AMCSPayAmount"
+          },
+          "cardEntryMode": {
+            "type": "string",
+            "enum": [
+              "Keyed",
+              "Manual",
+              "MagneticStripe",
+              "Contactless",
+              "Tapped"
+            ],
+            "nullable": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCSPayInitiatePaymentRequest": {
         "type": "object",
         "required": [
           "requestType",
@@ -245,9 +461,12 @@
           "requestType": {
             "type": "string",
             "enum": [
-              "oneOffPayment",
-              "oneOffPaymentAndTokenization",
-              "Tokenization"
+              "OneOffOnly",
+              "OneOffAndTokenization",
+              "TokenizationOnly",
+              "VaultOrAutoPayment",
+              "Refund",
+              "DeleteToken"
             ],
             "nullable": false
           },
@@ -275,14 +494,12 @@
           },
           "callerTransactionId": {
             "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000",
             "nullable": false
           },
           "callerIPAddress": {
             "type": "string",
-            "nullable": false
-          },
-          "requestTimestamp": {
-            "type": "Date-time",
             "nullable": false
           },
           "providerType": {
@@ -297,138 +514,30 @@
             ]
           },
           "transactionAmount": {
-            "type": "array",
+            "type": "object",
             "nullable": false,
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/AMCSPayAmount"
-              }
-            ]
+            "$ref": "#/components/schemas/AMCSPayAmount"
           },
-          "hPPTransactionRequest": {
+          "completionURL": {
+            "type": "string",
+            "format": "url",
+            "example": "",
+            "nullable": false
+          },
+          "addresses": {
             "type": "array",
-            "nullable": false,
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/AmcsHPPTransactionRequest"
-              }
-            ]
-          }
-        }
-      },
-      "AMCSPayMobillsIvrResponse": {
-        "type": "object",
-        "properties": {
-          "details": {
-            "$ref": "#/components/schemas/AMCSPayMobillsIvrResponseDetail"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSPayHeader": {
-        "required": [
-          "ClientProvidedGuid",
-          "RequestType",
-          "StatusCode",
-          "BecameStateAt"
-        ],
-        "type": "object",
-        "properties": {
-          "Guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
+            "items": {
+              "$ref": "#/components/schemas/AMCSPayAddress"
+            }
           },
-          "ClientProvidedGuid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": false
+          "contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCSPayContact"
+            }
           },
-          "requestType": {
-            "type": "string",
-            "enum": [
-              "Payment",
-              "CardAuthentication",
-              "Refund",
-              "Ivr",
-              "AutoPay",
-              "Test",
-              "DeleteProfile",
-              "Terminal"
-            ],
-            "nullable": false
-          },
-          "statusCode": {
-            "type": "string",
-            "enum": [
-              "Initiated",
-              "Success",
-              "Failure",
-              "InvalidCardInformation",
-              "Exception"
-            ],
-            "nullable": false
-          },
-          "BecameStateAt": {
-            "type": "string",
-            "format": "datetime",
-            "nullable": false
-          }
-        }
-      },
-      "AMCSAddress": {
-        "type": "object",
-        "properties": {
-          "addressType": {
-            "enum": [
-              "Billing",
-              "Shipping"
-            ],
-            "type": "string"
-          },
-          "streetAddress1": {
-            "type": "string",
-            "nullable": true
-          },
-          "streetAddress2": {
-            "type": "string",
-            "nullable": true
-          },
-          "streetAddress3": {
-            "type": "string",
-            "nullable": true
-          },
-          "city": {
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "type": "string",
-            "nullable": true
-          },
-          "postalCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "country": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSListItem": {
-        "type": "object",
-        "required": [
-          "Guid"
-        ],
-        "properties": {
-          "Guid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Description": {
-            "type": "string"
+          "customerInfo": {
+            "$ref": "#/components/schemas/AMCSPayCustomerDetail"
           }
         }
       },
@@ -448,7 +557,7 @@
           }
         }
       },
-      "AMCSPayMobillsIvrResponseDetail": {
+      "AMCSPayMobillsIvrResponse": {
         "type": "object",
         "properties": {
           "customerGuid": {
@@ -472,13 +581,8 @@
             "example": "EUR"
           },
           "invoiceDetails": {
-            "type": "array",
-            "nullable": true,
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/AmcsInvoiceDetails"
-              }
-            ]
+            "type": "object",
+            "$ref": "#/components/schemas/AMCSPayInvoiceDetails"
           },
           "transactionReference": {
             "type": "string",
@@ -533,34 +637,60 @@
           }
         }
       },
-      "AmcsHPPTransactionRequest": {
+      "AMCSPayTerminalResponse": {
         "type": "object",
         "properties": {
-          "completionURL": {
+          "statusCode": {
             "type": "string",
-            "format": "url",
-            "example": "",
+            "enum": [
+              "Success",
+              "Failure"
+            ],
+            "example": "Success",
             "nullable": false
           },
-          "address": {
-            "type": "Arrays",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/AMCSPayAddress"
-              }
-            ]
+          "amcsPayTransactionId": {
+            "type": "string",
+            "nullable": false
           },
-          "contact": {
-            "type": "Arrays",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/AMCSPayContact"
-              }
-            ]
+          "providerTransactionId": {
+            "type": "string",
+            "nullable": false
+          },
+          "approvalCode": {
+            "type": "string",
+            "nullable": false
+          },
+          "tokenValue": {
+            "type": "string",
+            "example": "iLGOd76VSiaAQBcZswQf",
+            "nullable": true
+          },
+          "tokenExpiry": {
+            "type": "string",
+            "format": "datetime",
+            "example": "2022-07-27 18:54:18.6767965 +08:00",
+            "nullable": false
+          },
+          "responseTimeStamp": {
+            "type": "string",
+            "format": "datetime",
+            "example": "2022-07-27 18:54:18.6767965 +08:00",
+            "nullable": false
           }
         }
       },
-      "AmcsInvoiceDetails": {
+      "AMCSPayErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errorMessage": {
+            "type": "string",
+            "example": "error message",
+            "nullable": true
+          }
+        }
+      },
+      "AMCSPayInvoiceDetails": {
         "type": "object",
         "properties": {
           "invoiceNumber": {
@@ -595,7 +725,7 @@
         },
         "additionalProperties": false
       },
-      "AMCSInitiatePaymentResponse": {
+      "AMCSPayInitiatePaymentResponse": {
         "type": "object",
         "properties": {
           "amcsPayUrl": {
@@ -604,7 +734,7 @@
             "example": "https://localhost/paybylink?key=092159d8-9e57-41a5-af6c-745bd45ff2f7",
             "nullable": false
           },
-          "amcsPayTransactionGuid": {
+          "amcsPayTransactionId": {
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
             "type": "string",
@@ -634,14 +764,44 @@
             ]
           },
           "contactValue": {
-            "type": "string",
+            "type": "Mobile",
             "example": "089748588788",
             "nullable": false
           }
         }
       },
+      "AMCSPayCustomerDetail": {
+        "type": "object",
+        "properties": {
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerIP": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "websiteUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AMCSPayAmount": {
         "type": "object",
+        "required": [
+          "principalAmount",
+          "currency"
+        ],
         "properties": {
           "principalAmount": {
             "type": "Decimal",
@@ -718,14 +878,14 @@
       },
       "AMCSPayPollPaymentRequest": {
         "required": [
-          "amcsPayTransactionGuid"
+          "amcsPayTransactionId"
         ],
         "type": "object",
         "properties": {
-          "amcsPayTransactionGuid": {
+          "amcsPayTransactionId": {
             "type": "string",
             "format": "uuid",
-            "example": "204ba071-1e75-48c6-8a08-aedf00b3b648"
+            "example": "00000000-0000-0000-0000-000000000000"
           }
         },
         "additionalProperties": false
@@ -736,14 +896,14 @@
           "callerTransactionId": {
             "type": "string",
             "format": "uuid",
-            "example": "204ba071-1e75-48c6-8a08-aedf00b3b648"
+            "example": "00000000-0000-0000-0000-000000000000"
           },
           "providerReference": {
             "type": "string",
             "nullable": true,
             "example": ""
           },
-          "amcsPayReference": {
+          "amcsPayReferenceId": {
             "type": "string",
             "nullable": true,
             "example": ""
