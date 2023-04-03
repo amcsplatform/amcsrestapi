@@ -10,6 +10,12 @@
       "cookieAuth": []
     }
   ],
+  "servers": [
+    {
+      "url": "https://eu1-pay-dev.amcsplatform.com/",
+      "description": "AMCSPay Developer Environment"
+    }
+  ],
   "paths": {
     "/authTokens": {
       "post": {
@@ -51,7 +57,7 @@
         }
       }
     },
-    "ExternalTransaction/OneOff": {
+    "/ExternalTransaction/OneOff": {
       "post": {
         "tags": [
           "ExternalTransaction"
@@ -121,7 +127,7 @@
         }
       }
     },
-    "ExternalTransaction/Poll": {
+    "/ExternalTransaction/Poll": {
       "post": {
         "tags": [
           "ExternalTransaction"
@@ -191,7 +197,7 @@
         }
       }
     },
-    "Mobills/Ivr/Pay/GetCustomerInvoiceDetails": {
+    "/Mobills/Ivr/Pay/GetCustomerInvoiceDetails": {
       "post": {
         "tags": [
           "Mobills IVR"
@@ -241,7 +247,7 @@
         }
       }
     },
-    "ExternalTransaction/Terminal": {
+    "/ExternalTransaction/Terminal": {
       "post": {
         "tags": [
           "ExternalTransaction"
