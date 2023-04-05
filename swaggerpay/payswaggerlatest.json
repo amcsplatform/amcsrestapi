@@ -205,7 +205,7 @@
           "ExternalTransaction"
         ],
         "summary": "Refund",
-        "description": "This endpoint is used to initiate refunds.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"Refund\". |\n| PaymentType | Payment Type can be any of \"Card\", \"ACH \".| \n| TransactionOrigin | For refunds, transaction origin can only be \"Moto\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| CallerTransactionId | The Caller supplied GUID associated to the Payment request.|\n| CallerIPAddress | The IP Address associated to the the customer's location.| \n| RequestTimeStamp | The date and time associated to the payment request in ISO format (YYYY-MM-DD). |\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for refund.|\n| OriginalPaymentReference | The reference ID sent by the provider associated to the payment being refunded.|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The Caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| AMCSPayReferenceId | The ID associated to the payment response being saved in AMCS Pay. |\n| ResponseCode | The status code associated to the payment response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. As of the moment, this will be required only for Tokenization only. |\n| ResponseTimeStamp | The time stamp of the payment response payload. |\n| StatusCode | The status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
+        "description": "This endpoint is used to initiate refunds.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"Refund\". |\n| PaymentType | Payment Type can be any of \"Card\", \"ACH \".| \n| TransactionOrigin | For refunds, transaction origin can only be \"Moto\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| CallerTransactionId | The Caller supplied GUID associated to the Payment request.|\n| CallerIPAddress | The IP Address associated to the the customer's location.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for refund.|\n| OriginalPaymentReference | The reference ID sent by the provider associated to the original payment being refunded.|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The Caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| AMCSPayReferenceId | The ID associated to the payment response being saved in AMCS Pay. |\n| ResponseCode | The status code associated to the payment response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. As of the moment, this will be required only for Tokenization only. |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| StatusCode | The status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1054,14 +1054,15 @@
           },
           "transactionOrigin": {
             "type": "string",
-            "example": "Elemos"
-          },
-          "callerIdentifier": {
-            "type": "string",
             "enum": [
               "Moto"
             ],
             "example": "MOTO"
+          },
+          "callerIdentifier": {
+            "type": "string",
+            
+            "example": "Elemos"
           },
           "callerTransactionId": {
             "type": "string",
