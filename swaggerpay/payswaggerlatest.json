@@ -127,7 +127,8 @@
         }
       }
     },
-    "/ExternalTransaction/Poll": {
+    "/ExternalTransaction/Poll": 
+    {
       "post": {
         "tags": [
           "ExternalTransaction"
@@ -150,6 +151,77 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AMCSPayPollPaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ExternalTransaction/Refund": 
+    {
+      "post": {
+        "tags": [
+          "ExternalTransaction"
+        ],
+        "summary": "Refund",
+        "description": "This endpoint is used to initiate refunds.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"Refund\". |\n| PaymentType | Payment Type can be any of \"Card\", \"ACH \".| \n| TransactionOrigin | For refunds, transaction origin can only be \"Moto\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| CallerTransactionId | The Caller supplied GUID associated to the Payment request.|\n| CallerIPAddress | The IP Address associated to the the customer's location.| \n| RequestTimeStamp | The date and time associated to the payment request in ISO format (YYYY-MM-DD). |\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for refund.|\n| OriginalPaymentReference | The reference ID sent by the provider associated to the payment being refunded.|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The Caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| AMCSPayReferenceId | The ID associated to the payment response being saved in AMCS Pay. |\n| ResponseCode | The status code associated to the payment response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. As of the moment, this will be required only for Tokenization only. |\n| ResponseTimeStamp | The time stamp of the payment response payload. |\n| StatusCode | The status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayRefundRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayRefundResponse"
                 }
               }
             }
@@ -946,6 +1018,131 @@
               "Failure",
               "Timeout",
               "Cancelled"
+            ],
+            "example": "Success",
+            "nullable": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCSPayRefundRequest": {
+        "required": [
+          "requestType",
+          "paymentType",
+          "transactionOrigin",
+          "callerIdentifier",
+          "callerTransactionId",
+          "providerType",
+          "transactionAmount",
+          "originalPaymentReference"
+        ],
+        "type": "object",
+        "properties": {
+          "requestType": {
+            "type": "string",
+            "enum": [
+              "Refund"
+            ],
+            "example": "Refund"
+          },
+          "paymentType": {
+            "type": "string",
+            "enum": [
+              "Card",
+              "ACH"
+            ],
+            "example": "CARD"
+          },
+          "transactionOrigin": {
+            "type": "string",
+            "example": "Elemos"
+          },
+          "callerIdentifier": {
+            "type": "string",
+            "enum": [
+              "Moto"
+            ],
+            "example": "MOTO"
+          },
+          "callerTransactionId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "callerIPAddress": {
+            "type": "string",
+            "example": ""
+          },
+          "providerType": {
+            "type": "string",
+            "enum": [
+              "ACICards",
+              "Heartland",
+              "MerchantPartners",
+              "PaymentExpress",
+              "Realex"
+            ],
+            "example": "ACICards"
+          },
+          "transactionAmount": {
+            "type": "object",
+            "example": "24.00",
+            "nullable": false,
+            "$ref": "#/components/schemas/AMCSPayAmount"
+          },
+          "originalPaymentReference": {
+            "type": "string",
+            "example": "8ac7a4a28749242d01874c7e648327b7"
+          }
+        }
+      },
+      "AMCSPayRefundResponse": {
+        "type": "object",
+        "properties": {
+          "callerTransactionId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "providerReference": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "amcsPayReferenceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "responseCode": {
+            "type": "string",
+            "nullable": true,
+            "example": "Success"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "example": ""
+          },
+          "providerAuthCode": {
+            "type": "string",
+            "nullable": true,
+            "example": ""
+          },
+          "additionalProviderData": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "responseTimeStamp": {
+            "type": "string",
+            "format": "datetime",
+            "example": "2022-07-27 18:54:18.6767965 +08:00"
+          },
+          "statusCode": {
+            "type": "string",
+            "enum": [
+              "Success",
+              "Failure"
             ],
             "example": "Success",
             "nullable": false
