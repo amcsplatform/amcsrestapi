@@ -63,7 +63,7 @@
           "ExternalTransaction"
         ],
         "summary": "OneOff Payment",
-        "description": "This endpoint is used to initiate the iframe payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffOnly\", \"OneOffAndTokenization\", \"TokenizationOnly\", \"VaultOrAutoPayment\", \"Refund\", \"DeleteToken\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| CallerTransactionId               | The Caller supplied GUID associated to the Payment request.        |\r\n| CallerIPAddress               |Caller IPAddress associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CompletionURL                         | The Completion URL Request associated to the customer mandate for webhooks.        |\r\n| Addresses                         | The Addresses associated to the customer mandate for 3ds transaction.        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for 3ds transaction.",
+        "description": "This endpoint is used to initiate the payment through the hosted payments page.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"Tokenization\", \"VaultOrAutoPayment\", \"Refund\", \"DeleteToken\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| CallerTransactionId               | The Caller supplied GUID associated to the Payment request.        |\r\n| CallerIPAddress               |Caller IPAddress associated to the the payment request.        |\r\n| RequestTimeStamp               |The RequestTimeStamp associated to the payment request in ISO format (YYYY-MM-DD).        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CompletionURL                         | The Completion URL Request associated to the customer mandate for webhooks.        |\r\n| Addresses                         | The Addresses associated to the customer mandate for 3ds transaction.        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for 3ds transaction.\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| HppUrl                      | The Hosted Payment Page Url to load in a frame/browser.        |\r\n| AMCSPayReferenceId               |  The AMCS generated GUID associated to the Payment request.                              |\r\n| StatusCode                 | The StatusCode associated to the Payment request.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -72,55 +72,55 @@
               }
             }
           }
-        }
-      },
-      "responses": {
-        "200": {
-          "description": "Ok",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AMCSPayInitiatePaymentResponse"
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayInitiatePaymentResponse"
+                }
               }
             }
-          }
-        },
-        "400": {
-          "description": "Bad Request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AMCSPayErrorResponse"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
               }
             }
-          }
-        },
-        "401": {
-          "description": "Unauthorized",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AMCSPayErrorResponse"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
               }
             }
-          }
-        },
-        "404": {
-          "description": "Not Found",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AMCSPayErrorResponse"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
               }
             }
-          }
-        },
-        "500": {
-          "description": "Internal Server Error",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AMCSPayErrorResponse"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
               }
             }
           }
@@ -134,7 +134,7 @@
           "ExternalTransaction"
         ],
         "summary": "Poll Payment",
-        "description": "This endpoint is used to poll the payment initiated after interaction through an iframe.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayTransactionId | The AMCS generated GUID associated to the Iframe payment request. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The Caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| AMCSPayReferenceId | The ID associated to the payment reference sent by the provider in the payload response. |\n| ResponseCode | The response code associated to the response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| StatusCode | The status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\".",
+        "description": "This endpoint is used to poll the payment initiated after interaction through a hosted payments page.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| AmcsPayTransactionId | The AMCS generated GUID associated to the hosted payments page. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The Caller supplied GUID associated to the payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| AMCSPayReferenceId | The AMCS generated GUID associated to the Payment request. |\n| ResponseCode | The response code associated to the response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| StatusCode | The status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\".",
         "requestBody": {
           "content": {
             "application/json": {
@@ -539,9 +539,8 @@
           "requestType": {
             "type": "string",
             "enum": [
-              "OneOffOnly",
-              "OneOffAndTokenization",
-              "TokenizationOnly",
+              "OneOffPayment",
+              "Tokenization",
               "VaultOrAutoPayment",
               "Refund",
               "DeleteToken"
@@ -806,13 +805,13 @@
       "AMCSPayInitiatePaymentResponse": {
         "type": "object",
         "properties": {
-          "amcsPayUrl": {
+          "hppUrl": {
             "format": "url",
             "type": "string",
             "example": "https://localhost/paybylink?key=092159d8-9e57-41a5-af6c-745bd45ff2f7",
             "nullable": false
           },
-          "amcsPayTransactionId": {
+          "amcsPayReferenceId": {
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
             "type": "string",
