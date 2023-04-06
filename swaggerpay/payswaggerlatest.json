@@ -202,8 +202,8 @@
         "tags": [
           "ExternalTransaction"
         ],
-        "summary": "Refund",
-        "description": "This endpoint is used to initiate refunds.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"Refund\". |\n| PaymentType | Payment Type can be any of \"Card\", \"ACH \".| \n| TransactionOrigin | For refunds, transaction origin can only be \"Moto\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| CallerTransactionId | The Caller supplied GUID associated to the Payment request.|\n| CallerIPAddress | The IP Address associated to the the customer's location.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for refund.|\n| OriginalPaymentReference | The reference ID sent by the provider associated to the original payment being refunded.|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| ResponseCode | The status code associated to the payment response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. As of the moment, this will be required only for Tokenization only. |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| StatusCode | The status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
+        "summary": "Refund Payment",
+        "description": "This endpoint is used to initiate refunds.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"Refund\". |\n| PaymentType | Payment Type can be any of \"Card\", \"ACH \".| \n| TransactionOrigin | For refunds, transaction origin can only be \"Moto\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| RequestId | The Caller supplied GUID associated to the Payment request.|\n| CallerIPAddress | The IP Address associated to the the customer's location.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for refund.|\n| OriginalPaymentReference | The reference ID sent by the provider associated to the original payment being refunded.|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| ResponseCode | The status code associated to the payment response. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. As of the moment, this will be required only for Tokenization only. |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| StatusCode | The status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
         "requestBody": {
           "content": {
             "application/json": {
@@ -594,8 +594,7 @@
           "completionURL": {
             "type": "string",
             "format": "url",
-            "example": "",
-            "nullable": false
+            "example": ""
           },
           "addresses": {
             "type": "array",
@@ -875,19 +874,16 @@
       "AMCSPayAmount": {
         "type": "object",
         "required": [
-          "principalAmount",
           "currency"
         ],
         "properties": {
           "principalAmount": {
             "type": "Decimal",
-            "example": "40",
-            "nullable": false
+            "example": "40"
           },
           "serviceFeeAmount": {
             "type": "Decimal",
-            "example": "10.20",
-            "nullable": false
+            "example": "10.20"
           },
           "currency": {
             "type": "string",
@@ -1022,7 +1018,7 @@
           "paymentType",
           "transactionOrigin",
           "callerIdentifier",
-          "callerTransactionId",
+          "requestId",
           "providerType",
           "transactionAmount",
           "originalPaymentReference"
@@ -1055,7 +1051,7 @@
             "type": "string",
             "example": "Elemos"
           },
-          "callerTransactionId": {
+          "requestId": {
             "type": "string",
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000"
