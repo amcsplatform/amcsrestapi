@@ -594,8 +594,7 @@
           "completionURL": {
             "type": "string",
             "format": "url",
-            "example": "",
-            "nullable": false
+            "example": ""
           },
           "addresses": {
             "type": "array",
@@ -875,19 +874,16 @@
       "AMCSPayAmount": {
         "type": "object",
         "required": [
-          "principalAmount",
           "currency"
         ],
         "properties": {
           "principalAmount": {
             "type": "Decimal",
-            "example": "40",
-            "nullable": false
+            "example": "40"
           },
           "serviceFeeAmount": {
             "type": "Decimal",
-            "example": "10.20",
-            "nullable": false
+            "example": "10.20"
           },
           "currency": {
             "type": "string",
