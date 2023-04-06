@@ -516,7 +516,6 @@
           "callerIdentifier",
           "terminalId",
           "cardEntryMode",
-          "requestTimestamp",
           "transactionAmount"
         ],
         "properties": {
@@ -534,13 +533,6 @@
           "terminalId": {
             "type": "string",
             "example": "450-829-523",
-            "nullable": false
-          },
-          "requestTimestamp": {
-            "type": "string",
-            "format": "datetime",
-            "pattern": "yyyy-MM-dd'T'HH:mm:ss.SSSz",
-            "example": "2030-01-01T10:10:00.000Z",
             "nullable": false
           },
           "transactionAmount": {
