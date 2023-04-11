@@ -117,7 +117,7 @@
         }
       }
     },
-    "/ExternalTransaction/Poll/{callerTransactionId}": {
+    "/ExternalTransaction/Poll": {
       "get": {
         "tags": [
           "ExternalTransaction"
@@ -127,7 +127,7 @@
         "parameters": [
           {
             "name": "callerTransactionId",
-            "in": "path",
+            "in": "query",
             "required": true,
             "type": "string",
             "format": "uuid",
