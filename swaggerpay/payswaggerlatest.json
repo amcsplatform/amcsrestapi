@@ -861,7 +861,7 @@
               "Email",
               "Mobile"
             ],
-            "example": "Billing"
+            "example": "Email"
           },
           "contactValue": {
             "type": "Mobile",
