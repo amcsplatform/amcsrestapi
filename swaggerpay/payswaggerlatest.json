@@ -995,11 +995,13 @@
           },
           "additionalProviderData": {
             "type": "object",
+            "nullable": true,
             "additionalProperties": true
           },
           "responseTimeStamp": {
             "type": "string",
             "format": "datetime",
+            "nullable": true,
             "example": "2022-07-27 18:54:18.6767965 +08:00"
           },
           "notes": {
@@ -1019,28 +1021,33 @@
           },
           "tokenReference": {
             "type": "string",
-            "example": "58af616d8b112af873be57bb627a7677bdffdc6a306ffdff26c6f6b59d917fe7",
-            "nullable": false
+            "nullable": true,
+            "example": "58af616d8b112af873be57bb627a7677bdffdc6a306ffdff26c6f6b59d917fe7"
           },
           "historyReference": {
             "type": "string",
+            "nullable": true,
             "example": "123456789012345"
           },
           "maskedProfileNumber": {
             "type": "string",
+            "nullable": true,
             "example": "XXXXX"
           },
           "profileExpiryDate": {
             "type": "string",
+            "nullable": true,
             "format": "datetime",
             "example": "MM/YY"
           },
           "profileType": {
             "type": "string",
+            "nullable": true,
             "example": "VISA"
           },
           "profileHolder": {
             "type": "string",
+            "nullable": true,
             "example": "Roofus Summers"
           }
         },
