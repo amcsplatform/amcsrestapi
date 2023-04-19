@@ -314,7 +314,7 @@
           "ExternalTransaction"
         ],
         "summary": "Terminal Payment",
-        "description": "This endpoint is used to make a terminal payment.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| RequestId               | The Caller supplied Request GUID associated to the Payment request.        |\r\n| TerminalId               | The Terminal Id associated to the payment request.        |\r\n| TransactionAmount                     |The Amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The Principal Amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The Currency associated to the payment request.        |\r\n| CardEntryMode                         | The Card Entry Mode can be any of \"Manual\", \"Swipe\", \"Tap\". |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| TransactionStatus               | The Transaction Status associated to the payment can be any of type \"Success\", \"Failure\". |\n| AMCSPayReferenceId | The Transaction Guid associated to AMCSPay. |\n| ProviderAuthCode               | The Approval code associated to the payment provider. |\n| TokenReference               | The Token value associated to the card. |\n| ResponseTimeStamp               | The Timestamp of the payment response payload.",
+        "description": "This endpoint is used to make a terminal payment.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | The Payment Provide Type; this end point only supports TerminalPay. |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| TerminalId | The Terminal Id associated to the payment request. |\n| TransactionAmount | The Amount associated to the payment request. |\n| TransactionAmount.PrincipalAmount | The Principal Amount associated to the payment request. |\n| TransactionAmount.ServiceFeeAmount | The Service Fee Amount associated to the payment request. |\n| TransactionAmount.Currency | The Currency associated to the payment request. |\n| CardEntryMode | The Card Entry Mode can be any of \"Manual\", \"Swipe\", \"Tap\". |\n| EmailAddress | The e-mail address associated to the payment requestor. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Success\", \"Failure\". |\n| AMCSPayReferenceId | The AMCS generated response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| TokenValue | The Token value associated to the card. |\n| TokenExpiry | The expiration of the token associated to the card. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| Notes | More information associated to the payment transaction. |",
         "requestBody": {
           "content": {
             "application/json": {
@@ -515,21 +515,36 @@
         "type": "object",
         "required": [
           "requestId",
+          "providerType",
           "callerIdentifier",
           "terminalId",
-          "cardEntryMode",
-          "transactionAmount"
+          "transactionAmount",
+          "cardEntryMode"
         ],
         "properties": {
-          "requestId": {
+          "providerType": {
             "type": "string",
-            "format": "uuid",
-            "example": "00000000-0000-0000-0000-000000000000",
-            "nullable": false
+            "enum": [
+              "ACICards",
+              "ACIElectronic",
+              "Heartland",
+              "MerchantPartners",
+              "PaymentExpress",
+              "Realex",
+              "TerminalPay"
+            ],
+            "nullable": false,
+            "example":"TerminalPay"
           },
           "callerIdentifier": {
             "type": "string",
             "example": "client-name",
+            "nullable": false
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "0d920c06-b568-442b-94cc-afe60176708f",
             "nullable": false
           },
           "terminalId": {
@@ -545,11 +560,25 @@
           "cardEntryMode": {
             "type": "string",
             "enum": [
+              "Rfid",
+              "Keyed",
               "Manual",
-              "Swipe",
-              "Tap"
+              "File",
+              "Scanned",
+              "MagStripe",
+              "Icc",
+              "SynchronousIcc",
+              "Tapped",
+              "Contactless",
+              "Mobile"
             ],
-            "nullable": true
+            "nullable": false,
+            "example": "Manual"
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true,
+            "example": "amcspayuser@email.com"
           }
         },
         "additionalProperties": false
@@ -763,15 +792,41 @@
           },
           "amcsPayReferenceId": {
             "type": "string",
-            "nullable": false
+            "format": "uuid",
+            "nullable": true,
+            "example": "c4521490-c0dd-40e5-94c6-afe90073aa1b"
+          },
+          "providerReference": {
+            "type": "string",
+            "nullable": true,
+            "example": "710718500049"
+          },
+          "providerResponseCode": {
+            "type": "string",
+            "nullable": true,
+            "example": "Success"
           },
           "providerAuthCode": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "example": "DEMO684"
           },
-          "tokenReference": {
+          "tokenValue": {
             "type": "string",
-            "example": "iLGOd76VSiaAQBcZswQf",
+            "nullable": true,
+            "example": "iLGOd76VSiaAQBcZswQf"
+          },
+          "tokenExpiry": {
+            "type": "string",
+            "nullable": true,
+            "example": ""
+          },
+          "additionalProviderData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
             "nullable": true
           },
           "responseTimeStamp": {
@@ -779,14 +834,28 @@
             "format": "datetime",
             "example": "2022-07-27 18:54:18.6767965 +08:00",
             "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
       "AMCSPayErrorResponse": {
         "type": "object",
         "properties": {
-          "errorMessage": {
+          "message": {
             "type": "string",
+            "example": "error message",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "example": "error message",
+            "nullable": true
+          },
+          "stackTrace": {
+            "type":"string",
             "example": "error message",
             "nullable": true
           }
@@ -916,17 +985,18 @@
       "AMCSPayAmount": {
         "type": "object",
         "required": [
+          "principalAmount",
           "currency"
         ],
         "properties": {
           "principalAmount": {
             "type": "Decimal",
-            "example": "40",
-            "nullable": true
+            "example": 40.10,
+            "nullable": false
           },
           "serviceFeeAmount": {
             "type": "Decimal",
-            "example": "10.20",
+            "example": 10.20,
             "nullable": true
           },
           "currency": {
