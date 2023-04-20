@@ -534,7 +534,7 @@
               "TerminalPay"
             ],
             "nullable": false,
-            "example":"TerminalPay"
+            "example": "TerminalPay"
           },
           "callerIdentifier": {
             "type": "string",
@@ -850,7 +850,7 @@
             "nullable": true
           },
           "stackTrace": {
-            "type":"string",
+            "type": "string",
             "example": "error message",
             "nullable": true
           }
@@ -1191,6 +1191,7 @@
             "type": "string",
             "enum": [
               "ACICards",
+              "ACIElectronic",
               "Heartland",
               "MerchantPartners",
               "PaymentExpress",
@@ -1266,6 +1267,7 @@
             "type": "string",
             "enum": [
               "ACICards",
+              "ACIElectronic",
               "Heartland",
               "MerchantPartners",
               "PaymentExpress",
