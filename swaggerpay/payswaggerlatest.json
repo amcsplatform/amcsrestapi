@@ -1081,7 +1081,10 @@
           "additionalProviderData": {
             "type": "object",
             "nullable": true,
-            "additionalProperties": true
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            }
           },
           "responseTimeStamp": {
             "type": "string",
@@ -1325,7 +1328,10 @@
           },
           "additionalProviderData": {
             "type": "object",
-            "additionalProperties": true,
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
             "nullable": true
           },
           "responseTimeStamp": {
@@ -1378,8 +1384,11 @@
           },
           "additionalProviderData": {
             "type": "object",
-            "additionalProperties": true,
-            "nullable": false
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
           },
           "responseTimeStamp": {
             "type": "string",
