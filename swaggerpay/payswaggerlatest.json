@@ -63,7 +63,7 @@
           "ExternalTransaction"
         ],
         "summary": "OneOff Payment",
-        "description": "This endpoint is used to initiate the payment through the hosted payments page.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"Card\", \"ACH \", \"GooglePay\", \"ApplePay\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"Moto\", \"Ecom\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| RequestId               | The Caller supplied GUID associated to the Payment request.        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CanStoreProfile                         | The flag suggests store the profile to vault.        |\r\n| CompletionURL                         | The Completion URL Request associated to the customer mandate for webhooks.        |\r\n| Addresses                         | The List of addresses associated to the customer mandate for 3ds transaction (Conditionally required).        |\r\n| Addresses[0].AddressType                         | The AddressType associated to the address can be any of \"Billing\", \"Shipping\".        |\r\n| Addresses[0].StreetAddress1                         | The StreetAddress Line1 associated to the address.        |\r\n| Addresses[0].StreetAddress2                         | The StreetAddress Line2 associated to the address.        |\r\n| Addresses[0].StreetAddress3                         | The StreetAddress Line3 associated to the address (Conditionally required).        |\r\n| Addresses[0].City                         | The City associated to the address.        |\r\n| Addresses[0].State                         | The State associated to the address.        |\r\n| Addresses[0].PostCode                         | The PostCode associated to the address.        |\r\n| Addresses[0].Country                         | The Country associated to the address.        |\r\n| Addresses[0].ISO3166Numeric                         | The ISO3166Numeric associated to the address (Conditionally required).        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction (Conditionally required).        |\r\n| Contacts[0].ContactType                         | The Contact Type associated to the contact can be any of type \"Email\", \"Mobile\".        |\r\n| Contacts[0].ContactValue                         | The Contact Value associated to the contact type.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for 3ds transaction (Conditionally required).        |\r\n| CustomerInfo.CustomerName                         | The Customer Name associated to the customer.        |\r\n| CustomerInfo.CustomerId                         | The Customer Id associated to the customer.        |\r\n| CustomerInfo.CustomerIP                         | The Customer Ip associated to the customer.        |\r\n| CustomerInfo.CustomerStatus                         | The Customer Status associated to the customer.        |\r\n| CustomerInfo.WebsiteUrl                         | The Website Url associated to the customer.\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| HppUrl                      | The Hosted Payment Page Url to load in a frame/browser.        |\r\n| CallerTransactionId               |  The AMCS generated Request GUID associated to the Payment request.                              |\r\n| TransactionStatus                 | The Transaction Status associated to the Payment request.",
+        "description": "This endpoint is used to initiate a payment/tokenization request via the Provider's hosted payments page (HPP).\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"CARD\", \"ACH \", \"GOOGLEPAY\", \"APPLEPAY\" .                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"MOTO\", \"ECOM\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| RequestId               | The Caller supplied GUID associated to the Payment request.        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request.        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CanStoreProfile                         | The flag suggests store the profile to vault.        |\r\n| CompletionURL                         | The Completion URL Request associated to the customer mandate for webhooks.        |\r\n| Addresses                         | The List of addresses associated to the customer mandate for 3ds transaction (Conditionally required).        |\r\n| Addresses[0].AddressType                         | The AddressType associated to the address can be any of \"Billing\", \"Shipping\".        |\r\n| Addresses[0].StreetAddress1                         | The StreetAddress Line1 associated to the address.        |\r\n| Addresses[0].StreetAddress2                         | The StreetAddress Line2 associated to the address.        |\r\n| Addresses[0].StreetAddress3                         | The StreetAddress Line3 associated to the address (Conditionally required).        |\r\n| Addresses[0].City                         | The City associated to the address.        |\r\n| Addresses[0].State                         | The State associated to the address.        |\r\n| Addresses[0].PostCode                         | The PostCode associated to the address.        |\r\n| Addresses[0].Country                         | The Country associated to the address.        |\r\n| Addresses[0].ISO3166Numeric                         | The ISO3166Numeric associated to the address (Conditionally required).        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction (Conditionally required).        |\r\n| Contacts[0].ContactType                         | The Contact Type associated to the contact can be any of type \"Email\", \"Mobile\".        |\r\n| Contacts[0].ContactValue                         | The Contact Value associated to the contact type.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for 3ds transaction (Conditionally required).        |\r\n| CustomerInfo.CustomerName                         | The Customer Name associated to the customer.        |\r\n| CustomerInfo.CustomerId                         | The Customer Id associated to the customer.        |\r\n| CustomerInfo.CustomerIP                         | The Customer Ip associated to the customer.        |\r\n| CustomerInfo.CustomerStatus                         | The Customer Status associated to the customer.        |\r\n| CustomerInfo.WebsiteUrl                         | The Website Url associated to the customer.\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| HppUrl                      | The Hosted Payment Page Url to load in a frame/browser.        |\r\n| CallerTransactionId               |  The AMCS generated Request GUID associated to the Payment request.                              |\r\n| TransactionStatus                 | The Transaction Status associated to the Payment request.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -123,7 +123,7 @@
           "ExternalTransaction"
         ],
         "summary": "Poll Payment",
-        "description": "This endpoint is used to poll the payment initiated after interaction through a hosted payments page.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The AMCS generated Request GUID associated to the hosted payments page. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\". |\n| TokenReference | The Token Reference sent by the provider associated to the original payment (Tokenisation Response). |\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Tokenisation Response). |\n| MaskedProfileNumber | The Profile/Card Number sent by the provider associated to the original payment (Tokenisation Response) (Conditionally required). |\n| ProfileType | The Profile/Card Type sent by the provider associated to the original payment (Tokenisation Response). |\n| ProfileHolder | The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response).",
+        "description": "This endpoint is used to poll the AmcsPay database to make sure whether the provider's hosted payments page(HPP) has sent the transaction response back to AmcsPay.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The AMCS generated Request GUID associated to the hosted payments page. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\". |\n| TokenReference | The Token Reference sent by the provider associated to the original payment (Tokenisation Response). |\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Tokenisation Response). |\n| MaskedProfileNumber | The Profile/Card Number sent by the provider associated to the original payment (Tokenisation Response) (Conditionally required). |\n| ProfileType | The Profile/Card Type sent by the provider associated to the original payment (Tokenisation Response). |\n| ProfileHolder | The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response).",
         "parameters": [
           {
             "name": "callerTransactionId",
@@ -194,7 +194,7 @@
           "ExternalTransaction"
         ],
         "summary": "Refund Payment",
-        "description": "This endpoint is used to make a refund.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"Refund\". |\n| PaymentType | Payment Type can be any of \"Card\", \"ACH \".| \n| TransactionOrigin | For Refund, transaction origin can only be \"Moto\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| RequestId | The Caller supplied GUID associated to the Payment request.|\n| CallerIPAddress | The IP Address associated to the the customer's location.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for refund.|\n| OriginalPaymentReference | The reference ID sent by the provider associated to the original payment being refunded.|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| ProviderResponseCode | The status code associated to the payment provider response. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. As of the moment, this will be required only for Tokenization only. |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| Notes | More information associated to the payment. |\n| TransactionStatus | The Transaction Status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
+        "description": "This endpoint is used to request a refund for a Card/ACH payment already processed via AmcsPay.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"Refund\". |\n| PaymentType | Payment Type can be any of \"CARD\", \"ACH \".| \n| TransactionOrigin | For Refund, transaction origin can only be \"MOTO\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| RequestId | The Caller supplied GUID associated to the Payment request.|\n| CallerIPAddress | The IP Address associated to the the customer's location.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for refund.|\n| OriginalPaymentReference | The reference ID sent by the provider associated to the original payment being refunded.|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| ProviderResponseCode | The status code associated to the payment provider response. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| Notes | More information associated to the payment. |\n| TransactionStatus | The Transaction Status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
         "requestBody": {
           "content": {
             "application/json": {
@@ -254,7 +254,7 @@
           "ExternalTransaction"
         ],
         "summary": "Vault Payment",
-        "description": "This endpoint is used to make a vault payment.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"VaultOrAutoPayment\". |\n| PaymentType | Payment Type can be any of \"Card\", \"ACH \".| \n| TransactionOrigin | Transaction Origin can be any of \"Moto\", \"Ecom\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| RequestId | The Caller supplied GUID associated to the Payment request.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for vault.|\n| TokenReference | The Token Reference sent by the provider associated to the original payment.|\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Conditionally required).|\n| MaskedProfileNumber | The Masked Profile/Card Number sent by the provider associated to the original payment (Conditionally required).|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| ProviderResponseCode | The status code associated to the payment response. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| AdditionalProviderData | More information associated to the payment provider. As of the moment, this will be required only for Tokenization only. |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| Notes | More information associated to the payment. |\n| TransactionStatus | The Transaction Status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
+        "description": "This endpoint is used to make a payment using the saved profile(Card / ACH) via AmcsPay.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"VaultOrAutoPayment\". |\n| PaymentType | Payment Type can be any of \"CARD\", \"ACH \".| \n| TransactionOrigin | Transaction Origin can be any of \"MOTO\", \"ECOM\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| RequestId | The Caller supplied GUID associated to the Payment request.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for vault.|\n| TokenReference | The Token Reference sent by the provider associated to the original payment.|\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Conditionally required).|\n| MaskedProfileNumber | The Masked Profile/Card Number sent by the provider associated to the original payment (Conditionally required).|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| ProviderResponseCode | The status code associated to the payment response. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| Notes | More information associated to the payment. |\n| TransactionStatus | The Transaction Status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
         "requestBody": {
           "content": {
             "application/json": {
@@ -314,7 +314,7 @@
           "ExternalTransaction"
         ],
         "summary": "Terminal Payment",
-        "description": "This endpoint is used to make a terminal payment.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\" and \"TerminalPay\". However, this end point only supports Terminal Pay. |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| TerminalId | The Terminal Id is the verifone terminal device serial number. |\n| TransactionAmount | The Amount associated to the payment request. |\n| TransactionAmount.PrincipalAmount | The Principal Amount associated to the payment request. |\n| TransactionAmount.ServiceFeeAmount | The Service Fee Amount associated to the payment request. |\n| TransactionAmount.Currency | The Currency associated to the payment request. |\n| CardEntryMode | The Card entry mode of the payment instrument information. |\n| EmailAddress | The e-mail address associated to the payment requestor. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Success\", \"Failure\". |\n| AMCSPayReferenceId | The AMCS generated response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| TokenValue | The Token value associated to the card. |\n| AdditionalProviderData | More information associated to the payment provider. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| Notes | More information associated to the payment transaction. |",
+        "description": "This endpoint is used to make a card payment using a terminal device.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\" and \"TerminalPay\". However, this end point only supports Terminal Pay. |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| TerminalId | The Terminal Id is the verifone terminal device serial number. |\n| TransactionAmount | The Amount associated to the payment request. |\n| TransactionAmount.PrincipalAmount | The Principal Amount associated to the payment request. |\n| TransactionAmount.ServiceFeeAmount | The Service Fee Amount associated to the payment request. |\n| TransactionAmount.Currency | The Currency associated to the payment request. |\n| CardEntryMode | The Card entry mode of the payment instrument information. |\n| EmailAddress | The e-mail address associated to the payment requestor. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Success\", \"Failure\". |\n| AMCSPayReferenceId | The AMCS generated response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| TokenValue | The Token value associated to the card. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| Notes | More information associated to the payment transaction. |",
         "requestBody": {
           "content": {
             "application/json": {
@@ -646,12 +646,12 @@
           "transactionAmount": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayAmount",
-            "nullable": true
+            "nullable": false
           },
           "canStoreProfile": {
             "type": "boolean",
             "example": false,
-            "nullable": false
+            "nullable": true
           },
           "completionURL": {
             "type": "string",
@@ -816,14 +816,6 @@
             "nullable": true,
             "example": "iLGOd76VSiaAQBcZswQf"
           },
-          "additionalProviderData": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
-            "nullable": true
-          },
           "responseTimeStamp": {
             "type": "string",
             "format": "datetime",
@@ -904,22 +896,19 @@
           "hppUrl": {
             "format": "url",
             "type": "string",
-            "example": "https://localhost/paybylink?key=092159d8-9e57-41a5-af6c-745bd45ff2f7",
-            "nullable": false
+            "example": "https://localhost/paybylink?key=092159d8-9e57-41a5-af6c-745bd45ff2f7"
           },
           "callerTransactionId": {
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
-            "type": "string",
-            "nullable": false
+            "type": "string"
           },
           "transactionStatus": {
             "type": "string",
             "enum": [
               "Initiated"
             ],
-            "example": "Initiated",
-            "nullable": false
+            "example": "Initiated"
           }
         }
       },
@@ -936,7 +925,7 @@
             "nullable": false
           },
           "contactValue": {
-            "type": "Mobile",
+            "type": "string",
             "example": "089748588788",
             "nullable": false
           }
@@ -948,7 +937,7 @@
           "customerName": {
             "type": "string",
             "example": "",
-            "nullable": false
+            "nullable": true
           },
           "customerId": {
             "type": "string",
@@ -972,7 +961,7 @@
           "websiteUrl": {
             "type": "string",
             "example": "",
-            "nullable": false
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -980,14 +969,13 @@
       "AMCSPayAmount": {
         "type": "object",
         "required": [
-          "principalAmount",
           "currency"
         ],
         "properties": {
           "principalAmount": {
             "type": "Decimal",
             "example": 40.10,
-            "nullable": false
+            "nullable": true
           },
           "serviceFeeAmount": {
             "type": "Decimal",
@@ -1050,7 +1038,7 @@
           },
           "iSO3166Numeric": {
             "type": "string",
-            "example": "Ireland",
+            "example": "372",
             "nullable": false
           }
         }
@@ -1077,14 +1065,6 @@
             "type": "string",
             "nullable": true,
             "example": ""
-          },
-          "additionalProviderData": {
-            "type": "object",
-            "nullable": true,
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            }
           },
           "responseTimeStamp": {
             "type": "string",
@@ -1165,7 +1145,7 @@
           "paymentType": {
             "type": "string",
             "enum": [
-              "Card",
+              "CARD",
               "ACH"
             ],
             "example": "CARD",
@@ -1221,9 +1201,9 @@
           "requestType",
           "paymentType",
           "transactionOrigin",
+          "providerType",
           "callerIdentifier",
           "requestId",
-          "providerType",
           "transactionAmount",
           "tokenReference"
         ],
@@ -1240,7 +1220,7 @@
           "paymentType": {
             "type": "string",
             "enum": [
-              "Card",
+              "CARD",
               "ACH"
             ],
             "example": "CARD",
@@ -1284,6 +1264,11 @@
             "$ref": "#/components/schemas/AMCSPayAmount",
             "nullable": false
           },
+          "customerInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/AMCSPayCustomerInfo",
+            "nullable": true
+          },
           "tokenReference": {
             "type": "string",
             "example": "58af616d8b112af873be57bb627a7677bdffdc6a306ffdff26c6f6b59d917fe7",
@@ -1296,7 +1281,7 @@
           },
           "maskedProfileNumber": {
             "type": "string",
-            "example": "XXXXX",
+            "example": "5454XXXXXXXX5454",
             "nullable": true
           }
         }
@@ -1324,14 +1309,6 @@
           "providerAuthCode": {
             "type": "string",
             "example": "",
-            "nullable": true
-          },
-          "additionalProviderData": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
             "nullable": true
           },
           "responseTimeStamp": {
@@ -1380,14 +1357,6 @@
           "providerAuthCode": {
             "type": "string",
             "example": "",
-            "nullable": true
-          },
-          "additionalProviderData": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string",
-              "nullable": true
-            },
             "nullable": true
           },
           "responseTimeStamp": {
