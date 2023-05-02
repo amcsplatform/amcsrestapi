@@ -947,7 +947,7 @@
           "customerIP": {
             "type": "string",
             "example": "000.000.0.000",
-            "nullable": false
+            "nullable": true
           },
           "customerStatus": {
             "type": "string",
@@ -1054,7 +1054,7 @@
           "providerReference": {
             "type": "string",
             "nullable": true,
-            "example": ""
+            "example": "8ac7a4a28749242d01874c7e648327b7"
           },
           "providerResponseCode": {
             "type": "string",
@@ -1297,8 +1297,7 @@
           },
           "providerReference": {
             "type": "string",
-            "format": "uuid",
-            "example": "00000000-0000-0000-0000-000000000000",
+            "example": "8ac7a4a28749242d01874c7e648327b7",
             "nullable": false
           },
           "providerResponseCode": {
@@ -1345,8 +1344,7 @@
           },
           "providerReference": {
             "type": "string",
-            "format": "uuid",
-            "example": "00000000-0000-0000-0000-000000000000",
+            "example": "8ac7a4a28749242d01874c7e648327b7",
             "nullable": true
           },
           "providerResponseCode": {
