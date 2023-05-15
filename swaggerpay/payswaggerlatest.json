@@ -645,7 +645,7 @@
         "required": [
           "transactionReference",
           "paymentAmount",
-          "curreny",
+          "currency",
           "timestamp",
           "transactionPaymentType",
           "isIVR",
