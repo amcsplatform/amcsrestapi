@@ -671,7 +671,7 @@
             "example": 10.20,
             "nullable": false
           },
-          "curreny": {
+          "currency": {
             "type": "string",
             "example": "EUR",
             "nullable": false
@@ -694,7 +694,7 @@
           },
           "code": {
             "type": "string",
-            "example": "MOBILL / IVR",
+            "example": "000.100.112",
             "nullable": false
           },
           "description": {
@@ -703,7 +703,7 @@
             "nullable": false
           },
           "bin": {
-            "type": "integer",
+            "type": "string",
             "example": "545454",
             "nullable": false
           },
