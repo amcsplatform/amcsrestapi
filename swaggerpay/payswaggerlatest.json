@@ -496,6 +496,56 @@
           }
         }
       }
+    },
+    "/payACIInteractiveVoiceResponse": {
+      "post": {
+        "tags": [
+          "Mobills IVR"
+        ],
+        "summary": "Post Back IVR Response",
+        "description": "This endpoint updates an existing record in the payment transaction table and creates a record in the Amcs-Pay Database.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| TransactionReference                      | The Transaction Reference can get from the GetCustomerInvoce API.                           |\r\n| PaymentAmount               | The payment amount associated to the payment request.  |\r\n| Currency               | Currency associated with the Customer account.|\r\n| Timestamp                     | The time stamp associated to the response payload. |\r\n| TransactionPaymentType                     | Transaction payment type can be any of \"CARD\", \"ACH \".  |\r\n| IsIVR                     |IsIVR is a flag and should be set to true..  |\r\n| Code                     |The codes for successfully processed transactions.  |\r\n| Description                     |Description associated with the Code.  |\r\n| Bin                     |The first six digits of the card.number. |\r\n| Last4Digits                     |Last 4 digits of the \"Credit\", \"Debit\" Card.  |\r\n| PaymentType                     |Payment Type DB, Debit: Debits the account of the end customer and credits the merchant account. |\r\n| Holder                     |Holder of the credit card account. |\r\n| ExpiryMonth                    | The expiry month of the card. |\r\n| ExpiryYear                     |The expiry year of the card. |\r\n| ConfirmationNumber                     |The Confirmation Number (payment reference) data sent by the provider associated to the original payment response.| \n\n ## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n|  |\r\n| Response                     |It returns the success response.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayPostBackIvrRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayIvrResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -586,6 +636,107 @@
             "type": "string",
             "example": "MOBILL / IVR",
             "nullable": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCSPayPostBackIvrRequest": {
+        "type": "object",
+        "required": [
+          "transactionReference",
+          "paymentAmount",
+          "curreny",
+          "timestamp",
+          "transactionPaymentType",
+          "isIVR",
+          "code",
+          "description",
+          "bin",
+          "last4Digits",
+          "paymentType",
+          "holder",
+          "expiryMonth",
+          "expiryYear",
+          "confirmationNumber"
+        ],
+        "properties": {
+          "transactionReference": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": false,
+            "example": "c4521490-c0dd-40e5-94c6-afe90073aa1b"
+          },
+          "paymentAmount": {
+            "type": "integer",
+            "example": 10.20,
+            "nullable": false
+          },
+          "curreny": {
+            "type": "string",
+            "example": "EUR",
+            "nullable": false
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "datetime",
+            "example": "2021-10-21-17:20:30",
+            "nullable": false
+          },
+          "transactionPaymentType": {
+            "type": "string",
+            "example": "Credit Card",
+            "nullable": false
+          },
+          "isIVR": {
+            "type": "boolean",
+            "example": "true",
+            "nullable": false
+          },
+          "code": {
+            "type": "string",
+            "example": "MOBILL / IVR",
+            "nullable": false
+          },
+          "description": {
+            "type": "string",
+            "example": "Request successfully processed in 'Merchant In Connect",
+            "nullable": false
+          },
+          "bin": {
+            "type": "integer",
+            "example": "545454",
+            "nullable": false
+          },
+          "last4Digits": {
+            "type": "string",
+            "example": "5454",
+            "nullable": false
+          },
+          "paymentType": {
+            "type": "string",
+            "example": "DB",
+            "nullable": false
+          },
+          "holder": {
+            "type": "string",
+            "example": "SK_Test",
+            "nullable": false
+          },
+          "expiryMonth": {
+            "type": "string",
+            "example": "06",
+            "nullable": false
+          },
+          "expiryYear": {
+            "type": "string",
+            "example": "2034",
+            "nullable": false
+          },
+          "confirmationNumber": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": false,
+            "example": "c4521490-c0dd-40e5-94c6-afe90073aa1b"
           }
         },
         "additionalProperties": false
@@ -854,6 +1005,10 @@
             "nullable": true
           }
         }
+      },
+      "AMCSPayIvrResponse": {
+        "type": "object",
+        "example":"Success"   
       },
       "AMCSPayTerminalResponse": {
         "type": "object",
