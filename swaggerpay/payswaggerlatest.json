@@ -671,7 +671,7 @@
             "example": 10.20,
             "nullable": false
           },
-          "curreny": {
+          "currency": {
             "type": "string",
             "example": "EUR",
             "nullable": false
