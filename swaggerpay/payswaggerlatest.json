@@ -1,4 +1,4 @@
-{
+  {
   "openapi": "3.0.1",
   "info": {
     "title": "AMCS Pay External API",
@@ -286,14 +286,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error",
@@ -1523,9 +1516,7 @@
       },
       "AMCSPayVaultRequest": {
         "required": [
-          "requestType",
           "paymentType",
-          "transactionOrigin",
           "providerType",
           "callerIdentifier",
           "requestId",
