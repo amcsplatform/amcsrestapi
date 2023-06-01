@@ -1196,9 +1196,51 @@
         },
         "additionalProperties": false
       },
+      "AMCSPayVaultCustomerInfo": {
+        "type": "object",
+        "required": [
+          "customerName",
+          "customerId",
+          "customerIP",
+          "customerStatus"
+        ],
+        "properties": {
+          "customerName": {
+            "type": "string",
+            "example": "",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "string",
+            "example": "ACC1007",
+            "nullable": false
+          },
+          "customerIP": {
+            "type": "string",
+            "example": "000.000.0.000",
+            "nullable": true
+          },
+          "customerStatus": {
+            "type": "string",
+            "enum": [
+              "NEW",
+              "EXISTING"
+            ],
+            "example": "NEW",
+            "nullable": false
+          },
+          "websiteUrl": {
+            "type": "string",
+            "example": "",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AMCSPayAmount": {
         "type": "object",
         "required": [
+          "principalAmount",
           "currency"
         ],
         "properties": {
@@ -1516,11 +1558,12 @@
       },
       "AMCSPayVaultRequest": {
         "required": [
+          "requestType",
           "paymentType",
-          "providerType",
+          "transactionOrigin",
           "callerIdentifier",
           "requestId",
-          "transactionAmount",
+          "providerType",
           "tokenReference"
         ],
         "type": "object",
@@ -1582,7 +1625,7 @@
           },
           "customerInfo": {
             "type": "object",
-            "$ref": "#/components/schemas/AMCSPayCustomerInfo",
+            "$ref": "#/components/schemas/AMCSPayVaultCustomerInfo",
             "nullable": true
           },
           "tokenReference": {
