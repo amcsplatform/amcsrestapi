@@ -440,6 +440,96 @@
         }
       }
     },
+    "/ExternalTransaction/DeleteToken": {
+      "post": {
+        "tags": [
+          "ExternalTransaction"
+        ]
+        , "summary": "Delete Token"
+        , "description": "This endpoint is used to delete Card Tokens from the vault for both AMCS Pay and Payment provider gateway."
+        , "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayDeleteProfileRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayDeleteProfileRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayDeleteProfileRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayDeleteProfileResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayDeleteProfileResponse"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayDeleteProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Mobills/Ivr/Pay/GetCustomerInvoiceDetails": {
       "post": {
         "tags": [
@@ -1059,17 +1149,20 @@
           "message": {
             "type": "string",
             "example": "error message",
-            "nullable": true
+            "nullable": true,
+            "description": "The exception message."
           },
           "type": {
             "type": "string",
             "example": "error message",
-            "nullable": true
+            "nullable": true,
+            "description": "The type of exception thrown."
           },
           "stackTrace": {
             "type": "string",
             "example": "error message",
-            "nullable": true
+            "nullable": true,
+            "description": "The stack trace of the error encountered."
           }
         }
       },
@@ -1237,6 +1330,25 @@
         },
         "additionalProperties": false
       },
+      "AMCSPayDeleteProfile.AMCSPayAmount": {
+        "type": "object",
+        "properties": {
+          "principalAmount": {
+            "type": "number",
+            "nullable": true
+          },
+          "serviceFeeAmount": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": false
+          }
+        },
+        "example": null,
+        "description": "Not applicable for this endpoint."
+      },
       "AMCSPayAmount": {
         "type": "object",
         "required": [
@@ -1245,12 +1357,12 @@
         ],
         "properties": {
           "principalAmount": {
-            "type": "Decimal",
+            "type": "number",
             "example": 40.10,
             "nullable": true
           },
           "serviceFeeAmount": {
-            "type": "Decimal",
+            "type": "number",
             "example": 10.20,
             "nullable": true
           },
@@ -1481,6 +1593,151 @@
         },
         "additionalProperties": false
       },
+      "AMCSPayDeleteProfileRequest": {
+        "required": [
+          "requestType",
+          "paymentType",
+          "transactionOrigin",
+          "callerIdentifier",
+          "requestId",
+          "referenceId",
+          "providerType"
+        ],
+        "type": "object",
+        "properties": {
+          "requestType": {
+            "enum": [
+              "OneOffPayment",
+              "Tokenization",
+              "VaultOrAutoPayment",
+              "Refund",
+              "DeleteToken"
+            ],
+            "type": "string",
+            "description": "The request type for this endpoint is \"DeleteToken\"."
+          },
+          "paymentType": {
+            "enum": [
+              "CARD",
+              "ACH",
+              "GOOGLEPAY",
+              "APPLEPAY"
+            ],
+            "type": "string",
+            "description": "The supported payment type for this endpoint is \"CARD\"."
+          },
+          "transactionOrigin": {
+            "enum": [
+              "MOTO",
+              "ECOM"
+            ],
+            "type": "string"
+          },
+          "callerIdentifier": {
+            "minLength": 1,
+            "type": "string",
+            "example": "Elemos",
+            "description": "The identification associated to the calling application."
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "3e14bdf6-5b17-44aa-bf5b-2f7fb113daf9",
+            "description": "The Caller supplied GUID associated to the payment request." 
+          },
+          "requestTimestamp": {
+            "type": "string",
+            "format": "dateTime",
+            "nullable": true,
+            "readOnly": true,
+            "example": "2023-06-08T21:29:51.915166+08:00",
+            "description": "The request time stamp when this endpoint was called."
+          },
+          "providerType": {
+            "enum": [
+              "Test",
+              "Realex",
+              "Heartland",
+              "MerchantPartners",
+              "ACICards",
+              "ACIElectronic",
+              "AptPay",
+              "PaymentExpress",
+              "EftCanada",
+              "TerminalPay"
+            ],
+            "type": "string",
+            "example": "ACICards",
+            "description": "The payment providers integrated to AMCS Pay. This endpoint only supports \"ACICards\"."
+          },
+          "referenceId": {
+            "type": "string",
+            "nullable": true,
+            "example": "8ac7a49f8898f2af018899c2fb6d22b0",
+            "description": "The reference number associated to the payment provider upon Card Tokenization."
+          }
+        },
+        "additionalProperties": false
+      }
+      ,"AMCSPayDeleteProfileResponse": {
+          "type": "object",
+          "properties": {
+            "amcsPayReferenceId": {
+              "type": "string",
+              "nullable": true,
+              "format": "uuid",
+              "example": "f15da253-d85b-4e7d-99eb-b01b00de6dce",
+              "description": "The AMCS Pay generated Response GUID associated to the Payment request."
+            },
+            "providerReference": {
+              "type": "string",
+              "nullable": true,
+              "example": "8ac7a49f8898f2af01889b33033902d1",
+              "description": "The reference number associated to the payment provider."
+            },
+            "providerResponseCode": {
+              "type": "string",
+              "nullable": true,
+              "example": "Success",
+              "description": "The response code associated to the payment provider."
+            },
+            "providerAuthCode": {
+              "type": "string",
+              "nullable": true,
+              "example": null,
+              "description": "The authorization code associated to the payment provider."
+            },
+            "responseTimestamp": {
+              "type": "string",
+              "format": "dateTime",
+              "nullable": true,
+              "example": "2023-06-08T21:29:51.915166+08:00",
+              "description": "The Timestamp of the payment response payload."
+            },
+            "notes": {
+              "type": "string",
+              "nullable": true,
+              "example": "        ACI Vault Transaction Id 8ac7a49f8898f2af01889b33033902d1\r\n\r\n        Transaction Date 2023-06-08 13:29:51+0000\r\n\r\n        Result code 000.100.110\r\n\r\n        ResultDescription: Request successfully processed in 'Merchant in Integrator Test Mode'\r\n\r\n        Payment Type \r\n\r\n    ",
+              "description": "More information associated to the AMCS Pay transaction."
+            },
+            "transactionStatus": {
+              "enum": [
+                "Success",
+                "Failure",
+                "Partial"
+              ],
+              "type": "string",
+              "description": "The Transaction Status associated to the AMCS Pay transaction."
+            },
+            "transactionAmount": {
+              "type": "object",
+              "$ref": "#/components/schemas/AMCSPayDeleteProfile.AMCSPayAmount",
+              "nullable": false,
+              "description": "Not applicable for this endpoint."
+            }
+          },
+          "additionalProperties": false
+        },
       "AMCSPayRefundRequest": {
         "required": [
           "requestType",
