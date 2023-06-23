@@ -63,7 +63,7 @@
             "ExternalTransaction"
           ],
           "summary": "OneOff Payment",
-          "description": "This endpoint is used to initiate a payment/tokenization request via the Provider's hosted payments page (HPP).\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"CARD\", \"ACH \".                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"MOTO\", \"ECOM\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| RequestId               | The Caller supplied GUID associated to the Payment request.        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CanStoreProfile                         | The flag suggests store the profile to vault.        |\r\n| CompletionURL                         | The Completion URL Request associated to the customer mandate for webhooks.        |\r\n| Addresses                         | The List of addresses associated to the customer mandate for 3ds transaction (Billing address is mandatory for 3ds enabled transaction).        |\r\n| Addresses[0].AddressType                         | The AddressType associated to the address can be any of \"Billing\", \"Shipping\".        |\r\n| Addresses[0].StreetAddress1                         | The StreetAddress Line1 associated to the address.        |\r\n| Addresses[0].StreetAddress2                         | The StreetAddress Line2 associated to the address.        |\r\n| Addresses[0].StreetAddress3                         | The StreetAddress Line3 associated to the address (Conditionally required).        |\r\n| Addresses[0].City                         | The City associated to the address.        |\r\n| Addresses[0].State                         | The State associated to the address.        |\r\n| Addresses[0].PostCode                         | The PostCode associated to the address.        |\r\n| Addresses[0].Country                         | The Country associated to the address.        |\r\n| Addresses[0].ISO3166Numeric                         | The ISO3166Numeric associated to the address (Conditionally required).        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction (Contact type 'Mobile' and 'Email' are mandatory for 3ds enabled transaction).        |\r\n| Contacts[0].ContactType                         | The Contact Type associated to the contact can be any of type \"Email\", \"Mobile\".        |\r\n| Contacts[0].ContactValue                         | The Contact Value associated to the contact type.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for risk assessment (Conditionally required for making payments using ACI Cards).        |\r\n| CustomerInfo.CustomerName                         | The Customer Name associated to the customer.        |\r\n| CustomerInfo.CustomerId                         | The Customer Id associated to the customer.        |\r\n| CustomerInfo.CustomerIP                         | The Customer Ip associated to the customer.        |\r\n| CustomerInfo.CustomerStatus                         | The Customer Status associated to the customer.        |\r\n| CustomerInfo.WebsiteUrl                         | The Website Url associated to the customer.\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| HppUrl                      | The Hosted Payment Page Url to load in a frame/browser.        |\r\n| CallerTransactionId               |  The AMCS generated Request GUID associated to the Payment request.                              |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.                              |\r\n| TransactionStatus                 | The Transaction Status associated to the Payment request.",
+          "description": "This endpoint is used to initiate a payment/tokenization request via the Provider's hosted payments page (HPP).\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"CARD\", \"ACH \".                      |\r\n| TransactionOrigin                 | Transaction Origin can be any of \"MOTO\", \"ECOM\"        |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| RequestId               | The Caller supplied GUID associated to the Payment request.        |\r\n| ProviderType                   |Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\",  \"Payment Express\", \"Realex\"        |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| CanStoreProfile                         | The flag suggests store the profile to vault.        |\r\n| CompletionURL                         | The Completion URL Request associated to the customer mandate for webhooks.        |\r\n| RedirectURL                         | The Redirect URL associated to the customer mandate for redirection.        |\r\n| Addresses                         | The List of addresses associated to the customer mandate for 3ds transaction (Billing address is mandatory for 3ds enabled transaction).        |\r\n| Addresses[0].AddressType                         | The AddressType associated to the address can be any of \"Billing\", \"Shipping\".        |\r\n| Addresses[0].StreetAddress1                         | The StreetAddress Line1 associated to the address.        |\r\n| Addresses[0].StreetAddress2                         | The StreetAddress Line2 associated to the address.        |\r\n| Addresses[0].StreetAddress3                         | The StreetAddress Line3 associated to the address (Conditionally required).        |\r\n| Addresses[0].City                         | The City associated to the address.        |\r\n| Addresses[0].State                         | The State associated to the address.        |\r\n| Addresses[0].PostCode                         | The PostCode associated to the address.        |\r\n| Addresses[0].Country                         | The Country associated to the address.        |\r\n| Addresses[0].ISO3166Numeric                         | The ISO3166Numeric associated to the address (Conditionally required).        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction (Contact type 'Mobile' and 'Email' are mandatory for 3ds enabled transaction).        |\r\n| Contacts[0].ContactType                         | The Contact Type associated to the contact can be any of type \"Email\", \"Mobile\".        |\r\n| Contacts[0].ContactValue                         | The Contact Value associated to the contact type.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for risk assessment (Conditionally required for making payments using ACI Cards).        |\r\n| CustomerInfo.CustomerName                         | The Customer Name associated to the customer.        |\r\n| CustomerInfo.CustomerId                         | The Customer Id associated to the customer.        |\r\n| CustomerInfo.CustomerIP                         | The Customer Ip associated to the customer.        |\r\n| CustomerInfo.CustomerStatus                         | The Customer Status associated to the customer.        |\r\n| CustomerInfo.WebsiteUrl                         | The Website Url associated to the customer.\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| HppUrl                      | The Hosted Payment Page Url to load in a frame/browser.        |\r\n| CallerTransactionId               |  The AMCS generated Request GUID associated to the Payment request.                              |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.                              |\r\n| TransactionStatus                 | The Transaction Status associated to the Payment request.",
           "requestBody": {
             "content": {
               "application/json": {
@@ -562,7 +562,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
+                    "$ref": "#/components/schemas/AMCSPayMobillsIvrResponse"
                   }
                 }
               }
@@ -619,56 +619,6 @@
             },
             "500": {
               "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/ivr/pay/getCustomerAccountDetail": {
-        "post": {
-          "tags": [
-            "Mobills IVR"
-          ],
-          "summary": "Get Customer Account Detail",
-          "description": "If the credit balance flag is false, then this endpoint initiates a payment for the IVR and returns the customer's details. If it's true, then it returns the customer's name along with the available credit balance in the account.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerARCode                      | The account code used for Accounts Receivable.        (AMCS will provide the account ARCode)                             |\r\n| Channel               | Channel can be only MOBILL OR IVR.   |\r\n| Amount               | Amount that customer wants to make a payment.                     | \n\n ## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| CustomerId                      | The account code used for Accounts Receivable.        (AMCS will provide the account ARCode) |\r\n|CustomerGuid                 | The GUID associated to the customer.        |\r\n| CustomerName               |The customer's name.   |\r\n| CustomerBalance               |The amount associated to the payment.|\r\n| CustomerCurrency               | Customer Currency associated with the Customer account.|\r\n| CreditBalance               |The Credit Balance available balance.|\r\n| ZipCode                         |ZipCode associated with the account address                            |\r\n| LastPaymentAmount                 |what was the last payment amount.    |\r\n| LastPaymentDate                 |When the last payment was made. |\r\n| TransactionReference            |Transaction Reference associated with account.",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayAccountDetailIvrRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Ok",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayAccountDetailIvrResponse"
-                  }
-                }
-              }
-            },
-            "204": {
-              "description": "No Content",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
               "content": {
                 "application/json": {
                   "schema": {
@@ -757,8 +707,7 @@
           "type": "object",
           "required": [
             "customerARCode",
-            "channel",
-            "amount"
+            "channel"
           ],
           "properties": {
             "customerARCode": {
@@ -770,38 +719,6 @@
               "type": "string",
               "example": "MOBILL / IVR",
               "nullable": false
-            }
-          },
-          "additionalProperties": false
-        },
-        "AMCSPayAccountDetailIvrRequest": {
-          "type": "object",
-          "required": [
-            "customerARCode",
-            "channel",
-            "amount"
-          ],
-          "properties": {
-            "customerARCode": {
-              "type": "string",
-              "example": "ACC1007",
-              "nullable": false
-            },
-            "channel": {
-              "type": "string",
-              "example": "MOBILL / IVR",
-              "nullable": false
-            },
-            "amount": {
-              "type": "integer",
-              "example": 10,
-              "nullable": true
-            },
-            "creditBalance": {
-              "type": "boolean",
-              "example": true,
-              "example2": false,
-              "nullable": true
             }
           },
           "additionalProperties": false
@@ -1053,6 +970,12 @@
               "example": "",
               "nullable": true
             },
+            "redirectURL": {
+              "type": "string",
+              "format": "url",
+              "example": "",
+              "nullable": true
+            },
             "addresses": {
               "type": "array",
               "items": {
@@ -1089,103 +1012,6 @@
             "ExternalChannel": {
               "type": "string",
               "nullable": false
-            }
-          }
-        },
-        "AMCSPayAccountDetailIvrResponse": {
-          "type": "object",
-          "properties": {
-            "creditBalanceAsTrue": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/AMCSPayAccountDetailIvrResponseCreditBalanceResponse"
-              },
-              "nullable": true
-            },
-            "creditBalanceAsFalse": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/AMCSPayAccountDetailIvrResponseCreditBalanceAsFalse"
-              },
-              "nullable": true
-            }         
-        }
-      },
-        "AMCSPayAccountDetailIvrResponseCreditBalanceResponse": {
-          "type": "object",
-          "properties": {
-            "customerid": {
-              "format": "string",
-              "type": "string",
-              "example": "ACC1001",
-              "nullable": false
-            },
-            "customerName": {
-              "type": "string",
-              "example": "Mark Smith",
-              "nullable": false
-            },
-            "creditBalance": {
-              "type": "integer",
-              "example": "200.00",
-              "nullable": true
-            }
-          }
-        },
-        "AMCSPayAccountDetailIvrResponseCreditBalanceAsFalse": {
-          "type": "object",
-          "properties": {
-            "customerid": {
-              "format": "uuid",
-              "type": "string",
-              "example": "ACC1001",
-              "nullable": false
-            },
-            "customerGuid": {
-              "format": "uuid",
-              "type": "string",
-              "example": "00000000-0000-0000-0000-000000000000",
-              "nullable": false
-            },
-            "customerName": {
-              "type": "string",
-              "example": "Mark Smith",
-              "nullable": false
-            },
-            "customerBalance": {
-              "type": "integer",
-              "example": "120.95",
-              "nullable": true
-            },
-            "customerCurrency": {
-              "type": "string",
-              "example": "EUR"
-            },
-            "creditBalance": {
-              "type": "integer",
-              "example": "200.00",
-              "nullable": true
-            },
-            "zipCode": {
-              "type": "string",
-              "example": "00501",
-              "nullable": true
-            },
-            "lastPaymentAmount": {
-              "type": "string",
-              "example": "155.50",
-              "nullable": true
-            },
-            "lastPaymentDate": {
-              "type": "string",
-              "example": "YYYY-MM-DD",
-              "nullable": true
-            },
-            "transactionReference": {
-              "type": "string",
-              "format": "uuid",
-              "example": "00000000-0000-0000-0000-000000000000",
-              "nullable": true
             }
           }
         },
@@ -1322,9 +1148,6 @@
               "nullable": true
             }
           }
-        },
-        "AMCSPayErrorContentResponse": {
-          "type": ""
         },
         "AMCSPayErrorResponse": {
           "type": "object",
@@ -1513,25 +1336,6 @@
           },
           "additionalProperties": false
         },
-        "AMCSPayDeleteProfile.AMCSPayAmount": {
-          "type": "object",
-          "properties": {
-            "principalAmount": {
-              "type": "number",
-              "nullable": true
-            },
-            "serviceFeeAmount": {
-              "type": "number",
-              "nullable": true
-            },
-            "currency": {
-              "type": "string",
-              "nullable": false
-            }
-          },
-          "example": null,
-          "description": "Not applicable for this endpoint."
-        },
         "AMCSPayAmount": {
           "type": "object",
           "required": [
@@ -1541,11 +1345,13 @@
           "properties": {
             "principalAmount": {
               "type": "number",
+              "format": "decimal",
               "example": 40.10,
               "nullable": true
             },
             "serviceFeeAmount": {
               "type": "number",
+              "format": "decimal",
               "example": 10.20,
               "nullable": true
             },
@@ -1916,12 +1722,6 @@
               ],
               "type": "string",
               "description": "The Transaction Status associated to the AMCS Pay transaction."
-            },
-            "transactionAmount": {
-              "type": "object",
-              "$ref": "#/components/schemas/AMCSPayDeleteProfile.AMCSPayAmount",
-              "nullable": false,
-              "description": "Not applicable for this endpoint."
             }
           },
           "additionalProperties": false
