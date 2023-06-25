@@ -1919,7 +1919,8 @@
             "requestId",
             "providerType",
             "transactionAmount",
-            "originalPaymentReference"
+            "originalPaymentReference",
+            "OriginalAmount"
           ],
           "type": "object",
           "properties": {
@@ -1982,6 +1983,12 @@
               "type": "string",
               "example": "8ac7a4a28749242d01874c7e648327b7",
               "nullable": false
+            },
+            "OriginalAmount": {
+              "type": "number",
+              "format": "decimal",
+              "example": 40.10,
+              "nullable": true
             }
           }
         },
