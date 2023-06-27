@@ -676,6 +676,16 @@
                   }
                 }
               }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                  }
+                }
+              }
             }
           }
         }
@@ -1114,9 +1124,9 @@
                 "$ref": "#/components/schemas/AMCSPayAccountDetailIvrResponseCreditBalanceAsFalse"
               },
               "nullable": true
-            }         
-        }
-      },
+            }
+          }
+        },
         "AMCSPayAccountDetailIvrResponseCreditBalanceResponse": {
           "type": "object",
           "properties": {
