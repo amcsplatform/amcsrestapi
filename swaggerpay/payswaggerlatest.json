@@ -129,9 +129,11 @@
               "name": "callerTransactionId",
               "in": "query",
               "required": true,
+              "schema":{
               "type": "string",
               "format": "uuid",
-              "example": "00000000-0000-0000-0000-000000000000"
+              "example": "827b7e68-2c52-43aa-9820-b02f006fa971"
+              }
             }
           ],
           "responses": {
@@ -141,6 +143,118 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/schemas/AMCSPayPollPaymentResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/ExternalTransaction/Poll/GetAll": {
+        "get": {
+          "tags": [
+            "ExternalTransaction"
+          ],
+          "summary": "Get All Payment Response Details",
+          "description": "This endpoint is used to get the payment transaction details based on the set filter criteria.",
+          "parameters": [
+            {
+              "name": "DateFrom",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "dateTimeOffset",
+                "example": "2023-06-28T06:46:32.910Z",
+                "description": "Date From is the user input in W3C-DTF Date format (YYYY-MM-DDTHH:MM:SS:SS.SSSZ). It cannot be later than the current date."
+              }
+            },
+            {
+              "name": "DateTo",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "dateTimeOffset",
+                "example": "2023-06-28T07:00:00.000Z",
+                "description": "Date To is the user input in W3C-DTF Date format (YYYY-MM-DDTHH:MM:SS:SS.SSSZ). It cannot be later than the current date or the date from value."
+              }
+            },
+            {
+              "name": "CustomerId",
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "description": "The customerId associated to the customer or the ARAccountCode account code used for Accounts Receivable."
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AMCSPayPollGetAllPaymentResponse"
+                    }
+                  }
+                },
+                "text/plain": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AMCSPayPollGetAllPaymentResponse"
+                    }
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AMCSPayPollGetAllPaymentResponse"
+                    }
                   }
                 }
               }
@@ -340,85 +454,6 @@
             },
             "401": {
               "description": "Unauthorized",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/ExternalTransaction/GetAllPaymentDetails": {
-        "get": {
-          "tags": [
-            "ExternalTransaction"
-          ],
-          "summary": "Get All Payment Response Details",
-          "description": "This endpoint is used to get all the payment response details from the database within the given date and time.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| DateTo |Date To is the user input and it will be using this format (YYYY-MM-DD HH:MM:SS).|\n| DateFrom |Date From is the user input and it will be using this format (YYYY-MM-DD HH:MM:SS).|\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| customerId | The customerId associated to the customer.|\n| customerName |The customer's name.|\n| ARAccountCode |The account code used for Accounts Receivable. (AMCS will provide the account ARCode).|\n| Currency |  Currency associated with the Customer account.|\n| Amount | The amount associated to the payment.|\n| PaymentType | Payment Type can be any of \"Credit Card\", \"Direct Debit \", \"Vault\", \"Credit Card/Auto-Pay\" .|\n| PaymentTransactionId | The AMCS generated Payment transaction Id associated to the payment request.|\n| PaymentTransactionGuid | The AMCS generated payment transaction guid, it is used by the AmcsPay Data Base in the CallerInitiatePaymentRequest table and in the CallerTransactionIdentifier column.|\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Pending\", \"Success\", \"Failed\", \"Timeout\", \"Cancelled\". |\n| PaymentId | The AMCS creates the record in the payment table, if the transaction status is success.|\n| PaymentProvider | Payment provider can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".|\n| Notes | More information associated to the payment.|\n| reference | The reference sent by the provider associated to the original payment response. |\n| PaymentReference | The payment reference data sent by the provider associated to the original payment response.|\n| DateInput |If the Payment is successful then it will record the date input in the payment transaction table.",
-          "parameters": [
-            {
-              "name": "dateTo",
-              "in": "query",
-              "required": true,
-              "type": "string",
-              "format": "datetime",
-              "example": "2023-05-02 12:26:25"
-            },
-            {
-              "name": "dateFrom",
-              "in": "query",
-              "required": true,
-              "type": "string",
-              "format": "datetime",
-              "example": "2023-06-02 12:26:25"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Ok",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayGetAllPaymentResponseDetails"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
               "content": {
                 "application/json": {
                   "schema": {
@@ -810,7 +845,6 @@
             "creditBalance": {
               "type": "boolean",
               "example": true,
-              "example2": false,
               "nullable": true
             }
           },
@@ -1340,7 +1374,8 @@
           }
         },
         "AMCSPayErrorContentResponse": {
-          "type": ""
+          "type": "string",
+          "nullable": true
         },
         "AMCSPayErrorResponse": {
           "type": "object",
@@ -1535,23 +1570,27 @@
             "principalAmount",
             "currency"
           ],
+          "description": "The amount associated to the payment request.",
           "properties": {
             "principalAmount": {
               "type": "number",
               "format": "decimal",
               "example": 40.10,
-              "nullable": true
+              "nullable": true,
+              "description": "The base amount associated to the payment request (This field is optional for Tokenization)."
             },
             "serviceFeeAmount": {
               "type": "number",
               "format": "decimal",
               "example": 10.20,
-              "nullable": true
+              "nullable": true,
+              "description": "The service fee amount associated to the payment request."
             },
             "currency": {
               "type": "string",
               "example": "EUR",
-              "nullable": false
+              "nullable": false,
+              "description": "The currency associated to the payment request."
             }
           }
         },
@@ -1697,6 +1736,189 @@
           },
           "additionalProperties": false
         },
+        "AMCSPayPollGetAllPaymentResponse": {
+          "type": "object",
+          "properties": {
+            "callerTransactionId": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true,
+              "example" : "5b1e280c-ba76-4f90-982a-b028006721f4",
+              "description": "The AMCS generated Request GUID associated to the Payment request."
+            },
+            "amcsPayReferenceId": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true,
+              "example" : "026b03bc-af5e-4615-8779-afe400ce9fdd",
+              "description": "The AMCS generated Response GUID associated to the Payment request."
+            },
+            "providerReference": {
+              "type": "string",
+              "nullable": true,
+              "example" : "8ac7a4a1877ca1eb01877fc082da054f",
+              "description": "The reference number associated to the payment provider."
+            },
+            "providerResponseCode": {
+              "type": "string",
+              "nullable": true,
+              "example" : "Success",
+              "description": "The response code associated to the payment provider."
+            },
+            "providerAuthCode": {
+              "type": "string",
+              "nullable": true,
+              "example" : "12345",
+              "description": "The authorization code associated to the payment provider."
+            },
+            "responseTimestamp": {
+              "type": "string",
+              "format": "dateTime",
+              "nullable": true,
+              "example": "2023-04-14T20:32:35.1965037+08:00",
+              "description": "The Timestamp of the payment response payload."
+            },
+            "notes": {
+              "type": "string",
+              "nullable": true,
+              "example" : "ACI Cards Transaction Id 8ac7a4a1877ca1eb01877fc082da054f\r\n\r\n        Transaction Date 2023-04-14 12:32:15+0000\r\n\r\n        Result code 000.100.110\r\n\r\n        ResultDescription: Request successfully processed in 'Merchant in Integrator Test Mode'\r\n\r\n        Payment Type DB\r\n\r\n        Card Holder jessah\r\n\r\n        Card Expiry 01/2025\r\n\r\n",
+              "description": "More information associated to the payment."
+            },
+            "transactionStatus": {
+              "enum": [
+                "Initiated",
+                "Success",
+                "Failure",
+                "Timeout",
+                "Cancelled",
+                "InvalidCardInformation",
+                "Exception"
+              ],
+              "type": "string",
+              "nullable": true,
+              "example" : "Success",
+              "description": "The Transaction Status associated to the payment."
+            },
+            "transactionAmount": {
+              "$ref": "#/components/schemas/AMCSPayAmount",
+              "example" : "Success",
+              "description": "The Transaction Status associated to the payment."
+            },
+            "requestType": {
+              "enum": [
+                "OneOffPayment",
+                "Tokenization",
+                "VaultOrAutoPayment",
+                "Refund",
+                "DeleteToken"
+              ],
+              "type": "string",
+              "nullable": true,
+              "example" : "Tokenization",
+              "description": "The payment transaction request type."
+            },
+            "paymentType": {
+              "enum": [
+                "CARD",
+                "ACH",
+                "GOOGLEPAY",
+                "APPLEPAY"
+              ],
+              "type": "string",
+              "nullable": true,
+              "example" : "CARD",
+              "description": "The payment transaction payment type."
+            },
+            "transactionOrigin": {
+              "enum": [
+                "MOTO",
+                "ECOM"
+              ],
+              "type": "string",
+              "nullable": true,
+              "example" : "MOTO",
+              "description": "The payment transaction payment type."
+            },
+            "callerIdentifier": {
+              "type": "string",
+              "nullable": true,
+              "example" : "Tenant Name",
+              "description": "The Caller Identification associated to the Payment request."
+            },
+            "requestId": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true,
+              "example" : "3e14bdf6-5b17-44aa-bf5b-2f7fb113daf9",
+              "description": "The Caller supplied GUID associated to the payment request."
+            },
+            "providerType": {
+              "enum": [
+                "Test",
+                "Realex",
+                "Heartland",
+                "MerchantPartners",
+                "ACICards",
+                "ACIElectronic",
+                "AptPay",
+                "PaymentExpress",
+                "EftCanada",
+                "TerminalPay"
+              ],
+              "type": "string",
+              "nullable": true,
+              "example" : "ACICards",
+              "description": "The payment provider type."
+            },
+            "customerInfo": {
+              "$ref": "#/components/schemas/AMCSPayCustomerInfo"
+            },
+            "createdTimestamp": {
+              "type": "string",
+              "format": "dateTimeOffset",
+              "nullable": true,
+              "example": "2000-01-01T00:00:00.0000000+01:00",
+              "description": "The timestamp when the payment transaction is initiated."
+            },
+            "tokenReference": {
+              "type": "string",
+              "nullable": true,
+              "example" : "72573620",
+              "description": "The Token Reference sent by the provider associated to the original payment (Tokenisation Response)."
+            },
+            "historyReference": {
+              "type": "string",
+              "nullable": true,
+              "example": "1234567",
+              "description": "The history reference data sent by the provider associated to the original payment (Tokenisation Response)."
+            },
+            "profileExpiryDate": {
+              "type": "string",
+              "nullable": true,
+              "example" :"08/24",
+              "description": "The Profile/Card expiry date sent by the  provider associated to the original payment (Tokenisation Response) in (MM/YY) format."
+            },
+            "maskedProfileNumber": {
+              "type": "string",
+              "nullable": true,
+              "example" : "************1234",
+              "description": "The masked Profile/Card Number sent by the provider associated to the original payment (Tokenisation Response) (Conditionally required)."
+            },
+            "profileType": {
+              "type": "string",
+              "nullable": true,
+              "example" : "MasterCard",
+              "description": "The Profile/Card Type sent by the provider associated to the original payment (Tokenisation Response)."
+            },
+            "profileHolder": {
+              "type": "string",
+              "nullable": true,
+              "example" : "Joe Bloggs",
+              "description": "The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response)."
+            }
+          },
+          "additionalProperties": false
+        },
         "AMCSPayGetAllPaymentResponseDetails": {
           "type": "object",
           "properties": {
@@ -1737,7 +1959,8 @@
               "example": 1
             },
             "paymentTransactionGuid": {
-              "type": "GUID",
+              "type": "string",
+              "format": "uuid",
               "nullable": false,
               "example": "17071E01-E9DF-498A-AD9F-AFDB00A203F0"
             },
