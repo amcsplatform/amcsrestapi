@@ -206,7 +206,7 @@
                 "type": "string",
                 "format": "dateTimeOffset",
                 "example": "2023-06-28T06:46:32.910Z",
-                "description": "Date From is the user input in W3C-DTF Date format (YYYY-MM-DDTHH:MM:SS:SS.SSSZ). It cannot be later than the current date."
+                "description": "Date From is the user input in W3C-DTF Date format [YYYY-MM-DDThh:mm:ss.sTZD]. It cannot be later than the current date."
               }
             },
             {
@@ -217,7 +217,7 @@
                 "type": "string",
                 "format": "dateTimeOffset",
                 "example": "2023-06-28T07:00:00.000Z",
-                "description": "Date To is the user input in W3C-DTF Date format (YYYY-MM-DDTHH:MM:SS:SS.SSSZ). It cannot be later than the current date or the date from value."
+                "description": "Date To is the user input in W3C-DTF Date format [YYYY-MM-DDThh:mm:ss.sTZD]. It cannot be later than the current date or the date from value."
               }
             },
             {
@@ -368,7 +368,7 @@
             "ExternalTransaction"
           ],
           "summary": "Vault Payment",
-          "description": "This endpoint is used to make a payment using the saved profile(Card / ACH) via AmcsPay.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| RequestType | Request Type is  \"VaultOrAutoPayment\". |\n| PaymentType | Payment Type can be any of \"CARD\", \"ACH \".| \n| TransactionOrigin | Transaction Origin can be any of \"MOTO\", \"ECOM\". |\n| CallerIdentifier | The identification associated to the calling application.| \n| RequestId | The Caller supplied GUID associated to the Payment request.|\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\".| \n| TransactionAmount | The amount subjected for vault.|\n| TokenReference | The Token Reference sent by the provider associated to the original payment.|\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Conditionally required).|\n| MaskedProfileNumber | The Masked Profile/Card Number sent by the provider associated to the original payment (Conditionally required).|\n |\r\n| CustomerInfo                         | The Details associated to the customer mandate for risk assessment (Conditionally required for making payments using ACI Cards).        |\r\n| CustomerInfo.CustomerName                         | The Customer Name associated to the customer.        |\r\n| CustomerInfo.CustomerId                         | The Customer Id associated to the customer.        |\r\n| CustomerInfo.CustomerIP                         | The Customer Ip associated to the customer.        |\r\n| CustomerInfo.CustomerStatus                         | The Customer Status associated to the customer.        |\r\n| CustomerInfo.WebsiteUrl                         | The Website Url associated to the customer.\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider response. |\n| ProviderResponseCode | The status code associated to the payment response. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.ServiceFeeAmount                     |The service fee amount associated to the payment request.        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.     |\n| ResponseTimeStamp | The time stamp associated to the response payload. |\n| Notes | More information associated to the payment. |\n| TransactionStatus | The Transaction Status associated to the refund response can be any of type \"Initiated\" or \"Failure\".",
+          "description": "This endpoint is used to make a payment using the saved profile(Card / ACH) via AmcsPay.",
           "requestBody": {
             "content": {
               "application/json": {
@@ -1535,17 +1535,20 @@
             "customerName": {
               "type": "string",
               "example": "",
-              "nullable": true
+              "nullable": true,
+              "description": "The Customer Name associated to the customer."
             },
             "customerId": {
               "type": "string",
               "example": "ACC1007",
-              "nullable": false
+              "nullable": false,
+              "description": "The Customer Id associated to the customer."
             },
             "customerIP": {
               "type": "string",
               "example": "000.000.0.000",
-              "nullable": true
+              "nullable": true,
+              "description": "The Customer Ip associated to the customer."
             },
             "customerStatus": {
               "type": "string",
@@ -1554,12 +1557,14 @@
                 "EXISTING"
               ],
               "example": "NEW",
-              "nullable": false
+              "nullable": false,
+              "description": "The Customer Status associated to the customer."
             },
             "websiteUrl": {
               "type": "string",
               "example": "",
-              "nullable": true
+              "nullable": true,
+              "description": "The Website Url associated to the customer."
             }
           },
           "additionalProperties": false
@@ -2243,7 +2248,8 @@
                 "VaultOrAutoPayment"
               ],
               "example": "VaultOrAutoPayment",
-              "nullable": false
+              "nullable": false,
+              "description": "Request Type is \"VaultOrAutoPayment\"."
             },
             "paymentType": {
               "type": "string",
@@ -2252,7 +2258,8 @@
                 "ACH"
               ],
               "example": "CARD",
-              "nullable": false
+              "nullable": false,
+              "description": "Payment Type can be any of \"CARD\", \"ACH \"."
             },
             "transactionOrigin": {
               "type": "string",
@@ -2261,18 +2268,21 @@
                 "ECOM"
               ],
               "example": "MOTO",
-              "nullable": false
+              "nullable": false,
+              "description": "Transaction Origin can be any of \"MOTO\", \"ECOM\"."
             },
             "callerIdentifier": {
               "type": "string",
               "example": "Elemos",
-              "nullable": false
+              "nullable": false,
+              "description": "The identification associated to the calling application."
             },
             "requestId": {
               "type": "string",
               "format": "uuid",
               "example": "00000000-0000-0000-0000-000000000000",
-              "nullable": false
+              "nullable": false,
+              "description": "The Caller supplied GUID associated to the Payment request."
             },
             "providerType": {
               "type": "string",
@@ -2285,32 +2295,38 @@
                 "Realex"
               ],
               "example": "ACICards",
-              "nullable": false
+              "nullable": false,
+              "description": "Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\"."
             },
             "transactionAmount": {
               "type": "object",
               "$ref": "#/components/schemas/AMCSPayAmount",
-              "nullable": false
+              "nullable": false,
+              "description": "The amount subjected for vault."
             },
             "customerInfo": {
               "type": "object",
               "$ref": "#/components/schemas/AMCSPayVaultCustomerInfo",
-              "nullable": true
+              "nullable": true,
+              "description": "The Details associated to the customer mandate for risk assessment (Conditionally required for making payments using ACI Cards)."
             },
             "tokenReference": {
               "type": "string",
               "example": "58af616d8b112af873be57bb627a7677bdffdc6a306ffdff26c6f6b59d917fe7",
-              "nullable": false
+              "nullable": false,
+              "description": "The Token Reference sent by the provider associated to the original payment."
             },
             "historyReference": {
               "type": "string",
               "example": "123456789012345",
-              "nullable": true
+              "nullable": true,
+              "description": "The history reference data sent by the provider associated to the original payment (Conditionally required)."
             },
             "maskedProfileNumber": {
               "type": "string",
               "example": "5454XXXXXXXX5454",
-              "nullable": true
+              "nullable": true,
+              "description": "The Masked Profile/Card Number sent by the provider associated to the original payment (Conditionally required)."
             }
           }
         },
@@ -2368,43 +2384,57 @@
         },
         "AMCSPayVaultResponse": {
           "type": "object",
-          "properties": {
+          "properties": { 
+            "callerTransactionId": {
+              "type": "string",
+              "format": "uuid",
+              "example": "16a56160-557b-4457-8f0f-b038006d0a8d",
+              "nullable": true,
+              "description": "The AMCS generated Request GUID associated to the hosted payments page."
+            },
             "amcsPayReferenceId": {
               "type": "string",
               "format": "uuid",
-              "example": "00000000-0000-0000-0000-000000000000",
-              "nullable": false
+              "example": "f8026905-9ec9-4bbb-aa42-b038006d0d3b",
+              "nullable": false,
+              "description": "The AMCS generated Response GUID associated to the Payment request."
             },
             "providerReference": {
               "type": "string",
               "example": "8ac7a4a28749242d01874c7e648327b7",
-              "nullable": true
+              "nullable": true,
+              "description": "The reference number associated to the payment provider response."
             },
             "providerResponseCode": {
               "type": "string",
               "example": "Success",
-              "nullable": true
+              "nullable": true,
+              "description": "The status code associated to the payment response."
             },
             "providerAuthCode": {
               "type": "string",
               "example": "",
-              "nullable": true
+              "nullable": true,
+              "description": "The authorization code associated to the payment provider."
             },
             "transactionAmount": {
               "type": "object",
               "$ref": "#/components/schemas/AMCSPayAmount",
-              "nullable": false
+              "nullable": false,
+              "description": "The amount associated to the payment request."
             },
             "responseTimeStamp": {
               "type": "string",
               "format": "datetime",
               "example": "2022-07-27 18:54:18.6767965 +08:00",
-              "nullable": false
+              "nullable": false,
+              "description": "The time stamp associated to the response payload."
             },
             "notes": {
               "type": "string",
-              "example": "",
-              "nullable": true
+              "example": "        ACI Auto Pay Transaction Id 8ac7a4a2892d433501892f117c3a3173\r\n\r\n        Transaction Date 2023-07-07 06:37:02+0000\r\n\r\n        Result code 000.100.110\r\n\r\n        ResultDescription: Request successfully processed in 'Merchant in Integrator Test Mode'\r\n\r\n        Payment Type DB\r\n\r\n    ",
+              "nullable": true,
+              "description": "More information associated to the payment."
             },
             "transactionStatus": {
               "type": "string",
@@ -2413,7 +2443,8 @@
                 "Failure"
               ],
               "example": "Success",
-              "nullable": false
+              "nullable": false,
+              "description": "The Transaction Status associated to the refund response."
             }
           },
           "additionalProperties": false
