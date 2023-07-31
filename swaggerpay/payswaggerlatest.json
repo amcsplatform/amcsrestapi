@@ -117,6 +117,66 @@
         }
       }
     },
+    "/pay/AptPay/GetTransactionStatus": {
+      "post": {
+        "tags": [
+          "AptPay"
+        ],
+        "summary": "Get Transaction Status",
+        "description": "This endpoint is used to get transaction status of an apt pay.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSAptPayGetTranStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSAptPayGetTranStatusResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ExternalTransaction/OneOff": {
       "post": {
         "tags": [
@@ -1314,6 +1374,20 @@
           }
         }
       },
+      "AMCSAptPayGetTranStatusRequest": {
+        "type": "object",
+        "required": [
+          "transactionId"
+        ],
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "nullable": false,
+            "description": "The transaction id of the request",
+            "example": "mi5gkghovd-0119-qgdgtosuxd7ehxbe5h2oiwae"
+          }
+        }
+      },
       "AMCSPayMobillsIvrRequestDetail": {
         "required": [
           "CustomerId",
@@ -1691,6 +1765,45 @@
             "type": "boolean",
             "nullable": true,
             "description": "Returns true if the request is successful; False, if the request is unsuccessful"
+          }
+        }
+      },
+      "AMCSAptPayGetTranStatusBasicDataResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": false,
+            "description": "Contains the status of the response",
+            "example": "SETTLED"
+          },
+          "message": {
+            "type": "string",
+            "nullable": false,
+            "description": "Contains the detailed description of the response",
+            "example": ""
+          }
+        }
+      },
+      "AMCSAptPayGetTranStatusResponse": {
+        "type": "object",
+        "properties": {
+          "Data": {
+            "type": "object",
+            "nullable": true,
+            "$ref": "#/components/schemas/AMCSAptPayGetTranStatusBasicDataResponse"
+          },
+          "Error": {
+            "type": "string",
+            "nullable": true,
+            "description": "Contains the error description of the response",
+            "example": null
+          },
+          "IsSuccess": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Returns true if it doesn't contains error; False if it contains error",
+            "example": true
           }
         }
       },
