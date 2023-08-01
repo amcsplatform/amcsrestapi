@@ -1462,6 +1462,29 @@
           }
         }
       },
+      "AMCSAptPayAddIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "Data": {
+            "type": "object",
+            "nullable": true,
+            "$ref": "#/components/schemas/AMCSAptPayBasicDataResponse"
+          },
+          "Error": {
+            "type": "array",
+            "nullable": true,
+            "description": "Contains the error description of the response",
+            "items": {
+              "$ref": "#/components/schemas/AMCSAptPayErrorDataResponse"
+            }
+          },
+          "IsSuccess": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "Returns true if it doesn't contains error; False if it contains error"
+          }
+        }
+      },
       "AMCSAptPayGetTranStatusRequest": {
         "type": "object",
         "required": [
@@ -1828,112 +1851,51 @@
           "currency",
           "transactionType",
           "disbursementNumber",
-          "branchTransitNumber",
-          "instrumentId",
           "expirationDate",
           "identityId",
-          "referenceId",
-          "firstName",
-          "lastName",
-          "businessName"
+          "instrumentId",
+          "referenceId"
         ],
         "properties": {
           "amount": {
             "type": "integer",
-            "example": 1,
-            "description": "The amount to be add. Amount must be greater than 0.00."
+            "example": 12.1,
+            "description": "Provide the amount to be disbursed"
           },
           "currency": {
             "type": "string",
-            "example": "CAD",
-            "nullable": false,
-            "description": "Currency of the transaction."
+            "example": "USD",
+            "description": "The currency being used for the transaction. This is expressed as a three-letter currency code (ie., CAD for Canadian dollars, USD for United States dollars, etc.)."
           },
           "transactionType": {
             "type": "string",
-            "example": "ACH",
-            "description": "Type of transaction. (ACH or Card)"
+            "example": "CARD",
+            "description": "Provides a descriptor that expresses what kind of payment type is being processed. (ACH or Card)"
           },
           "disbursementNumber": {
             "type": "string",
-            "example": "4111111111111111",
-            "description": "DisbursementNumber is required when InstrumentId is empty."
-          },
-          "bankNumber": {
-            "type": "string",
-            "example": "IE64IRCE92050112345678",
-            "description": "Bunk number."
-          },
-          "accountNumber": {
-            "type": "string",
-            "example": "123456789",
-            "nullable": false,
-            "description": "Account number."
-          },
-          "instrumentId": {
-            "type": "string",
-            "example": "",
-            "description": "It is used only if disbursement number was not specified."
+            "example": "5454545454545454",
+            "description": "Information inputted should be a Card or Personal Account Number (PAN) and must be 15-19 digits in length."
           },
           "expirationDate": {
             "type": "string",
             "example": "2026-11",
-            "nullable": false,
-            "description": "Date of exception."
+            "description": "Provide card expiration date.(Format: YYYY-MM)"
           },
           "identityId": {
             "type": "string",
-            "example": "271814238821",
-            "nullable": false,
+            "example": "762780560211",
             "description": "Identity Id must be greater than 0."
+          },
+          "instrumentId": {
+            "type": "string",
+            "example": "",
+            "description": "Provide the instrument ID. This is the ISIN and/or Common Code of the security that is the subject of the associated instruction. (This is required if transactionNumber is not defined)"
           },
           "referenceId": {
             "type": "string",
-            "example": "REF00003",
-            "nullable": false,
-            "description": "Reference id."
-          },
-          "firstName": {
-            "type": "string",
-            "example": "Test",
-            "nullable": false
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Test",
-            "nullable": false
-          },
-          "businessName": {
-            "type": "string",
-            "example": "Test",
-            "nullable": false
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCSAptPayAddDisbursementResponse": {
-        "type": "object",
-        "required": [
-          "id",
-          "referenceId",
-          "status"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "ynuboocqm3-0005-evhbxcn88buqfopqttihfiad",
-            "description": "An id of the disbursement."
-          },
-          "referenceId":{
-            "type": "string",
-            "example": "9eb76126-df37-4a8f-bdb0-435ae2d682eb",
-            "nullable": false,
-            "description": "Reference id."
-          },
-          "status": {
-            "type": "string",
-            "example": "ACCEPTED",
-            "description": "Status of the disbursement."
+            "example": "23232131554",
+            "description": "Reference transaction ID"
           }
         },
         "additionalProperties": false
@@ -1955,27 +1917,44 @@
           }
         }
       },
-      "AMCSAptPayAddIdentityResponse": {
+      "AMCSAptPayAddDisbursementResponse": {
         "type": "object",
         "properties": {
           "Data": {
             "type": "object",
-            "nullable": true,
-            "$ref": "#/components/schemas/AMCSAptPayBasicDataResponse"
+            "$ref": "#/components/schemas/AMCSAptPayAddDisbursementDataResponse"
           },
           "Error": {
-            "type": "array",
-            "nullable": true,
-            "description": "Contains the error description of the response",
-            "items": {
-              "$ref": "#/components/schemas/AMCSAptPayErrorDataResponse"
-            }
+            "type": "string",
+            "description": "Returns null if the request doesn't contains error",
+            "example": null
           },
           "IsSuccess": {
             "type": "boolean",
-            "nullable": false,
-            "description": "Returns true if it doesn't contains error; False if it contains error"
+            "description": "Returns true if the request is successful; False, if the request is unsuccessful",
+            "example": true
           }
+        },
+        "additionalProperties": false
+      },
+      "AMCSAptPayAddDisbursementDataResponse": {
+        "type": "object",
+        "properties": {
+           "id" : {
+              "type" : "string",
+              "example" : "6xxpsbbxjj-0119-hclhajwncvxejiefxgjatcen",
+              "description" : "This is the transaction ID of the transaction"
+            },
+            "status" : {
+              "type" : "string",
+              "example" : "ACCEPTED",
+              "description" : "This provides a message that describes the status of the transaction"
+            },
+            "referenceId" : {
+              "type" : "string",
+              "example" : "23232131554",
+              "description" : "Reference transaction ID"
+            }
         }
       },
       "AMCSAptPayGetTranStatusBasicDataResponse": {
