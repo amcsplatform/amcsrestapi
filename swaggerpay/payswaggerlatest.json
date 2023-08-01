@@ -1310,118 +1310,140 @@
           "individual": {
             "type": "boolean",
             "nullable": false,
-            "description": "The individual boolean value"
+            "description": "The individual boolean value",
+            "example": true
           },
           "name": {
             "type": "string",
             "nullable": true,
-            "description": "The name of the individual"
+            "description": "The name of the individual",
+            "example": "TestStevenK"
           },
           "firstName": {
             "type": "string",
             "nullable": false,
-            "description": "The first name of a person"
+            "description": "The first name of a person",
+            "example": "Steven"
           },
           "middleName": {
             "type": "string",
             "nullable": true,
-            "description": "The middle name of a person"
+            "description": "The middle name of a person",
+            "example": "Oliver"
           },
           "lastName": {
             "type": "string",
             "nullable": false,
-            "description": "The last name of a person"
+            "description": "The last name of a person",
+            "example": "Kyamko"
           },
           "dateOfBirth": {
             "type": "string",
-            "example": "YYYY-MM-DD",
             "nullable": true,
-            "description": "The date of birth of a person"
+            "description": "The date of birth of a person",
+            "example": "2000-01-01"
           },
           "phone": {
             "type": "string",
             "nullable": true,
-            "description": "The phone number of a person"
+            "description": "The phone number of a person",
+            "example": "+639201001111"
           },
           "occupation": {
             "type": "string",
             "nullable": true,
-            "description": "The occupation of the person or individual"
+            "description": "The occupation of the person or individual",
+            "example": "Janitor"
           },
           "street": {
             "type": "string",
             "nullable": true,
-            "description": "The streed address of the person or individual"
+            "description": "The streed address of the person or individual",
+            "example": "Street 1"
           },
           "streetLine2": {
             "type": "string",
             "nullable": true,
-            "description": "The street line address of the person or individual"
+            "description": "The street line address of the person or individual",
+            "example": "Street 2"
           },
           "city": {
             "type": "string",
             "nullable": true,
-            "description": "The city address of the person or individual"
+            "description": "The city address of the person or individual",
+            "example": "Toronto"
           },
           "zip": {
             "type": "string",
             "nullable": true,
-            "description": "The zip code or address of the person or individual"
+            "description": "The zip code or address of the person or individual",
+            "example": "L4K 0J7"
           },
           "country": {
             "type": "string",
             "nullable": false,
-            "description": "The country address of the person or individual"
+            "description": "The country address of the person or individual",
+            "example": "CA"
           },
           "province": {
             "type": "string",
             "nullable": true,
-            "description": "The province of the person or address"
+            "description": "The province of the person or address",
+            "example": "ON"
           },
           "email": {
             "type": "string",
             "nullable": false,
-            "description": "The email address of the person or individual"
+            "description": "The email address of the person or individual",
+            "example": "jametests@gmail.com"
           },
           "dbaName": {
             "type": "string",
             "nullable": true,
-            "description": "The dba name"
+            "description": "The dba name",
+            "example": "Steven"
           },
           "url": {
             "type": "string",
             "nullable": true,
-            "description": "The link on which it is stored"
+            "description": "The link on which it is stored",
+            "example": "sampleurl.com"
           },
           "typeOfBusiness": {
             "type": "string",
             "nullable": true,
-            "description": "The type of business on which it is applied to"
+            "description": "The type of business on which it is applied to",
+            "example": "Corporation"
           },
           "dateOfIncorporation": {
             "type": "string",
             "nullable": true,
-            "description": "The date of incorporation"
+            "description": "The date of incorporation",
+            "example": "2000-01-01"
           },
           "countryOfRegistration": {
             "type": "string",
             "nullable": true,
-            "description": "The country of registration of the person or individual"
+            "description": "The country of registration of the person or individual",
+            "example": "CA"
           },
           "provinceOfRegistration": {
             "type": "string",
             "nullable": true,
-            "description": "The province of the person or individual"
+            "description": "The province of the person or individual",
+            "example": "ON"
           },
           "businessTaxId": {
             "type": "string",
             "nullable": true,
-            "description": "The business Tax ID"
+            "description": "The business Tax ID",
+            "example": "12312"
           },
           "clientId": {
             "type": "string",
             "nullable": false,
-            "description": "The client ID"
+            "description": "The client ID",
+            "example": "12312"
           }
         }
       },
@@ -1790,12 +1812,14 @@
           "id": {
             "type": "string",
             "nullable": false,
-            "description": "Generated ID from the API"
+            "description": "Generated ID from the API",
+            "example": "183867559356"
           },
           "status": {
             "type": "string",
             "nullable": false,
-            "description": "Contains the status of the request"
+            "description": "Contains the status of the request",
+            "example": "AML check in progress"
           }
         }
       },
@@ -1927,12 +1951,14 @@
           "Error": {
             "type": "string",
             "nullable": true,
-            "description": "Returns null if the request doesn't contains error"
+            "description": "Returns null if the request doesn't contains error",
+            "example": null
           },
           "IsSuccess": {
             "type": "boolean",
             "nullable": true,
-            "description": "Returns true if the request is successful; False, if the request is unsuccessful"
+            "description": "Returns true if the request is successful; False, if the request is unsuccessful",
+            "example": true
           }
         }
       },
