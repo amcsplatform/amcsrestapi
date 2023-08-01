@@ -99,7 +99,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
                 }
               }
             }
@@ -1299,60 +1309,55 @@
         "type": "object",
         "required": [
           "individual",
-          "firstName",
-          "lastName",
-          "dateOfBirth",
-          "country",
-          "email",
           "clientId"
         ],
         "properties": {
           "individual": {
             "type": "boolean",
             "nullable": false,
-            "description": "The individual boolean value",
+            "description": "If this is an individual, set this parameter to True. If this is a business entity, set this to False.\n Default = true",
             "example": true
           },
           "name": {
             "type": "string",
             "nullable": true,
-            "description": "The name of the individual",
+            "description": "This is required if individual is set to false\n\nPlease provide business entity name",
             "example": "TestStevenK"
           },
           "firstName": {
             "type": "string",
-            "nullable": false,
-            "description": "The first name of a person",
+            "nullable": true,
+            "description": "This is required if individual is set to false\n\nPlease provide the individual's first name (max 50 characters)",
             "example": "Steven"
           },
           "middleName": {
             "type": "string",
             "nullable": true,
-            "description": "The middle name of a person",
+            "description": "Please provide the individual's middle name.",
             "example": "Oliver"
           },
           "lastName": {
             "type": "string",
-            "nullable": false,
-            "description": "The last name of a person",
+            "nullable": true,
+            "description": "This is required if individual is set to false\n\nPlease provide the individual's last name.",
             "example": "Kyamko"
           },
           "dateOfBirth": {
             "type": "string",
             "nullable": true,
-            "description": "The date of birth of a person",
+            "description": "Please provide the individual’s date of birth. This is represented as YYYY-MM-DD.",
             "example": "2000-01-01"
           },
           "phone": {
             "type": "string",
             "nullable": true,
-            "description": "The phone number of a person",
+            "description": "Either phone or email is required\n\nPlease provide a contact's phone number.",
             "example": "+639201001111"
           },
           "occupation": {
             "type": "string",
             "nullable": true,
-            "description": "The occupation of the person or individual",
+            "description": "Required for prepaid cards\n\nThe occupation of the person or individual",
             "example": "Janitor"
           },
           "street": {
@@ -1393,32 +1398,32 @@
           },
           "email": {
             "type": "string",
-            "nullable": false,
-            "description": "The email address of the person or individual",
+            "nullable": true,
+            "description": "Either phone or email is required\n\nThe email address of the person or individual",
             "example": "jametests@gmail.com"
           },
           "dbaName": {
             "type": "string",
             "nullable": true,
-            "description": "The dba name",
+            "description": "This is required if individual is set to false\n\nThe dba name",
             "example": "Steven"
           },
           "url": {
             "type": "string",
             "nullable": true,
-            "description": "The link on which it is stored",
+            "description": "This is required if individual is set to false\n\nPlease provide a Website Address/URL, if applicable",
             "example": "sampleurl.com"
           },
           "typeOfBusiness": {
             "type": "string",
             "nullable": true,
-            "description": "The type of business on which it is applied to",
+            "description": "This is required if individual is set to false\n\nPlease describe what type of business this is. This will be defined as one of the following below:\n- Corporation\n- LLC\n- Sole Proprietorship\n- Medical or legal corporation\n- Association/Estate/Trust\n- Partnership\n- Tax Exempt Organization (501c)\n- Charity\n- International organization\n- Government/Municipality\n- Not for Profit\n- Trust\n- Professional Association",
             "example": "Corporation"
           },
           "dateOfIncorporation": {
             "type": "string",
             "nullable": true,
-            "description": "The date of incorporation",
+            "description": "This is required if individual is set to false\n\nThe date of incorporation",
             "example": "2000-01-01"
           },
           "countryOfRegistration": {
@@ -1430,7 +1435,7 @@
           "provinceOfRegistration": {
             "type": "string",
             "nullable": true,
-            "description": "The province of the person or individual",
+            "description": "This is required if individual is set to false\n\nThe province of the person or individual",
             "example": "ON"
           },
           "businessTaxId": {
@@ -1806,23 +1811,6 @@
           }
         }
       },
-      "AMCSAptPayBasicDataResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": false,
-            "description": "Generated ID from the API",
-            "example": "183867559356"
-          },
-          "status": {
-            "type": "string",
-            "nullable": false,
-            "description": "Contains the status of the request",
-            "example": "AML check in progress"
-          }
-        }
-      },
       "AMCSAptPayAddDisbursementRequest": {
         "type": "object",
         "required": [
@@ -1940,6 +1928,23 @@
         },
         "additionalProperties": false
       },
+      "AMCSAptPayBasicDataResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": false,
+            "description": "Generated ID from the API",
+            "example": "183867559356"
+          },
+          "status": {
+            "type": "string",
+            "nullable": false,
+            "description": "Contains the status of the request",
+            "example": "AML check in progress"
+          }
+        }
+      },
       "AMCSAptPayAddIdentityResponse": {
         "type": "object",
         "properties": {
@@ -1949,16 +1954,17 @@
             "$ref": "#/components/schemas/AMCSAptPayBasicDataResponse"
           },
           "Error": {
-            "type": "string",
+            "type": "array",
             "nullable": true,
-            "description": "Returns null if the request doesn't contains error",
-            "example": null
+            "description": "Contains the error description of the response",
+            "items": {
+              "$ref": "#/components/schemas/AMCSAptPayErrorDataResponse"
+            }
           },
           "IsSuccess": {
             "type": "boolean",
-            "nullable": true,
-            "description": "Returns true if the request is successful; False, if the request is unsuccessful",
-            "example": true
+            "nullable": false,
+            "description": "Returns true if it doesn't contains error; False if it contains error"
           }
         }
       },
@@ -1976,6 +1982,21 @@
             "nullable": false,
             "description": "Contains the detailed description of the response",
             "example": ""
+          }
+        }
+      },
+      "AMCSAptPayErrorDataResponse": {
+        "type": "object",
+        "properties": {
+          "ErrorKey": {
+            "type": "string",
+            "nullable": false,
+            "description": "Contains error key"
+          },
+          "ErrorMessage": {
+            "type": "string",
+            "nullable": false,
+            "description": "Contains the detailed error message"
           }
         }
       },
