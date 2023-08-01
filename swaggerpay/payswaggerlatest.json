@@ -220,7 +220,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
                 }
               }
             }
@@ -1991,12 +2001,14 @@
           "ErrorKey": {
             "type": "string",
             "nullable": false,
-            "description": "Contains error key"
+            "description": "Contains error key",
+            "example": ""
           },
           "ErrorMessage": {
             "type": "string",
             "nullable": false,
-            "description": "Contains the detailed error message"
+            "description": "Contains the detailed error message",
+            "example": ""
           }
         }
       },
@@ -2009,16 +2021,17 @@
             "$ref": "#/components/schemas/AMCSAptPayGetTranStatusBasicDataResponse"
           },
           "Error": {
-            "type": "string",
+            "type": "array",
             "nullable": true,
             "description": "Contains the error description of the response",
-            "example": null
+            "items": {
+              "$ref": "#/components/schemas/AMCSAptPayErrorDataResponse"
+            }
           },
           "IsSuccess": {
             "type": "boolean",
-            "nullable": true,
-            "description": "Returns true if it doesn't contains error; False if it contains error",
-            "example": true
+            "nullable": false,
+            "description": "Returns true if it doesn't contains error; False if it contains error"
           }
         }
       },
