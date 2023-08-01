@@ -117,6 +117,57 @@
         }
       }
     },
+    "/pay/AptPay/AddDisbursement": {
+      "post": {
+        "tags": [
+          "AptPay"
+        ],
+        "summary": "Add disbursement",
+        "description": "This endpoint is used add disbursement to an account using ACH or Card.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "$ref": "#/components/schemas/AMCSAptPayAddDisbursementRequest"
+                }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSAptPayAddDisbursementResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/pay/AptPay/GetTransactionStatus": {
       "post": {
         "tags": [
@@ -1747,6 +1798,123 @@
             "description": "Contains the status of the request"
           }
         }
+      },
+      "AMCSAptPayAddDisbursementRequest": {
+        "type": "object",
+        "required": [
+          "amount",
+          "currency",
+          "transactionType",
+          "disbursementNumber",
+          "branchTransitNumber",
+          "instrumentId",
+          "expirationDate",
+          "identityId",
+          "referenceId",
+          "firstName",
+          "lastName",
+          "businessName"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "example": 1,
+            "description": "The amount to be add. Amount must be greater than 0.00."
+          },
+          "currency": {
+            "type": "string",
+            "example": "CAD",
+            "nullable": false,
+            "description": "Currency of the transaction."
+          },
+          "transactionType": {
+            "type": "string",
+            "example": "ACH",
+            "description": "Type of transaction. (ACH or Card)"
+          },
+          "disbursementNumber": {
+            "type": "string",
+            "example": "4111111111111111",
+            "description": "DisbursementNumber is required when InstrumentId is empty."
+          },
+          "bankNumber": {
+            "type": "string",
+            "example": "IE64IRCE92050112345678",
+            "description": "Bunk number."
+          },
+          "accountNumber": {
+            "type": "string",
+            "example": "123456789",
+            "nullable": false,
+            "description": "Account number."
+          },
+          "instrumentId": {
+            "type": "string",
+            "example": "",
+            "description": "It is used only if disbursement number was not specified."
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2026-11",
+            "nullable": false,
+            "description": "Date of exception."
+          },
+          "identityId": {
+            "type": "string",
+            "example": "271814238821",
+            "nullable": false,
+            "description": "Identity Id must be greater than 0."
+          },
+          "referenceId": {
+            "type": "string",
+            "example": "REF00003",
+            "nullable": false,
+            "description": "Reference id."
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Test",
+            "nullable": false
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Test",
+            "nullable": false
+          },
+          "businessName": {
+            "type": "string",
+            "example": "Test",
+            "nullable": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCSAptPayAddDisbursementResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "referenceId",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "ynuboocqm3-0005-evhbxcn88buqfopqttihfiad",
+            "description": "An id of the disbursement."
+          },
+          "referenceId":{
+            "type": "string",
+            "example": "9eb76126-df37-4a8f-bdb0-435ae2d682eb",
+            "nullable": false,
+            "description": "Reference id."
+          },
+          "status": {
+            "type": "string",
+            "example": "ACCEPTED",
+            "description": "Status of the disbursement."
+          }
+        },
+        "additionalProperties": false
       },
       "AMCSAptPayAddIdentityResponse": {
         "type": "object",
