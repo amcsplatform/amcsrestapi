@@ -128,6 +128,11 @@
           "401": {
             "description": "Unauthorized",
             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
+                }
+              }
             }
           }
         }
@@ -1333,13 +1338,13 @@
           "country": {
             "type": "string",
             "nullable": false,
-            "description": "The country address of the person or individual",
+            "description": "<div class='optional-required'>This is required if individual is set to false</div>\n\nThe country address of the person or individual",
             "example": "CA"
           },
           "province": {
             "type": "string",
             "nullable": true,
-            "description": "The province of the person or address",
+            "description": "<div class='optional-required'>This is required if individual is set to false</div>\n\nThe province of the person or address",
             "example": "ON"
           },
           "email": {
