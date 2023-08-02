@@ -158,21 +158,6 @@
           "401": {
             "description": "Unauthorized",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
-          },
-          "502": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
             }
           }
         }
@@ -1925,9 +1910,12 @@
             "$ref": "#/components/schemas/AMCSAptPayAddDisbursementDataResponse"
           },
           "Error": {
-            "type": "string",
-            "description": "Returns null if the request doesn't contains error",
-            "example": null
+            "type": "array",
+            "nullable": true,
+            "description": "Contains the error description of the response",
+            "items": {
+              "$ref": "#/components/schemas/AMCSAptPayErrorDataResponse"
+            }
           },
           "IsSuccess": {
             "type": "boolean",
