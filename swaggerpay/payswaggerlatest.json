@@ -1316,49 +1316,49 @@
           "name": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nPlease provide business entity name",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to false</div>\n\nThe business entity name",
             "example": "TestStevenK"
           },
           "firstName": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nPlease provide the individual's first name (max 50 characters)",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to true</div>\n\nThe individual's first name (max 50 characters)",
             "example": "Steven"
           },
           "middleName": {
             "type": "string",
             "nullable": true,
-            "description": "Please provide the individual's middle name.",
+            "description": "The individual's middle name.",
             "example": "Oliver"
           },
           "lastName": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nPlease provide the individual's last name.",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to true</div>\n\nThe individual's last name.",
             "example": "Kyamko"
           },
           "dateOfBirth": {
             "type": "string",
             "nullable": true,
-            "description": "Please provide the individual’s date of birth. This is represented as YYYY-MM-DD.",
+            "description": "The individual’s date of birth. This is represented as YYYY-MM-DD.",
             "example": "2000-01-01"
           },
           "phone": {
             "type": "string",
             "nullable": true,
-            "description": "Either phone or email is required\n\nPlease provide a contact's phone number.",
+            "description": "<div style='color: #d41f1c;'>Either phone or email is required</div>\n\nThe contact's phone number.",
             "example": "+639201001111"
           },
           "occupation": {
             "type": "string",
             "nullable": true,
-            "description": "Required for prepaid cards\n\nThe occupation of the person or individual",
+            "description": "<div style='color: #d41f1c;'>Required for prepaid cards</div>\n\nThe occupation of the person or individual",
             "example": "Janitor"
           },
           "street": {
             "type": "string",
             "nullable": true,
-            "description": "The streed address of the person or individual",
+            "description": "The street address of the person or individual",
             "example": "Street 1"
           },
           "streetLine2": {
@@ -1394,31 +1394,31 @@
           "email": {
             "type": "string",
             "nullable": true,
-            "description": "Either phone or email is required\n\nThe email address of the person or individual",
+            "description": "<div style='color: #d41f1c;'>Either phone or email is required</div>\n\nThe email address of the person or individual",
             "example": "jametests@gmail.com"
           },
           "dbaName": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nThe dba name",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to false</div>\n\nThe dba name",
             "example": "Steven"
           },
           "url": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nPlease provide a Website Address/URL, if applicable",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to false</div>\n\nThe Website Address/URL, if applicable",
             "example": "sampleurl.com"
           },
           "typeOfBusiness": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nPlease describe what type of business this is. This will be defined as one of the following below:\n- Corporation\n- LLC\n- Sole Proprietorship\n- Medical or legal corporation\n- Association/Estate/Trust\n- Partnership\n- Tax Exempt Organization (501c)\n- Charity\n- International organization\n- Government/Municipality\n- Not for Profit\n- Trust\n- Professional Association",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to false</div>\n\nThe type of business this is. This will be defined as one of the following below:\n- Corporation\n- LLC\n- Sole Proprietorship\n- Medical or legal corporation\n- Association/Estate/Trust\n- Partnership\n- Tax Exempt Organization (501c)\n- Charity\n- International organization\n- Government/Municipality\n- Not for Profit\n- Trust\n- Professional Association",
             "example": "Corporation"
           },
           "dateOfIncorporation": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nThe date of incorporation",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to false</div>\n\nThe date of incorporation",
             "example": "2000-01-01"
           },
           "countryOfRegistration": {
@@ -1430,7 +1430,7 @@
           "provinceOfRegistration": {
             "type": "string",
             "nullable": true,
-            "description": "This is required if individual is set to false\n\nThe province of the person or individual",
+            "description": "<div style='color: #d41f1c;'>This is required if individual is set to false</div>\n\nThe province of the person or individual",
             "example": "ON"
           },
           "businessTaxId": {
