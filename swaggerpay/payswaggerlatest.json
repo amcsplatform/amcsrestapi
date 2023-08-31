@@ -606,6 +606,56 @@
         }
       }
     },
+    "/ExternalTransaction/TerminalAbort": {
+      "post": {
+        "tags": [
+          "ExternalTransaction"
+        ],
+        "summary": "Terminal Payment Abort",
+        "description": "This endpoint is a signal used to abort a card payment requested using a terminal device.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\" and \"TerminalPay\". However, this end point only supports Terminal Pay. |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| TerminalId | The Terminal Id is the verifone terminal device serial number. |\n| EmailAddress | The e-mail address associated to the payment requestor. |",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayTerminalAbortRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ExternalTransaction/DeleteToken": {
       "post": {
         "tags": [
@@ -1145,6 +1195,54 @@
             ],
             "nullable": false,
             "example": "Manual"
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true,
+            "example": "amcspayuser@email.com"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCSPayTerminalAbortRequest": {
+        "type": "object",
+        "required": [
+          "requestId",
+          "providerType",
+          "callerIdentifier",
+          "terminalId",
+          "reason"
+        ],
+        "properties": {
+          "providerType": {
+            "type": "string",
+            "enum": [
+              "ACICards",
+              "ACIElectronic",
+              "Heartland",
+              "MerchantPartners",
+              "PaymentExpress",
+              "Realex",
+              "TerminalPay"
+            ],
+            "nullable": false,
+            "example": "TerminalPay"
+          },
+          "callerIdentifier": {
+            "type": "string",
+            "example": "client-name",
+            "nullable": false
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "0d920c06-b568-442b-94cc-afe60176708f",
+            "nullable": false
+          },
+          "terminalId": {
+            "type": "string",
+            "example": "450-829-523",
+            "nullable": false
           },
           "emailAddress": {
             "type": "string",
