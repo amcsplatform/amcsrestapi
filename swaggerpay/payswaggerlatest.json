@@ -1140,9 +1140,17 @@
           "callerIdentifier",
           "terminalId",
           "transactionAmount",
-          "cardEntryMode"
+          "cardEntryMode",
+          "requestType"
         ],
         "properties": {
+          "requestType": {
+            "type": "string",
+            "enum": [
+              "OneOffPayment"
+            ],
+            "nullable": false
+          },
           "providerType": {
             "type": "string",
             "enum": [
@@ -1211,9 +1219,17 @@
           "providerType",
           "callerIdentifier",
           "terminalId",
-          "reason"
+          "reason",
+          "requestType"
         ],
         "properties": {
+          "requestType": {
+            "type": "string",
+            "enum": [
+              "Abort"
+            ],
+            "nullable": false
+          },
           "providerType": {
             "type": "string",
             "enum": [
