@@ -623,6 +623,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayTerminalAbortResponse"
+                }
+              }
+            }
+          },
           "400": {
             "description": "Bad Request",
             "content": {
@@ -1267,6 +1277,22 @@
           }
         },
         "additionalProperties": false
+      },
+      "AMCSPayTerminalAbortResponse": {
+        "type": "object",
+        "properties": {
+          "callerTransactionId": {
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "type": "string"
+          },
+          "amcsPayReferenceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "c4521490-c0dd-40e5-94c6-afe90073aa1b"
+          }
+        }
       },
       "AMCSPayInitiatePaymentRequest": {
         "type": "object",
