@@ -2895,7 +2895,8 @@
               "Heartland",
               "MerchantPartners",
               "PaymentExpress",
-              "Realex"
+              "Realex",
+              "TerminalPay"
             ],
             "example": "ACICards",
             "nullable": false
