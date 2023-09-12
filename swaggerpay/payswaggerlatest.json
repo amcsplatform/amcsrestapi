@@ -2355,7 +2355,7 @@
           "amcsPayReferenceId": {
             "type": "string",
             "nullable": true,
-            "example": ""
+            "example": "f9a50643-05e3-45f9-9bc0-87be0d5ae0e2"
           },
           "providerReference": {
             "type": "string",
@@ -2375,7 +2375,7 @@
           "transactionAmount": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayAmount",
-            "nullable": false
+            "nullable": true
           },
           "responseTimeStamp": {
             "type": "string",
@@ -2392,6 +2392,7 @@
             "type": "string",
             "enum": [
               "Initiated",
+              "Exception",
               "Success",
               "Failure"
             ],
