@@ -60,10 +60,10 @@
     "/pay/AptPay/AddIdentity":{
       "post": {
         "tags": [
-          "AptPay"
+          "Disbursements"
         ],
         "summary": "Add Identity",
-        "description": "This endpoint is used to add identity of apt pay.",
+        "description": "This endpoint is used to add identity of disbursements.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -100,7 +100,7 @@
     "/pay/AptPay/AddDisbursement": {
       "post": {
         "tags": [
-          "AptPay"
+          "Disbursements"
         ],
         "summary": "Add disbursement",
         "description": "This endpoint is used add disbursement to an account using ACH or Card.",
@@ -141,10 +141,10 @@
     "/pay/AptPay/GetTransactionStatus": {
       "post": {
         "tags": [
-          "AptPay"
+          "Disbursements"
         ],
         "summary": "Get Transaction Status",
-        "description": "This endpoint is used to get transaction status of an apt pay.",
+        "description": "This endpoint is used to get transaction status of an disbursements.",
         "requestBody": {
           "content": {
             "application/json": {
