@@ -85,14 +85,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           }
         }
       }
@@ -126,14 +119,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           }
         }
       }
@@ -166,14 +152,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "415": {
             "description": "Unsupported Media Type",
@@ -226,14 +205,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error",
@@ -301,14 +273,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found",
@@ -413,14 +378,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found",
@@ -483,14 +441,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error",
@@ -596,14 +547,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error",
@@ -656,14 +600,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error",
@@ -736,14 +673,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found",
