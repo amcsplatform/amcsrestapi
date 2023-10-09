@@ -57,18 +57,18 @@
         }
       }
     },
-    "/pay/AptPay/AddIdentity":{
+    "/disbursement/AddSupplier" : {
       "post": {
         "tags": [
           "Disbursements"
         ],
-        "summary": "Add Identity",
-        "description": "This endpoint is used to add identity of disbursements.",
-        "requestBody": {
+        "summary": "Add Supplier",
+        "description": "This endpoint is used to add supplier of disbursements.",
+        "requestBody":{
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AMCSAptPayAddIdentityRequest"
+                "$ref": "#/components/schemas/AMCSPayDisbursementAddSupplierRequest"
               }
             }
           }
@@ -79,13 +79,33 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AMCSAptPayAddIdentityResponse"
+                  "$ref": "#/components/schemas/AMCSPayDisbursementAddSupplierResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
                 }
               }
             }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -95,14 +115,14 @@
         "tags": [
           "Disbursements"
         ],
-        "summary": "Add disbursement",
+        "summary": "Add Disbursement",
         "description": "This endpoint is used add disbursement to an account using ACH or Card.",
         "security": [],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                  "$ref": "#/components/schemas/AMCSAptPayAddDisbursementRequest"
+                  "$ref": "#/components/schemas/AMCSPayDisbursementAddDisbursementRequest"
                 }
             }
           }
@@ -113,13 +133,33 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AMCSAptPayAddDisbursementResponse"
+                  "$ref": "#/components/schemas/AMCSPayDisbursementAddDisbursementResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
                 }
               }
             }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3122,6 +3162,68 @@
           }
         },
         "additionalProperties": false
+      },
+      "AMCSPayDisbursementAddSupplierRequest": {
+        "type": "object",
+        "required": [
+          "provider",
+          "data"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "nullable": false,
+            "description": "Provider to use to add supplier for disbursement.\n\n- AptPay",
+            "example": "AptPay"
+          },
+          "data": {
+            "type": "object",
+            "nullable": false,
+            "description": "Holds the request object depends on the provider.",
+            "$ref": "#/components/schemas/AMCSAptPayAddIdentityRequest"
+          }
+        }
+      },
+      "AMCSPayDisbursementAddSupplierResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "description": "Holds the response object depends on the provider.",
+            "$ref": "#/components/schemas/AMCSAptPayBasicDataResponse"
+          }
+        }
+      },
+      "AMCSPayDisbursementAddDisbursementRequest": {
+        "type": "object",
+        "required": [
+          "provider",
+          "data"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "nullable": false,
+            "description": "Provider to use to add disbursement.\n\n- AptPay",
+            "example": "AptPay"
+          },
+          "data": {
+            "type": "object",
+            "nullable": false,
+            "description": "Holds the request object depends on the provider.",
+            "$ref": "#/components/schemas/AMCSAptPayAddDisbursementRequest"
+          }
+        }
+      },
+      "AMCSPayDisbursementAddDisbursementResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "description": "Holds the response object depends on the provider.",
+            "$ref": "#/components/schemas/AMCSAptPayAddDisbursementDataResponse"
+          }
+        }
       }
     }
   }
