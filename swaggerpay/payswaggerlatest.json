@@ -1212,8 +1212,7 @@
           "callerIdentifier",
           "terminalId",
           "reason",
-          "requestType",
-          "reason"
+          "requestType"
         ],
         "properties": {
           "requestType": {
@@ -3010,11 +3009,12 @@
               "Heartland",
               "MerchantPartners",
               "PaymentExpress",
-              "Realex"
+              "Realex",
+              "EftCanada"
             ],
             "example": "ACICards",
             "nullable": false,
-            "description": "Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\"."
+            "description": "Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\", \"EftCanada\"."
           },
           "transactionAmount": {
             "type": "object",
