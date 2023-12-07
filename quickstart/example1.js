@@ -97,3 +97,27 @@ example1 = async () =>
     }
 
 example1();
+
+//----------------------------------------------------------
+
+pm.test("response is ok.", () => {
+    pm.response.to.have.status(200);
+  });
+  
+pm.test('Check if changes links are exists in response of Routes.', function() {
+    var jsonData = pm.response.json();
+      if (jsonData.resource != undefined) { 
+          pm.expect(jsonData).to.have.property('extra');
+          if (jsonData.extra.hasOwnProperty('cursor') === true) {
+              pm.expect(jsonData.extra).to.have.property('cursor');
+          }    
+          else {
+              pm.expect(jsonData.extra).to.have.property('until');
+          }
+          pm.expect(jsonData).to.have.property('links');
+          pm.expect(jsonData.links).to.have.property('next');
+      }
+      else {
+          pm.expect.fail("Changes links was not present in response for GET Routes.")
+      }
+  });
