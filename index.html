@@ -115,11 +115,9 @@
 
         function switchvers( component )
         {
-            document.getElementById( "erpversions" ).style.display = "none";
-            document.getElementById( "payversions" ).style.display = "none";
-            document.getElementById( "coreversions" ).style.display = "none";
+            document.getElementById( component === "erp" ? "payversions" : "erpversions" ).style.display = "none";
             document.getElementById( component + "versions" ).style.display = "block";
-            intRedoc( component, "latest" );
+            intRedoc( component, component === "erp" ? "latest" : "latest" );
         }
 
         intRedoc('erp','latest');
@@ -128,20 +126,14 @@
     <p>Component <select id="componentselect" onchange="switchvers( this.value )">
         <option value="erp">ERP</option>
         <option value="pay">Pay</option>
-        <option value="core">Core</option>
     </select></p>
     <p id="payversions" style="display:none">Pay Version <select onchange="intRedoc( 'pay', this.value )">
-        <option value="latest">latest (9.1)</option>
-    </select></p>
-    <p id="coreversions" style="display:none">Core Version <select onchange="intRedoc( 'core', this.value )">
-        <option value="latest">latest (9.1)</option>
+        <option value="latest">latest (9.0)</option>
     </select></p>
     <p id="erpversions">Platform Version <select onchange="intRedoc( 'erp', this.value )">
-        <option value="latest">latest (9.1)</option>
-        <!-- on major release, copy latest and rename as the outgoing release, create a new latest for the new release -->
-        <option value="9-0-0">9.0</option>
-		<option value="8-12-0">8.12</option>
-		<option value="8-11-0">8.11</option>
+        <option value="latest">latest (8.12)</option>
+        <!-- make a new row for the current latest and update the latest version number -->
+        <option value="8-11-0">8.11</option>
         <option value="8-10-0">8.10</option>
         <option value="8-9-0">8.9</option>
         <option value="8-8-2">8.8.2</option>
