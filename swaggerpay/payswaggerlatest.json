@@ -110,7 +110,60 @@
         }
       }
     },
-    "/pay/AptPay/AddDisbursement": {
+    "/disbursement/GetSupplier" : {
+      "post": {
+        "tags": [
+          "Disbursements"
+        ],
+        "summary": "Get Supplier",
+        "description": "This endpoint is used to get supplier of disbursements.",
+        "requestBody":{
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayDisbursementGetSupplierRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayDisbursementGetSupplierResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/disbursement/AddDisbursement": {
       "post": {
         "tags": [
           "Disbursements"
@@ -1554,6 +1607,19 @@
           }
         }
       },
+      "AMCSAptPayGetIdentityRequest" : {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "number",
+            "nullable": false,
+            "example": "183867559356"
+          }
+        }
+      },
       "AMCSAptPayGetTranStatusRequest": {
         "type": "object",
         "required": [
@@ -2033,6 +2099,123 @@
             "nullable": false,
             "description": "Contains the status of the request",
             "example": "AML check in progress"
+          }
+        }
+      },
+      "AMCSAptPayDisbursementGetSupplierDataResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": "183867559356"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Steven"
+          },
+          "middleName": {
+            "type": "string",
+            "example": "Oliver"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Kyamko"
+          },
+          "country": {
+            "type": "string",
+            "example": "CA"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "example": "2000-01-01"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+639201001111"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Janitor"
+          },
+          "individual": {
+            "type": "boolean",
+            "example": true
+          },
+          "clientId": {
+            "type": "string",
+            "example": "12312"
+          },
+          "name": {
+            "type": "string",
+            "example": "TestStevenK"
+          },
+          "email": {
+            "type": "string",
+            "example": "jametests@gmail.com"
+          },
+          "status": {
+            "type": "string",
+            "example": "ACTIVE"
+          },
+          "amlStatus": {
+            "type": "string",
+            "example": "PASSED"
+          },
+          "businessTaxId": {
+            "type": "string",
+            "example": "12312"
+          },
+          "street": {
+            "type": "string",
+            "example": "Street 1"
+          },
+          "streetLine2": {
+            "type": "string",
+            "example": "Street 2"
+          },
+          "city": {
+            "type": "string",
+            "example": "Toronto"
+          },
+          "province": {
+            "type": "string",
+            "example": "ON"
+          },
+          "zip": {
+            "type": "string",
+            "example": "L4K 0J7"
+          },
+          "dbaName": {
+            "type": "string",
+            "example": "Steven"
+          },
+          "url": {
+            "type": "string",
+            "example": "sampleurl.com"
+          },
+          "typeOfBusiness": {
+            "type": "string",
+            "example": "Corporation"
+          },
+          "dateOfIncorporation": {
+            "type": "string",
+            "example": "2000-01-01"
+          },
+          "countryOfRegistration": {
+            "type": "string",
+            "example": "CA"
+          },
+          "provinceOfRegistration": {
+            "type": "string",
+            "example": "ON"
+          },
+          "selfVerify": {
+            "type": "boolean",
+            "example": true
+          },
+          "nationalIdentityNumber": {
+            "type": "string",
+            "example": ""
           }
         }
       },
@@ -3196,6 +3379,37 @@
             "type": "object",
             "description": "Holds the response object depends on the provider.",
             "$ref": "#/components/schemas/AMCSAptPayBasicDataResponse"
+          }
+        }
+      },
+      "AMCSPayDisbursementGetSupplierRequest": {
+        "type": "object",
+        "required": [
+          "provider",
+          "data"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "nullable": false,
+            "description": "Provider to use to get supplier for disbursement.\n\n- AptPay",
+            "example": "AptPay"
+          },
+          "data": {
+            "type": "object",
+            "nullable": false,
+            "description": "Holds the request object depends on the provider.",
+            "$ref": "#/components/schemas/AMCSAptPayGetIdentityRequest"
+          }
+        }
+      },
+      "AMCSPayDisbursementGetSupplierResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "description": "Holds the response object depends on the provider.",
+            "$ref": "#/components/schemas/AMCSAptPayDisbursementGetSupplierDataResponse"
           }
         }
       },
