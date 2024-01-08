@@ -1933,6 +1933,40 @@
           }
         }
       },
+      "AMCSPayCheckAccountRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "object",
+            "$ref": "#/components/schemas/AMCSPayAmount",
+            "nullable": false
+          },
+          "currency": {
+            "type": "string",
+            "nullable": false
+          },
+          "disbursementNumber": {
+            "type": "string"
+          },
+          "instrumentId": {
+            "type": "string"
+          },
+          "program": {
+            "type": "string",
+            "enum": [
+              "B2B",
+              "B2C",
+              "G2C",
+              "PayrollAndPension",
+              "RapidMerchantSettlement"
+            ]
+          },
+          "expirationDate": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
       "AMCSPayErrorContentResponse": {
         "type": "string",
         "nullable": true
