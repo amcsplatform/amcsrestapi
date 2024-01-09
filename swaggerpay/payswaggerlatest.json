@@ -1205,7 +1205,8 @@
               "MerchantPartners",
               "PaymentExpress",
               "Realex",
-              "TerminalPay"
+              "TerminalPay",
+              "EftCanada"
             ],
             "nullable": false,
             "example": "TerminalPay"
@@ -1284,7 +1285,8 @@
               "MerchantPartners",
               "PaymentExpress",
               "Realex",
-              "TerminalPay"
+              "TerminalPay",
+              "EftCanada"
             ],
             "nullable": false,
             "example": "TerminalPay"
@@ -1389,7 +1391,8 @@
               "Heartland",
               "MerchantPartners",
               "PaymentExpress",
-              "Realex"
+              "Realex",
+              "EftCanada"
             ],
             "nullable": false
           },
