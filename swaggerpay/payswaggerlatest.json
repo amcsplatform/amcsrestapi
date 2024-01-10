@@ -260,6 +260,69 @@
         }
       }
     },
+    "/pay/AptPay/CheckPayment": {
+      "post": {
+        "tags": [
+          "Disbursements"
+        ],
+        "summary": "Check Payment",
+        "description": "This endpoint is used to check if a card is eligible to receive funds.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayCheckAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayCheckAccountResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ExternalTransaction/OneOff": {
       "post": {
         "tags": [
@@ -1333,6 +1396,112 @@
             "format": "uuid",
             "nullable": true,
             "example": "c4521490-c0dd-40e5-94c6-afe90073aa1b"
+          }
+        }
+      },
+      "AMCSPayCheckAccountRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "nullable": false,
+            "example": 10,
+            "description": "Amount to be disbursed."
+          },
+          "currency": {
+            "type": "string",
+            "nullable": false,
+            "example": "CAD",
+            "description": "Currency to be used. This is expressed as a three-letter currency code (ie., CAD for Canadian dollars, USD for United States Dollars, etc.)"
+          },
+          "disbursementNumber": {
+            "type": "string",
+            "example": "5333619503715702",
+            "description": "Required if instrumentId is not defined. Card number or account number"
+          },
+          "instrumentId": {
+            "type": "string",
+            "example": "",
+            "description": "Required if disbursementNumber is not defined. The Instrument ID"
+          },
+          "program": {
+            "type": "string",
+            "enum": [
+              "B2B",
+              "B2C",
+              "G2C",
+              "PayrollAndPension",
+              "RapidMerchantSettlement"
+            ],
+            "example": "",
+            "description": "Program ID. This is a code to denote the use case for product (B2B, B2C, G2C, PayrollAndPension, RapidMerchantSettlement)"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": null,
+            "description": "The card expiration date"
+          }
+        }
+      },
+      "AMCSPayCheckAccountResponseData": {
+        "type": "object",
+        "properties": {
+          "receiving": {
+            "type": "boolean",
+            "example": true,
+            "description": "This indicates if the card is eligible to receive funds. This will return a value of either true or false."
+          },
+          "sending": {
+            "type": "boolean",
+            "example": false,
+            "description": "This indicates if the card is eligible to send funds. This will return a value of either true or false."
+          },
+          "network": {
+            "type": "string",
+            "example": "MASTERCARD",
+            "description": "The network the transaction takes place over (example: MasterCard)"
+          },
+          "funds_availability": {
+            "type": "string",
+            "example": "IMMEDIATE",
+            "description": "The duration of time required to send funds to the Payee's account"
+          },
+          "type": {
+            "type": "string",
+            "example": "DEBIT",
+            "description": "Type of card used for disbursement (ie., debit, credit, etc.)"
+          },
+          "country": {
+            "type": "string",
+            "example": "CAN",
+            "description": "The country in which the card was issued"
+          },
+          "currency": {
+            "type": "string",
+            "example": "CAD",
+            "description": "The currency available on the card."
+          }
+        }
+      },
+      "AMCSPayCheckAccountResponse": {
+        "type": "object",
+        "properties": {
+          "Data": {
+            "type": "object",
+            "$ref": "#/components/schemas/AMCSPayCheckAccountResponseData"
+          },
+          "Error": {
+            "type": "array",
+            "nullable": true,
+            "description": "Contains the error description of the response",
+            "items": {
+              "$ref": "#/components/schemas/AMCSAptPayErrorDataResponse"
+            }
+          },
+          "IsSuccess": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "Returns true if it doesn't contains error; False if it contains error"
           }
         }
       },
