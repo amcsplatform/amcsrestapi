@@ -266,7 +266,7 @@
           "Disbursements"
         ],
         "summary": "Check Payment",
-        "description": "This endpoint is used to check if a card is eligible to receive funds.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| Amount | Amount to be disbursed. |\n| Currency | Currency to be used. This is expressed as a three-letter currency code (ie., CAD for Canadian dollars, USD for United States Dollars, etc.) |\n| DisbursementNumber | *Required if instrumentId is not defined.*  Card number or account number |\n| InstrumentId | *Required if disbursementNumber is not defined.* The Instrument ID |\n| Program | Program ID. This is a code to denote the use case for product (B2B, B2C, G2C, PayrollAndPension, RapidMerchantSettlement) |\n| ExpirationDate | The card expiration date  |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| Receiving | This indicates if the card is eligible to receive funds. This will return a value of either true or false. |\n| Sending | This indicates if the card is eligible to send funds. This will return a value of either true or false. |\n| Network | The network the transaction takes place over (example: MasterCard) |\n| FundsAvailability | The duration of time required to send funds to the Payee's account |\n| Type | Type of card used for disbursement (ie., debit, credit, etc.) |\n| Country | The country in which the card was issued. |\n| Currency | The currency available on the card.  ",
+        "description": "This endpoint is used to check if a card is eligible to receive funds.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1403,20 +1403,24 @@
           "amount": {
             "type": "number",
             "nullable": false,
-            "example": 10
+            "example": 10,
+            "description": "Amount to be disbursed."
           },
           "currency": {
             "type": "string",
             "nullable": false,
-            "example": "CAD"
+            "example": "CAD",
+            "description": "Currency to be used. This is expressed as a three-letter currency code (ie., CAD for Canadian dollars, USD for United States Dollars, etc.)"
           },
           "disbursementNumber": {
             "type": "string",
-            "example": "5333619503715702"
+            "example": "5333619503715702",
+            "description": "Required if instrumentId is not defined. Card number or account number"
           },
           "instrumentId": {
             "type": "string",
-            "example": ""
+            "example": "",
+            "description": "Required if disbursementNumber is not defined. The Instrument ID"
           },
           "program": {
             "type": "string",
@@ -1427,11 +1431,13 @@
               "PayrollAndPension",
               "RapidMerchantSettlement"
             ],
-            "example": ""
+            "example": "",
+            "description": "Program ID. This is a code to denote the use case for product (B2B, B2C, G2C, PayrollAndPension, RapidMerchantSettlement)"
           },
           "expirationDate": {
             "type": "string",
-            "example": null
+            "example": null,
+            "description": "The card expiration date"
           }
         }
       },
@@ -1440,31 +1446,38 @@
         "properties": {
           "receiving": {
             "type": "boolean",
-            "example": true
+            "example": true,
+            "description": "This indicates if the card is eligible to receive funds. This will return a value of either true or false."
           },
           "sending": {
             "type": "boolean",
-            "example": false
+            "example": false,
+            "description": "This indicates if the card is eligible to send funds. This will return a value of either true or false."
           },
           "network": {
             "type": "string",
-            "example": "MASTERCARD"
+            "example": "MASTERCARD",
+            "description": "The network the transaction takes place over (example: MasterCard)"
           },
           "funds_availability": {
             "type": "string",
-            "example": "IMMEDIATE"
+            "example": "IMMEDIATE",
+            "description": "The duration of time required to send funds to the Payee's account"
           },
           "type": {
             "type": "string",
-            "example": "DEBIT"
+            "example": "DEBIT",
+            "description": "Type of card used for disbursement (ie., debit, credit, etc.)"
           },
           "country": {
             "type": "string",
-            "example": "CAN"
+            "example": "CAN",
+            "description": "The country in which the card was issued"
           },
           "currency": {
             "type": "string",
-            "example": "CAD"
+            "example": "CAD",
+            "description": "The currency available on the card."
           }
         }
       },
