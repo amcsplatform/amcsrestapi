@@ -260,12 +260,12 @@
         }
       }
     },
-    "/pay/AptPay/CheckPayment": {
+    "/pay/AptPay/CheckAccount": {
       "post": {
         "tags": [
           "Disbursements"
         ],
-        "summary": "Check Payment",
+        "summary": "Check Account",
         "description": "This endpoint is used to check if a card is eligible to receive funds.",
         "requestBody": {
           "content": {
@@ -287,38 +287,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
-          },
           "401": {
             "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
           }
         }
       }
@@ -1401,6 +1371,10 @@
       },
       "AMCSPayCheckAccountRequest": {
         "type": "object",
+        "required": [
+          "amount",
+          "currency"
+        ],
         "properties": {
           "amount": {
             "type": "number",
@@ -1417,12 +1391,12 @@
           "disbursementNumber": {
             "type": "string",
             "example": "5333619503715702",
-            "description": "Required if instrumentId is not defined. Card number or account number"
+            "description": "<span style='color: rgb(212, 31, 28)'>Required if instrumentId is not defined.</span> Card number or account number"
           },
           "instrumentId": {
             "type": "string",
             "example": "",
-            "description": "Required if disbursementNumber is not defined. The Instrument ID"
+            "description": "<span style='color: rgb(212, 31, 28)'>Required if disbursementNumber is not defined.</span> The Instrument ID"
           },
           "program": {
             "type": "string",
@@ -1434,12 +1408,12 @@
               "RapidMerchantSettlement"
             ],
             "example": "",
-            "description": "Program ID. This is a code to denote the use case for product (B2B, B2C, G2C, PayrollAndPension, RapidMerchantSettlement)"
+            "description": "<b>Optional.</b> Program ID. This is a code to denote the use case for product (B2B, B2C, G2C, PayrollAndPension, RapidMerchantSettlement)"
           },
           "expirationDate": {
             "type": "string",
             "example": null,
-            "description": "The card expiration date"
+            "description": "<b>Optional.</b> The card expiration date"
           }
         }
       },
