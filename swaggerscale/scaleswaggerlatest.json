@@ -4,7 +4,8 @@
         "version": "external",
         "title": "External API"
     },
-    "host": "localhost:10012",
+    "host": "{env}-svc-core.amcsplatform.com",
+    "basePath":"/scale/api/",
     "schemes": [
         "http"
     ],
@@ -673,7 +674,7 @@
                     "VehicleCarrierWork"
                 ],
                 "summary": "Find with Filters",
-                "description": "| Property\t\t\t\t\t\t\t\t\t\t\t\t\t\t| Description                                                                       |\r\n| --------------------------------------------------------------| ----------------------------------------------------------------------------------|\r\n| SubscriberGUID\t\t\t\t\t\t\t\t\t\t\t\t| The subscriber GUID filterable and required.\t\t\t\t\t\t\t\t\t\t|\r\n| VehicleGUID\t\t\t\t\t\t\t\t\t\t\t\t\t| The Vechicle GUID filterable and required.\t\t\t\t\t\t\t\t\t\t|\r\n| CarrierGUID\t\t\t\t\t\t\t\t\t\t\t\t\t| The SupplierSite GUID  filterable and optional.\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[]\t\t\t\t\t\t\t\t\t\t\t\t| The Weighing data is on stage status.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].WeighingGUID\t\t\t\t\t\t\t\t\t| The GUID associated to the weighing.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].TicketNo\t\t\t\t\t\t\t\t\t\t| The TicketNo associated to the weighing.\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].GrossWeight\t\t\t\t\t\t\t\t\t| The GrossWeight associated to the weighing.\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].TareWeight\t\t\t\t\t\t\t\t\t| The TareWeight associated to the weighing.\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].IsInboundWeighing\t\t\t\t\t\t\t\t| The IsInboundWeighing indicator of weighing base on weighing type\t\t\t\t\t|\r\n| CurrentLinkedJobs[]\t\t\t\t\t\t\t\t\t\t\t| The current linked jobs does not associated any weighning.\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].JobGUID\t\t\t\t\t\t\t\t\t| The Job Guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].TicketNo\t\t\t\t\t\t\t\t\t| The TicketNo weighing associated to the job.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].DefaultMaterial\t\t\t\t\t\t\t| The DefaultMaterial material assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialShortCode\t\t\t\t\t\t\t| The MaterialShortCode\tmaterial assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialAnalysisCode \t\t\t\t\t\t| The MaterialAnalysisCode material assocaited to the job.\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialEWCCode \t\t\t\t\t\t\t| The MaterialEWCCode material assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[]\t\t\t\t\t\t\t\t\t\t\t| The current linked routes that are not completed.\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].RouteGUID\t\t\t\t\t\t\t\t| The Route Guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].RouteNo\t\t\t\t\t\t\t\t\t| The Route Number.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].DefaultMaterial\t\t\t\t\t\t\t| The Default Material associated to the Route.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].MaterialShortCode\t\t\t\t\t\t| The Material short code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].MaterialEWCCode\t\t\t\t\t\t\t| The Material EW Code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[]\t\t\t\t\t\t| The materials that are linked to the Route.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialGUID\t\t\t| The linked material Guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].Material\t\t\t\t| The linked material description.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialShortCode\t\t| The linked material short code.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialAnalysisCode\t| The linked material analysis code.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialEWCCode\t\t| The linked material EW code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n",
+                "description": "| Property\t\t\t\t\t\t\t\t\t\t\t\t\t\t| Description                                                                       |\r\n| --------------------------------------------------------------| ----------------------------------------------------------------------------------|\r\n| SubscriberGUID\t\t\t\t\t\t\t\t\t\t\t\t| The subscriber guid filterable and required.\t\t\t\t\t\t\t\t\t\t|\r\n| VehicleGUID\t\t\t\t\t\t\t\t\t\t\t\t\t| The vechicle guid filterable and required.\t\t\t\t\t\t\t\t\t\t|\r\n| CarrierGUID\t\t\t\t\t\t\t\t\t\t\t\t\t| The suppliersite guid  filterable and optional.\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[]\t\t\t\t\t\t\t\t\t\t\t\t| The weighing data is on stage status.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].WeighingGUID\t\t\t\t\t\t\t\t\t| The guid associated to the weighing.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].TicketNo\t\t\t\t\t\t\t\t\t\t| The ticketno associated to the weighing.\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].GrossWeight\t\t\t\t\t\t\t\t\t| The grossweight associated to the weighing.\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].TareWeight\t\t\t\t\t\t\t\t\t| The tareweight associated to the weighing.\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].IsInboundWeighing\t\t\t\t\t\t\t\t| The isinboundweighing indicator of weighing base on weighing type\t\t\t\t\t|\r\n| CurrentLinkedJobs[]\t\t\t\t\t\t\t\t\t\t\t| The current linked jobs does not associated any weighning.\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].JobGUID\t\t\t\t\t\t\t\t\t| The job guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].TicketNo\t\t\t\t\t\t\t\t\t| The ticketno weighing associated to the job.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].DefaultMaterial\t\t\t\t\t\t\t| The defaultmaterial material assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialShortCode\t\t\t\t\t\t\t| The materialshortcode\tmaterial assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialAnalysisCode \t\t\t\t\t\t| The materialanalysiscode material assocaited to the job.\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialEWCCode \t\t\t\t\t\t\t| The materialewccode material assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[]\t\t\t\t\t\t\t\t\t\t\t| The current linked routes that are not completed.\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].RouteGUID\t\t\t\t\t\t\t\t| The route guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].RouteNo\t\t\t\t\t\t\t\t\t| The route number.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].DefaultMaterial\t\t\t\t\t\t\t| The default material associated to the route.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].MaterialShortCode\t\t\t\t\t\t| The material short code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].MaterialEWCCode\t\t\t\t\t\t\t| The material ew code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[]\t\t\t\t\t\t| The materials that are linked to the route.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialGUID\t\t\t| The linked material guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].Material\t\t\t\t| The linked material description.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialShortCode\t\t| The linked material short code.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialAnalysisCode\t| The linked material analysis code.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialEWCCode\t\t| The linked material ew code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedToMoreThanOneCustomers\t\t\t\t\t\t\t\t\t| The flag that tells a vehicle is linked one or more customers.\t\t\t\t\t|\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].CustomerGUID\t\t\t\t\t\t\t| The customer guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].CustomerSiteGUID\t\t\t\t\t\t| The customersite guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].Customer\t\t\t\t\t\t\t\t| The customer name.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedToMoreThanOneOrder\t\t\t\t| The flag that tells whether a customer has one or more orders.\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].OrderNo\t\t\t\t| The order number.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].OrderGUID\t\t\t\t| The order guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].AreaOfOrigin\t\t\t| The area of origin description.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].ShortCode\t\t\t\t| The area of origin short code.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n",
                 "operationId": "VehicleCarrierWork_GetCollection",
                 "consumes": [
                     "application/json"
@@ -890,18 +891,11 @@
         },
         "/integrator/weightBlobs": {
             "post": {
-                "tags": [
-                    "WeightBlob"
-                ],
-                "summary": "Create or update",
-                "description": "| Property\t\t\t\t\t\t| Description                               | Required\t|\r\n|-------------------------------|-------------------------------------------|-----------|\r\n| WeightId\t\t\t\t\t\t| The weight Id (Guid).\t\t\t\t\t\t|   Yes\t\t|\r\n| BlobURL\t\t\t\t\t\t| The blob url of the picture.\t\t\t\t|   Yes\t\t|\r\n\r\n\r\n## Extra validations\r\n\r\n| Condition | Error message |\r\n| --------- | ------------- |\r\n| Both WeightId and BlobURL property must have a value. |",
-                "operationId": "WeightBlob_Create",
                 "consumes": [
                     "application/json"
                 ],
-                "produces": [
-                    "application/json"
-                ],
+                "description": "| Property\t\t\t\t\t\t| Description                               | Required\t|\r\n|-------------------------------|-------------------------------------------|-----------|\r\n| WeightId\t\t\t\t\t\t| The weight Id (Guid).\t\t\t\t\t\t|   Yes\t\t|\r\n| BlobURL\t\t\t\t\t\t| The blob url of the picture.\t\t\t\t|   Yes\t\t|\r\n\r\n\r\n## Extra validations\r\n\r\n| Condition | Error message |\r\n| --------- | ------------- |\r\n| Both WeightId and BlobURL property must have a value. |",
+                "operationId": "WeightBlob_Create",
                 "parameters": [
                     {
                         "in": "body",
@@ -911,6 +905,9 @@
                         }
                     }
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -918,7 +915,11 @@
                             "$ref": "#/definitions/ApiResourceId"
                         }
                     }
-                }
+                },
+                "summary": "Create or update",
+                "tags": [
+                    "WeightBlob"
+                ]
             }
         }
     },
@@ -1719,6 +1720,15 @@
                     "items": {
                         "$ref": "#/definitions/ApiVehicleCarrierWorkCurrentLinkedJobsResource"
                     }
+                },
+                "LinkedToMoreThanOneCustomers": {
+                    "type": "boolean"
+                },
+                "CurrentLinkedCustomers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkCurrentLinkedCustomersResource"
+                    }
                 }
             }
         },
@@ -1814,6 +1824,45 @@
                 }
             }
         },
+        "ApiVehicleCarrierWorkCurrentLinkedCustomersResource": {
+            "type": "object",
+            "properties": {
+                "CustomerGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "CustomerSiteGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Customer": {
+                    "type": "string"
+                },
+                "CustomerSite": {
+                    "type": "string"
+                },
+                "LinkedToMoreThanOneOrder": {
+                    "type": "boolean"
+                },
+                "LinkedOrders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkLinkedToCustomerLinkedOrdersResource"
+                    }
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LastChangeReasonId": {
+                    "format": "int32",
+                    "type": "integer"
+                }
+            }
+        },
         "ApiVehicleCarrierWorkCurrentLinkedMaterialsResource": {
             "type": "object",
             "properties": {
@@ -1833,6 +1882,79 @@
                 },
                 "MaterialEWCCode": {
                     "type": "string"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkLinkedToCustomerLinkedOrdersResource": {
+            "type": "object",
+            "properties": {
+                "OrderNo": {
+                    "type": "string"
+                },
+                "OrderGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "AreaOfOriginGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "AreaOfOrigin": {
+                    "type": "string"
+                },
+                "ShortCode": {
+                    "type": "string"
+                },
+                "InboundOrder": {
+                    "type": "boolean"
+                },
+                "LinkedMaterials": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkLinkedToCustomerLinkedOrderMaterialsResource"
+                    }
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LastChangeReasonId": {
+                    "format": "int32",
+                    "type": "integer"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkLinkedToCustomerLinkedOrderMaterialsResource": {
+            "type": "object",
+            "properties": {
+                "MaterialGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Material": {
+                    "type": "string"
+                },
+                "ShortCode": {
+                    "type": "string"
+                },
+                "MaterialAnalysisCode": {
+                    "type": "string"
+                },
+                "MaterialEWCCode": {
+                    "type": "string"
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LastChangeReasonId": {
+                    "format": "int32",
+                    "type": "integer"
                 }
             }
         },
