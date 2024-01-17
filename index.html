@@ -117,6 +117,7 @@
         {
             document.getElementById( "erpversions" ).style.display = "none";
             document.getElementById( "payversions" ).style.display = "none";
+            document.getElementById( "scaleversions" ).style.display = "none";
             document.getElementById( "coreversions" ).style.display = "none";
             document.getElementById( component + "versions" ).style.display = "block";
             intRedoc( component, "latest" );
@@ -129,11 +130,15 @@
         <option value="erp">ERP</option>
         <option value="pay">Pay</option>
         <option value="core">Core</option>
+        <option value="scale">Scale</option>
     </select></p>
     <p id="payversions" style="display:none">Pay Version <select onchange="intRedoc( 'pay', this.value )">
         <option value="latest">latest (9.1)</option>
     </select></p>
     <p id="coreversions" style="display:none">Core Version <select onchange="intRedoc( 'core', this.value )">
+        <option value="latest">latest (9.1)</option>
+    </select></p>
+    <p id="scaleversions"  style="display:none">Scale Version <select onchange="intRedoc( 'scale', this.value )">
         <option value="latest">latest (9.1)</option>
     </select></p>
     <p id="erpversions">Platform Version <select onchange="intRedoc( 'erp', this.value )">
