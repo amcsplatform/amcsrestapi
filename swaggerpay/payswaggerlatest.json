@@ -694,7 +694,7 @@
           "ExternalTransaction"
         ],
         "summary": "Terminal Payment Abort",
-        "description": "This endpoint is a signal used to abort a card payment requested using a terminal device.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\" and \"TerminalPay\". However, this end point only supports Terminal Pay. |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| TerminalId | The Terminal Id is the verifone terminal device serial number. |\n| EmailAddress | The e-mail address associated to the abort request. |\n| Reason | The reason associated to the abort request. |",
+        "description": "This endpoint is a signal used to abort a card payment requested using a terminal device.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | Provide Type can be any of \"ACICards\", \"ACIElectronic\", \"Heartland\", \"MerchantPartners\", \"Payment Express\", \"Realex\" and \"TerminalPay\". However, this end point only supports Terminal Pay. |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| RequestType | Request Type is \"Abort\". |\n| TerminalId | The Terminal Id is the verifone terminal device serial number. |\n| EmailAddress | The e-mail address associated to the abort request. |\n| Reason | The reason associated to the abort request. |",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1312,14 +1312,7 @@
           "providerType": {
             "type": "string",
             "enum": [
-              "ACICards",
-              "ACIElectronic",
-              "Heartland",
-              "MerchantPartners",
-              "PaymentExpress",
-              "Realex",
-              "TerminalPay",
-              "EftCanada"
+              "TerminalPay"
             ],
             "nullable": false,
             "example": "TerminalPay"
