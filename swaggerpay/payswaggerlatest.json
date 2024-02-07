@@ -57,14 +57,14 @@
         }
       }
     },
-    "/disbursement/AddSupplier" : {
+    "/disbursement/AddSupplier": {
       "post": {
         "tags": [
           "Disbursements"
         ],
         "summary": "Add Supplier",
         "description": "This endpoint is used to add supplier of disbursements.",
-        "requestBody":{
+        "requestBody": {
           "content": {
             "application/json": {
               "schema": {
@@ -110,14 +110,14 @@
         }
       }
     },
-    "/disbursement/GetSupplier" : {
+    "/disbursement/GetSupplier": {
       "post": {
         "tags": [
           "Disbursements"
         ],
         "summary": "Get Supplier",
         "description": "This endpoint is used to get supplier of disbursements.",
-        "requestBody":{
+        "requestBody": {
           "content": {
             "application/json": {
               "schema": {
@@ -175,8 +175,8 @@
           "content": {
             "application/json": {
               "schema": {
-                  "$ref": "#/components/schemas/AMCSPayDisbursementAddDisbursementRequest"
-                }
+                "$ref": "#/components/schemas/AMCSPayDisbursementAddDisbursementRequest"
+              }
             }
           }
         },
@@ -210,6 +210,49 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pay/AptPay/GetIdentity": {
+      "post": {
+        "tags": [
+          "Disbursements"
+        ],
+        "summary": "Get Identity",
+        "description": "This endpoint is used to get identity of a supplier.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSAptPayGetIdentityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSAptPayGetIdentityResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorContentResponse"
                 }
               }
             }
@@ -358,22 +401,22 @@
             "name": "callerTransactionId",
             "in": "query",
             "required": false,
-            "schema":{
-            "type": "string",
-            "format": "uuid",
-            "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
-            "description": "Required for all payments."
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
+              "description": "Required for all payments."
             }
           },
           {
             "name": "requestId",
             "in": "query",
             "required": false,
-            "schema":{
-            "type": "string",
-            "format": "uuid",
-            "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
-            "description": "Required for terminal payments if a response is not received."
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
+              "description": "Required for terminal payments if a response is not received."
             }
           }
         ],
@@ -1746,7 +1789,7 @@
           }
         }
       },
-      "AMCSAptPayGetIdentityRequest" : {
+      "AMCSAptPayGetIdentityRequest": {
         "type": "object",
         "required": [
           "id"
@@ -1755,7 +1798,31 @@
           "id": {
             "type": "number",
             "nullable": false,
-            "example": "183867559356"
+            "description": "The identity id of the request",
+            "example": "123"
+          }
+        }
+      },
+      "AMCSAptPayGetIdentityResponse": {
+        "type": "object",
+        "properties": {
+          "Data": {
+            "type": "object",
+            "nullable": true,
+            "$ref": "#/components/schemas/AMCSAptPayGetIdentityDataResponse"
+          },
+          "Error": {
+            "type": "array",
+            "nullable": true,
+            "description": "Contains the error description of the response",
+            "items": {
+              "$ref": "#/components/schemas/AMCSAptPayErrorDataResponse"
+            }
+          },
+          "IsSuccess": {
+            "type": "boolean",
+            "nullable": false,
+            "description": "Returns true if it doesn't contains error; False if it contains error"
           }
         }
       },
@@ -2384,21 +2451,129 @@
       "AMCSAptPayAddDisbursementDataResponse": {
         "type": "object",
         "properties": {
-           "id" : {
-              "type" : "string",
-              "example" : "6xxpsbbxjj-0119-hclhajwncvxejiefxgjatcen",
-              "description" : "This is the transaction ID of the transaction"
-            },
-            "status" : {
-              "type" : "string",
-              "example" : "ACCEPTED",
-              "description" : "This provides a message that describes the status of the transaction"
-            },
-            "referenceId" : {
-              "type" : "string",
-              "example" : "23232131554",
-              "description" : "Reference transaction ID"
-            }
+          "id": {
+            "type": "string",
+            "example": "6xxpsbbxjj-0119-hclhajwncvxejiefxgjatcen",
+            "description": "This is the transaction ID of the transaction"
+          },
+          "status": {
+            "type": "string",
+            "example": "ACCEPTED",
+            "description": "This provides a message that describes the status of the transaction"
+          },
+          "referenceId": {
+            "type": "string",
+            "example": "23232131554",
+            "description": "Reference transaction ID"
+          }
+        }
+      },
+      "AMCSAptPayGetIdentityDataResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": false
+          },
+          "individual": {
+            "type": "boolean",
+            "nullable": false
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "occupation": {
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "streetLine2": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "zip": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "province": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dbaName": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeOfBusiness": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfIncorporation": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryOfRegistration": {
+            "type": "string",
+            "nullable": true
+          },
+          "provinceOfRegistration": {
+            "type": "string",
+            "nullable": true
+          },
+          "businessTaxId": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "selfVerify": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "nationalIdentityNumber": {
+            "type": "string",
+            "nullable": true
+          }
         }
       },
       "AMCSAptPayGetTranStatusBasicDataResponse": {
@@ -2780,32 +2955,32 @@
             "type": "string",
             "format": "uuid",
             "nullable": true,
-            "example" : "5b1e280c-ba76-4f90-982a-b028006721f4",
+            "example": "5b1e280c-ba76-4f90-982a-b028006721f4",
             "description": "The AMCS generated Request GUID associated to the Payment request."
           },
           "amcsPayReferenceId": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-            "example" : "026b03bc-af5e-4615-8779-afe400ce9fdd",
+            "example": "026b03bc-af5e-4615-8779-afe400ce9fdd",
             "description": "The AMCS generated Response GUID associated to the Payment request."
           },
           "providerReference": {
             "type": "string",
             "nullable": true,
-            "example" : "8ac7a4a1877ca1eb01877fc082da054f",
+            "example": "8ac7a4a1877ca1eb01877fc082da054f",
             "description": "The reference number associated to the payment provider."
           },
           "providerResponseCode": {
             "type": "string",
             "nullable": true,
-            "example" : "Success",
+            "example": "Success",
             "description": "The response code associated to the payment provider."
           },
           "providerAuthCode": {
             "type": "string",
             "nullable": true,
-            "example" : "12345",
+            "example": "12345",
             "description": "The authorization code associated to the payment provider."
           },
           "responseTimestamp": {
@@ -2818,7 +2993,7 @@
           "notes": {
             "type": "string",
             "nullable": true,
-            "example" : "ACI Cards Transaction Id 8ac7a4a1877ca1eb01877fc082da054f\r\n\r\n        Transaction Date 2023-04-14 12:32:15+0000\r\n\r\n        Result code 000.100.110\r\n\r\n        ResultDescription: Request successfully processed in 'Merchant in Integrator Test Mode'\r\n\r\n        Payment Type DB\r\n\r\n        Card Holder jessah\r\n\r\n        Card Expiry 01/2025\r\n\r\n",
+            "example": "ACI Cards Transaction Id 8ac7a4a1877ca1eb01877fc082da054f\r\n\r\n        Transaction Date 2023-04-14 12:32:15+0000\r\n\r\n        Result code 000.100.110\r\n\r\n        ResultDescription: Request successfully processed in 'Merchant in Integrator Test Mode'\r\n\r\n        Payment Type DB\r\n\r\n        Card Holder jessah\r\n\r\n        Card Expiry 01/2025\r\n\r\n",
             "description": "More information associated to the payment."
           },
           "transactionStatus": {
@@ -2833,7 +3008,7 @@
             ],
             "type": "string",
             "nullable": true,
-            "example" : "Success",
+            "example": "Success",
             "description": "The Transaction Status associated to the payment."
           },
           "transactionAmount": {
@@ -2849,7 +3024,7 @@
             ],
             "type": "string",
             "nullable": true,
-            "example" : "Tokenization",
+            "example": "Tokenization",
             "description": "The payment transaction request type."
           },
           "paymentType": {
@@ -2862,7 +3037,7 @@
             ],
             "type": "string",
             "nullable": true,
-            "example" : "CARD",
+            "example": "CARD",
             "description": "The payment transaction payment type."
           },
           "transactionOrigin": {
@@ -2872,20 +3047,20 @@
             ],
             "type": "string",
             "nullable": true,
-            "example" : "MOTO",
+            "example": "MOTO",
             "description": "The payment transaction payment type."
           },
           "callerIdentifier": {
             "type": "string",
             "nullable": true,
-            "example" : "Tenant Name",
+            "example": "Tenant Name",
             "description": "The Caller Identification associated to the Payment request."
           },
           "requestId": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-            "example" : "3e14bdf6-5b17-44aa-bf5b-2f7fb113daf9",
+            "example": "3e14bdf6-5b17-44aa-bf5b-2f7fb113daf9",
             "description": "The Caller supplied GUID associated to the payment request."
           },
           "providerType": {
@@ -2903,7 +3078,7 @@
             ],
             "type": "string",
             "nullable": true,
-            "example" : "ACICards",
+            "example": "ACICards",
             "description": "The payment provider type."
           },
           "customerInfo": {
@@ -2919,7 +3094,7 @@
           "tokenReference": {
             "type": "string",
             "nullable": true,
-            "example" : "72573620",
+            "example": "72573620",
             "description": "The Token Reference sent by the provider associated to the original payment (Tokenisation Response)."
           },
           "historyReference": {
@@ -2931,25 +3106,25 @@
           "profileExpiryDate": {
             "type": "string",
             "nullable": true,
-            "example" :"08/24",
+            "example": "08/24",
             "description": "The Profile/Card expiry date sent by the  provider associated to the original payment (Tokenisation Response) in (MM/YY) format."
           },
           "maskedProfileNumber": {
             "type": "string",
             "nullable": true,
-            "example" : "************1234",
+            "example": "************1234",
             "description": "The masked Profile/Card Number sent by the provider associated to the original payment (Tokenisation Response) (Conditionally required)."
           },
           "profileType": {
             "type": "string",
             "nullable": true,
-            "example" : "MasterCard",
+            "example": "MasterCard",
             "description": "The Profile/Card Type sent by the provider associated to the original payment (Tokenisation Response)."
           },
           "profileHolder": {
             "type": "string",
             "nullable": true,
-            "example" : "Joe Bloggs",
+            "example": "Joe Bloggs",
             "description": "The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response)."
           }
         },
@@ -3425,7 +3600,7 @@
       },
       "AMCSPayVaultResponse": {
         "type": "object",
-        "properties": { 
+        "properties": {
           "callerTransactionId": {
             "type": "string",
             "format": "uuid",
