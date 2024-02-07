@@ -8,10 +8,10 @@
     "/integrator/assets": {
       "post": {
         "tags": [
-          "asset"
+          "Asset"
         ],
-        "summary": "Asset",
-        "description": "# Asset\r\n\r\nCreate an Asset (Vehicle)\r\n\r\n## Input\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| AssetId         \t\t| GUID     | ID of the Asset                                                                    |\r\n| AssetName\t\t\t\t\t\t| string   | Display name\t(vehicle registration plate)                                          |\r\n| AssetType \t\t\t\t\t| string   | Front Loader, Side Loader, Rear End Loader                                         |\r\n| City          \t\t\t| string   | Address part                                                                       |\r\n| Street              | string   | Address part                                                                       |\r\n| Address1            | string   | Address part                                                                       |\r\n| Address2            | string   | Address part                                                                       |\r\n| Address3            | string   | Address part                                                                       |\r\n| PostalCode          | string   | Address part                                                                       |\r\n| HouseNumber         | string   | Address part                                                                       |\r\n| OutletId            | GUID     | ID of the Company Outlet associated with the Asset                                 |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Inactive    \t\t\t\t\t\t\t\t\t\t\t\t\t                                              |",
+        "summary": "Create or Update an Asset (Vehicle)",
+        "description": "# Create or Update an Asset (Vehicle)\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| AssetId         \t\t| GUID     | ID of the Asset                                                                    |\r\n| AssetName\t\t\t\t\t\t| string   | Display name\t(vehicle registration plate)                                          |\r\n| AssetType \t\t\t\t\t| string   | Front Loader, Side Loader, Rear End Loader                                         |\r\n| OutletId            | GUID     | ID of the Company Outlet associated with the Asset                                 |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Asset is no longer in use\t\t\t\t\t\t                                              |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"AssetName\": \"VEH 001\",\r\n  \"AssetType\": \"Front Loader\",\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\"\r\n}\r\n```",
         "requestBody": {
           "content": {
             "application/json": {
@@ -28,71 +28,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/integrator/assets/{id}": {
-      "put": {
-        "tags": [
-          "asset"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "asset"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResource"
                 }
               }
             }
@@ -103,10 +38,10 @@
     "/integrator/contaminationEvents/changes": {
       "get": {
         "tags": [
-          "contaminationEvent"
+          "ContaminationEvent"
         ],
-        "summary": "Contamination Event Changes",
-        "description": "# Contamination Event Changes\r\n\r\nRetrieve changes in the list of Contamination Events for all tenants, that have been made since a specific point in the history\r\n\r\n## Input\r\n\r\n| Parameter               | Description                |\r\n| ----------------------- | -------------------------- |\r\n| since                   | Bookmark from extra.until  |\r\n| cursor                  | Bookmark from extra.cursor |\r\n| links                   | N/A                        |\r\n\r\n## Output\r\n\r\n| Property\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| GUID\t\t\t\t\t\t\t\t| GUID     | ID of the Contamination Event.\t\t\t\t\t\t\t\t\t\t\t\t\t                          \t|\r\n| TenantId\t\t\t\t\t\t| GUID     | ID of the Tenant associated with the Contamination Event\t\t                        |\r\n| CompanyOutletId\t\t\t| GUID     | ID of the Company Outlet associated with the Contamination Event                  \t|\r\n| CustomerSiteId\t\t\t| GUID     | ID of the Customer Site associated with the Contamination Event                     |\r\n| VehicleId\t\t\t\t\t\t| GUID     | ID of the Vehicle associated with the Contamination Event\t\t\t\t                  \t|\r\n| Latitude\t   \t\t\t  | double   | Location of the Contamination Event                                                |\r\n| Longitude\t\t\t\t\t\t| double   | Location of the Contamination Event                                                |\r\n| Timestamp\t\t\t\t\t\t| DateTime | Timestamp of the Contamination Event\t                                              |\r\n| ContaminationScore \t| int      | Degree of Contamination found                                                      |\r\n| extra.until         | string   | Bookmark to put in as \"since\" later - appears when there are no more pages for now |\r\n| link.next           | URI      | Link to follow to get next page with changes                                       |",
+        "summary": "Request list of Contamination Event changes",
+        "description": "# Request list of Contamination Event changes\r\n\r\nRetrieve changes in the list of Contamination Events for all tenants, that have been made since a specific point in the history\r\n\r\n## Input\r\n\r\n| Parameter               | Description                |\r\n| ----------------------- | -------------------------- |\r\n| since                   | Bookmark from extra.until  |\r\n| cursor                  | Bookmark from extra.cursor |\r\n| links                   | N/A                        |\r\n\r\n## Output\r\n\r\n| Property\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| GUID\t\t\t\t\t\t\t\t| GUID     | ID of the Contamination Event.\t\t\t\t\t\t\t\t\t\t\t\t\t                          \t|\r\n| TenantId\t\t\t\t\t\t| GUID     | ID of the Tenant associated with the Contamination Event\t\t                        |\r\n| CompanyOutletId\t\t\t| GUID     | ID of the Company Outlet associated with the Contamination Event                  \t|\r\n| CustomerSiteId\t\t\t| GUID     | ID of the Customer Site associated with the Contamination Event                     |\r\n| VehicleId\t\t\t\t\t\t| GUID     | ID of the Vehicle associated with the Contamination Event\t\t\t\t                  \t|\r\n| Latitude\t   \t\t\t  | double   | Location of the Contamination Event                                                |\r\n| Longitude\t\t\t\t\t\t| double   | Location of the Contamination Event                                                |\r\n| Timestamp\t\t\t\t\t\t| DateTime | Timestamp of the Contamination Event\t                                              |\r\n| ContaminationScore \t| int      | Degree of Contamination found                                                      |\r\n| extra.until         | string   | Bookmark to put in as \"since\" later - appears when there are no more pages for now |\r\n| link.next           | URI      | Link to follow to get next page with changes                                       |",
         "parameters": [
           {
             "name": "since",
@@ -136,7 +71,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResourceChanges[ApiContaminationEventExternalResource]"
+                  "$ref": "#/components/schemas/ApiResourceChanges[Contamination EventResource]"
                 }
               }
             }
@@ -144,238 +79,13 @@
         }
       }
     },
-    "/iot/devices/changes": {
-      "get": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "Device",
-        "description": "# Device\r\n\r\nRequest a list of devices (e.g. DVR cameras) for all tenants, that has changed since ???\r\n\r\n| Parameter               | Description             |\r\n| ----------------------- | ------------------------|\r\n| since                   | ???                     |\r\n| cursor                  | ???                     |\r\n| links                   | ???                     |",
-        "parameters": [
-          {
-            "name": "since",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceChanges[ApiIntegratorDeviceResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/iot/devices/{id}": {
-      "get": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "Device",
-        "description": "# Device\r\n\r\nRequest a list of devices (e.g. DVR cameras) for all tenants, or request a specific Device by its GUID.\r\n\r\n| Property                | Description                                            |\r\n| ----------------------- | ------------------------------------------------------ |\r\n| GUID                    | GUID associated to the Event.                          |\r\n| ManufactureIdentifier   | [int] Device Foreign Id.                               |\r\n| Description             | Device name                                            |\r\n| DeviceTypeListItem.Guid | GUID of the Type of the Device -- See DeviceType API       |\r\n| DeviceStatusListItem.Guid | GUID of the Status of the Device -- See DeviceStatus API       |",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "expand",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultEntity[ApiIntegratorDeviceResource]"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "Device",
-        "description": "# Device\r\n\r\nUpdate an existing Device (e.g. a DVR camera).\r\n\r\n| Parameter               | Description                   |\r\n| ----------------------- | ----------------------------- |\r\n| id                      | GUID of the Device to Update. |\r\n\r\n# Request\r\n\r\n```\r\n{\r\n    \"ManufactureIdentifier\": [int] Device Foreign Id,\r\n    \"Description\": \"Device Name\",\r\n    \"DeviceTypeListItem\": {\r\n      \"Guid\": \"GUID of Device Type -- See Device Type API\"\r\n    },\r\n    \"DeviceStatusListItem\": {\r\n      \"Guid\": \"GUID of Device Status -- See Device Status API\"\r\n    }\r\n}\r\n```",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/iot/devices": {
-      "get": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "Device",
-        "description": "# Device\r\n\r\nRequest a list of devices (e.g. DVR cameras) for all tenants, or request a specific Device by its GUID.\r\n\r\n| Property                | Description                                            |\r\n| ----------------------- | ------------------------------------------------------ |\r\n| GUID                    | GUID associated to the Event.                          |\r\n| ManufactureIdentifier   | [int] Device Foreign Id.                               |\r\n| Description             | Device name                                            |\r\n| DeviceTypeListItem.Guid | GUID of the Type of the Device -- See DeviceType API       |\r\n| DeviceStatusListItem.Guid | GUID of the Status of the Device -- See DeviceStatus API       |",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "max",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCount",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeDeleted",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorDeviceResource]"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/integrator/customerSites": {
       "post": {
         "tags": [
-          "Device"
+          "CustomerSite"
         ],
-        "summary": "Device",
-        "description": "# Device\r\n\r\nCreate a new Device (e.g. a DVR camera).\r\n\r\n# Request\r\n\r\n```\r\n{\r\n    \"ManufactureIdentifier\": [int] Device Foreign Id,\r\n    \"Description\": \"Device Name\",\r\n    \"DeviceTypeListItem\": {\r\n      \"Guid\": \"GUID of Device Type -- See Device Type API\"\r\n    },\r\n    \"DeviceStatusListItem\": {\r\n      \"Guid\": \"GUID of Device Status -- See Device Status API\"\r\n    }\r\n}\r\n```\r\n\r\n# Response\r\n\r\n```\r\n{\r\n    \"resource\": \"GUID of newly created Device\"\r\n}\r\n```",
+        "summary": "Create or Update a Customer Site",
+        "description": "# Create or Update a Customer Site\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| CustomerAddressId\t\t| GUID     | ID of the Customer Site                                                            |\r\n| Name\t\t\t\t\t\t\t\t| string   | Display name\tof the Customer Site (Customer Name)                                  |\r\n| Country \t\t\t\t\t\t| string   | Address part                                                                       |\r\n| City          \t\t\t| string   | Address part                                                                       |\r\n| Street              | string   | Address part                                                                       |\r\n| Address1            | string   | Address part                                                                       |\r\n| Address2            | string   | Address part                                                                       |\r\n| Address3            | string   | Address part                                                                       |\r\n| PostalCode          | string   | Address part                                                                       |\r\n| HouseNumber         | string   | Address part                                                                       |\r\n| Latitude            | double   | Geographic coordinate                                                              |\r\n| Longitude           | double   | Geographic coordinate                                                              |\r\n| OutletId            | GUID     | ID of the Company Outlet associated with the Customer Site                         |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Customer Site is no longer in use\t\t                                              |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"CustomerAddressId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"Name\": \"Alterwerth Group\",\r\n  \"Country\": \"Unites States\",\r\n  \"City\": \"Upper Marlboro\",\r\n  \"Street\": \"Trent Oval\",\r\n  \"PostalCode\": \"MD 20792\",\r\n  \"HouseNumber\": \"1762\",\r\n  \"Latitude\": 38.82000560748161, \r\n  \"Longitude\": -76.75000011205616,\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\"\r\n}\r\n```",
         "requestBody": {
           "content": {
             "application/json": {
@@ -399,692 +109,27 @@
         }
       }
     },
-    "/lists/deviceStatuses/{id}": {
+    "/integrator/image/{eventGuid}": {
       "get": {
         "tags": [
-          "DeviceStatus"
+          "EventImage"
         ],
-        "summary": "Device Status",
-        "description": "# Device Status\r\n\r\nRequest possible statuses a Device can have.\r\n\r\n| Property                | Description                                     |\r\n| ----------------------- | ----------------------------------------------- |\r\n| GUID                    | GUID associated to the DeviceStatus         |\r\n| Description             | Descriptive Name of the DeviceStatus        |\r\n\r\n# Response\r\n\r\n```\r\n{\r\n    \"resource\": [\r\n        {\r\n            \"resource\": {\r\n                \"Description\": \"Name of DeviceStatus\",\r\n                \"IsDeleted\": true/false,\r\n                \"GUID\": \"GUID of DeviceStatus\"\r\n            }\r\n        },\r\n        ...\r\n    ]\r\n}\r\n```",
+        "summary": "Download Event Image",
+        "description": "# Download Event Image\r\n\r\nDownload the inferenced jpeg image associated with an Event.\r\n\r\n| Property                | Description                                            |\r\n| ----------------------- | ------------------------------------------------------ |\r\n| GUID                    | GUID associated to the Event.                          |",
         "parameters": [
           {
-            "name": "id",
+            "name": "eventGuid",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "expand",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultEntity[ApiIntegratorDeviceStatusResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/lists/deviceStatuses": {
-      "get": {
-        "tags": [
-          "DeviceStatus"
-        ],
-        "summary": "Device Status",
-        "description": "# Device Status\r\n\r\nRequest possible statuses a Device can have.\r\n\r\n| Property                | Description                                     |\r\n| ----------------------- | ----------------------------------------------- |\r\n| GUID                    | GUID associated to the DeviceStatus         |\r\n| Description             | Descriptive Name of the DeviceStatus        |\r\n\r\n# Response\r\n\r\n```\r\n{\r\n    \"resource\": [\r\n        {\r\n            \"resource\": {\r\n                \"Description\": \"Name of DeviceStatus\",\r\n                \"IsDeleted\": true/false,\r\n                \"GUID\": \"GUID of DeviceStatus\"\r\n            }\r\n        },\r\n        ...\r\n    ]\r\n}\r\n```",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "max",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCount",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeDeleted",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorDeviceStatusResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/lists/deviceTypes/{id}": {
-      "get": {
-        "tags": [
-          "DeviceType"
-        ],
-        "summary": "Device Type",
-        "description": "# Device Type\r\n\r\nRequest possible types a Device can have.\r\n\r\n| Property                | Description                                   |\r\n| ----------------------- | --------------------------------------------- |\r\n| GUID                    | The GUID associated to the DeviceType         |\r\n| Description             | The descriptive Name of the DeviceType        |\r\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "expand",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultEntity[ApiIntegratorDeviceTypeResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/lists/deviceTypes": {
-      "get": {
-        "tags": [
-          "DeviceType"
-        ],
-        "summary": "Device Type",
-        "description": "# Device Type\r\n\r\nRequest possible types a Device can have.\r\n\r\n| Property                | Description                                   |\r\n| ----------------------- | --------------------------------------------- |\r\n| GUID                    | The GUID associated to the DeviceType         |\r\n| Description             | The descriptive Name of the DeviceType        |\r\n",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "max",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCount",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeDeleted",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorDeviceTypeResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/iot/events/changes": {
-      "get": {
-        "tags": [
-          "Event"
-        ],
-        "summary": "Event",
-        "description": "# Event\r\n\r\nRequest a list of Events for all tenants, that has changed since ???\r\n\r\n| Parameter               | Description             |\r\n| ----------------------- | ------------------------|\r\n| since                   | ???                     |\r\n| cursor                  | ???                     |\r\n| links                   | ???                     |",
-        "parameters": [
-          {
-            "name": "since",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "cursor",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceChanges[ApiIntegratorEventResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/iot/events/{id}": {
-      "get": {
-        "tags": [
-          "Event"
-        ],
-        "summary": "Event",
-        "description": "# Event\r\n\r\nRequest a list of Events for all tenants, or request a specific Event by its GUID.\r\n\r\n| Property                | Description                                             |\r\n| ----------------------- | ------------------------------------------------------- |\r\n| GUID                    | GUID associated to the Event.                           |\r\n| Timestamp               | Timestamp when the Event occurred.                      |\r\n| GeoLat                  | Latitude of the GPS location where the Event occurred.  |\r\n| GeoLon                  | Longitude of the GPS location where the Event occurred. |\r\n| RelatedDeviceGuid       | GUID of the Device that recorded the Event.             |\r\n| CustomAttributesJson    | Event Type dependent information.                       |\r\n| EventTypeListItem.Guid          | GUID of the Type of Event.                          |\r\n| EventTypeListItem.Description   | Descriptive Name of the Type of Event.              |\r\n| VideoStatusListItem.Guid        | GUID of the Video Status of the Event.              |\r\n| VideoStatusListItem.Description | Descriptive Name of the Video Status of the Event.  |\r\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "expand",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultEntity[ApiIntegratorEventResource]"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Event"
-        ],
-        "summary": "Event",
-        "description": "# Event\r\n\r\nUpdate an existing Event.\r\n\r\n| Parameter               | Description                  |\r\n| ----------------------- | ---------------------------- |\r\n| id                      | GUID of the Event to Update. |\r\n\r\n# Request\r\n\r\n```\r\n{\r\n\t\"RelatedDeviceGuid\": \"GUID of the Device that recorded the Event\",\r\n\t\"EventTypeListItem\": {\r\n\t\t\"Guid\": \"GUID of Type of Event\"\r\n\t},\r\n\t\"Timestamp\": \"2022-01-01 00:00:00\",\r\n\t\"GeoLat\": 0.0,\r\n\t\"GeoLon\": 0.0,\r\n\t\"CustomAttributesJson\": \"Json As String\",\r\n\t\"VideoStatusListItem\": {\r\n        \"Guid\": \"GUID of the Video Status of the Event\"\r\n    }\r\n}\r\n```",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/iot/events": {
-      "get": {
-        "tags": [
-          "Event"
-        ],
-        "summary": "Event",
-        "description": "# Event\r\n\r\nRequest a list of Events for all tenants, or request a specific Event by its GUID.\r\n\r\n| Property                | Description                                             |\r\n| ----------------------- | ------------------------------------------------------- |\r\n| GUID                    | GUID associated to the Event.                           |\r\n| Timestamp               | Timestamp when the Event occurred.                      |\r\n| GeoLat                  | Latitude of the GPS location where the Event occurred.  |\r\n| GeoLon                  | Longitude of the GPS location where the Event occurred. |\r\n| RelatedDeviceGuid       | GUID of the Device that recorded the Event.             |\r\n| CustomAttributesJson    | Event Type dependent information.                       |\r\n| EventTypeListItem.Guid          | GUID of the Type of Event.                          |\r\n| EventTypeListItem.Description   | Descriptive Name of the Type of Event.              |\r\n| VideoStatusListItem.Guid        | GUID of the Video Status of the Event.              |\r\n| VideoStatusListItem.Description | Descriptive Name of the Video Status of the Event.  |\r\n",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "max",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCount",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeDeleted",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorEventResource]"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Event"
-        ],
-        "summary": "Event",
-        "description": "# Event\r\n\r\nCreate a new Event.\r\n\r\n# Request\r\n\r\n```\r\n{\r\n\t\"RelatedDeviceGuid\": \"GUID of the Device that recorded the Event\",\r\n\t\"EventTypeListItem\": {\r\n\t\t\"Guid\": \"GUID of Type of Event\"\r\n\t},\r\n\t\"Timestamp\": \"2022-01-01 00:00:00\",\r\n\t\"GeoLat\": 0.0,\r\n\t\"GeoLon\": 0.0,\r\n\t\"CustomAttributesJson\": \"Json As String\",\r\n\t\"VideoStatusListItem\": {\r\n        \"Guid\": \"GUID of the Video Status of the Event\"\r\n    }\r\n}\r\n```\r\n\r\n# Response\r\n\r\n```\r\n{\r\n    \"resource\": \"GUID of newly created Event\"\r\n}\r\n```",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/lists/eventTypes/{id}": {
-      "get": {
-        "tags": [
-          "EventType"
-        ],
-        "summary": "Event Type",
-        "description": "# Event Type\r\n\r\nRequest possible types an Event can have.\r\n\r\n| Property                | Description                                  |\r\n| ----------------------- | -------------------------------------------- |\r\n| GUID                    | The GUID associated to the EventType         |\r\n| Description             | The descriptive Name of the EventType        |\r\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "expand",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultEntity[ApiIntegratorEventTypeResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/lists/eventTypes": {
-      "get": {
-        "tags": [
-          "EventType"
-        ],
-        "summary": "Event Type",
-        "description": "# Event Type\r\n\r\nRequest possible types an Event can have.\r\n\r\n| Property                | Description                                  |\r\n| ----------------------- | -------------------------------------------- |\r\n| GUID                    | The GUID associated to the EventType         |\r\n| Description             | The descriptive Name of the EventType        |\r\n",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "max",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCount",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeDeleted",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorEventTypeResource]"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -1092,10 +137,10 @@
     "/integrator/outlets": {
       "post": {
         "tags": [
-          "outlet"
+          "Outlet"
         ],
-        "summary": "Outlet",
-        "description": "# Outlet\r\n\r\nCreate an Outlet\r\n\r\n## Input\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| OutletId         \t\t| GUID     | ID of the Outlet                                                                   |\r\n| OutletName\t\t\t\t\t| string   | Display name                                                                       |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Inactive    \t\t\t\t\t\t\t\t\t\t\t\t\t                                              |\r\n",
+        "summary": "Create or Update an Outlet",
+        "description": "# Create or Update an Outlet\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| OutletId         \t\t| GUID     | ID of the Outlet                                                                   |\r\n| OutletName\t\t\t\t\t| string   | Display name                                                                       |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Outlet is no longer in use \t\t\t\t\t                                              |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"OutletId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"OutletName\": \"Primary Company Outlet\"\r\n}\r\n```",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1112,71 +157,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/integrator/outlets/{id}": {
-      "put": {
-        "tags": [
-          "outlet"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "outlet"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResource"
                 }
               }
             }
@@ -1187,10 +167,10 @@
     "/integrator/overfilledContainerEvents/changes": {
       "get": {
         "tags": [
-          "overfilledContainerEvent"
+          "OverfilledContainerEvent"
         ],
-        "summary": "Contamination Event Changes",
-        "description": "# Contamination Event Changes\r\n\r\nRetrieve changes in the list of Overfilled Container Events for all tenants, that have been made since a specific point in the history\r\n\r\n## Input\r\n\r\n| Parameter               | Description                |\r\n| ----------------------- | -------------------------- |\r\n| since                   | Bookmark from extra.until  |\r\n| cursor                  | Bookmark from extra.cursor |\r\n| links                   | N/A                        |\r\n\r\n## Output\r\n\r\n| Property\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| GUID\t\t\t\t\t\t\t\t| GUID     | ID of the Overfilled Container Event.\t\t\t\t\t\t\t\t\t\t\t\t\t                    |\r\n| TenantId\t\t\t\t\t\t| GUID     | ID of the Tenant associated with the Overfilled Container Event\t\t                |\r\n| CompanyOutletId\t\t\t| GUID     | ID of the Company Outlet associated with the Overfilled Container Event            |\r\n| CustomerSiteId\t\t\t| GUID     | ID of the Customer Site associated with the Overfilled Container Event             |\r\n| VehicleId\t\t\t\t\t\t| GUID     | ID of the Vehicle associated with the Overfilled Container Event\t\t\t\t            |\r\n| Latitude\t   \t\t\t  | double   | Location of the Overfilled Container Event                                         |\r\n| Longitude\t\t\t\t\t\t| double   | Location of the Overfilled Container Event                                         |\r\n| Timestamp\t\t\t\t\t\t| DateTime | Timestamp of the Overfilled Container Event\t                                      |\r\n| ContaminationScore \t| int      | Degree of Overfilled Container found                                               |\r\n| extra.until         | string   | Bookmark to put in as \"since\" later - appears when there are no more pages for now |\r\n| link.next           | URI      | Link to follow to get next page with changes                                       |",
+        "summary": "Request list of Overfilled Container Event changes",
+        "description": "# Request list of Overfilled Container Event changes\r\n\r\nRetrieve changes in the list of Overfilled Container Events for all tenants, that have been made since a specific point in the history\r\n\r\n## Input\r\n\r\n| Parameter               | Description                |\r\n| ----------------------- | -------------------------- |\r\n| since                   | Bookmark from extra.until  |\r\n| cursor                  | Bookmark from extra.cursor |\r\n| links                   | N/A                        |\r\n\r\n## Output\r\n\r\n| Property\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| GUID\t\t\t\t\t\t\t\t| GUID     | ID of the Overfilled Container Event.\t\t\t\t\t\t\t\t\t\t\t\t\t                    |\r\n| TenantId\t\t\t\t\t\t| GUID     | ID of the Tenant associated with the Overfilled Container Event\t\t                |\r\n| CompanyOutletId\t\t\t| GUID     | ID of the Company Outlet associated with the Overfilled Container Event            |\r\n| CustomerSiteId\t\t\t| GUID     | ID of the Customer Site associated with the Overfilled Container Event             |\r\n| VehicleId\t\t\t\t\t\t| GUID     | ID of the Vehicle associated with the Overfilled Container Event\t\t\t\t            |\r\n| Latitude\t   \t\t\t  | double   | Geographic coordinate of the Overfilled Container Event                                         |\r\n| Longitude\t\t\t\t\t\t| double   | Geographic coordinate of the Overfilled Container Event                                         |\r\n| Timestamp\t\t\t\t\t\t| DateTime | Timestamp of the Overfilled Container Event\t                                      |\r\n| ContaminationScore \t| int      | Degree of Overfilled Container found                                               |\r\n| extra.until         | string   | Bookmark to put in as \"since\" later - appears when there are no more pages for now |\r\n| link.next           | URI      | Link to follow to get next page with changes                                       |",
         "parameters": [
           {
             "name": "since",
@@ -1227,708 +207,10 @@
           }
         }
       }
-    },
-    "/integrator/sites": {
-      "post": {
-        "tags": [
-          "site"
-        ],
-        "summary": "Customer Site",
-        "description": "# Customer Site\r\n\r\nCreate a Customer Site\r\n\r\n## Input\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| CustomerAddressId\t\t| GUID     | ID of the Customer Site                                                            |\r\n| Name\t\t\t\t\t\t\t\t| string   | Display name\t\t\t\t\t\t\t\t\t\t\t\t\t                                              |\r\n| Country \t\t\t\t\t\t| string   | Address part                                                                       |\r\n| City          \t\t\t| string   | Address part                                                                       |\r\n| Street              | string   | Address part                                                                       |\r\n| Address1            | string   | Address part                                                                       |\r\n| Address2            | string   | Address part                                                                       |\r\n| Address3            | string   | Address part                                                                       |\r\n| PostalCode          | string   | Address part                                                                       |\r\n| HouseNumber         | string   | Address part                                                                       |\r\n| OutletId            | GUID     | ID of the Company Outlet associated with the Customer Site                         |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Inactive    \t\t\t\t\t\t\t\t\t\t\t\t\t                                              |",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/integrator/sites/{id}": {
-      "put": {
-        "tags": [
-          "site"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "site"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResource"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/lists/videoStatuses/{id}": {
-      "get": {
-        "tags": [
-          "VideoStatus"
-        ],
-        "summary": "Video Status",
-        "description": "# Video Status\r\n\r\nRequest possible statuses a video can have.\r\n\r\n| Property                | Description                                    |\r\n| ----------------------- | ---------------------------------------------- |\r\n| GUID                    | The GUID associated to the VideoStatus         |\r\n| Description             | The descriptive Name of the VideoStatus        |\r\n",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "expand",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultEntity[ApiIntegratorVideoStatusResource]"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/lists/videoStatuses": {
-      "get": {
-        "tags": [
-          "VideoStatus"
-        ],
-        "summary": "Video Status",
-        "description": "# Video Status\r\n\r\nRequest possible statuses a video can have.\r\n\r\n| Property                | Description                                    |\r\n| ----------------------- | ---------------------------------------------- |\r\n| GUID                    | The GUID associated to the VideoStatus         |\r\n| Description             | The descriptive Name of the VideoStatus        |\r\n",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "order",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "max",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeCount",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeDeleted",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "links",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "udf",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorVideoStatusResource]"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
-      "AMCS.IoT.Contamination.Api.Integrator.ApiIntegratorListItem": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCS.IoT.Contamination.Api.Integrator.ContaminationEvent.ApiContaminationEventExternal": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "tenantId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "companyOutletId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "customerSiteId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "vehicleId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "dateTime",
-            "example": "2000-01-01 00:00:00.000"
-          },
-          "contaminationScore": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCS.IoT.Contamination.Api.Integrator.Device.ApiIntegratorDevice": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "deviceId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "tenantId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "manufactureIdentifier": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "deviceTypeListItem": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.ApiIntegratorListItem"
-          },
-          "deviceStatusListItem": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.ApiIntegratorListItem"
-          },
-          "isDeleted": {
-            "type": "boolean"
-          },
-          "deviceTypeListItemGuid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "deviceStatusListItemGuid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCS.IoT.Contamination.Api.Integrator.Event.ApiIntegratorEvent": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "eventId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "tenantId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "relatedDeviceGuid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "eventTypeListItem": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.ApiIntegratorListItem"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "dateTime",
-            "nullable": true,
-            "example": "2000-01-01 00:00:00.000"
-          },
-          "geoLat": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "geoLon": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "customAttributesJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "videoStatusListItem": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.ApiIntegratorListItem"
-          },
-          "relatedEventTypeGuidFilter": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "isDeleted": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorDeviceStatus": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "deviceStatusId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "isDeleted": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorDeviceType": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "deviceTypeId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "isDeleted": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorEventType": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "eventTypeId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "isDeleted": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorVideoStatus": {
-        "type": "object",
-        "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "guid": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastChangeReasonId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "statusId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "isDeleted": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "AMCS.IoT.Contamination.Api.Integrator.OverfilledContainerEvent.ApiOverfilledContainerEventExternal": {
         "type": "object",
         "properties": {
@@ -2002,84 +284,6 @@
         },
         "additionalProperties": false
       },
-      "ApiResource": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceChanges[ApiContaminationEventExternalResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.ContaminationEvent.ApiContaminationEventExternal"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultUpdatesExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceChanges[ApiIntegratorDeviceResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Device.ApiIntegratorDevice"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultUpdatesExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceChanges[ApiIntegratorEventResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Event.ApiIntegratorEvent"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultUpdatesExtra"
-          }
-        },
-        "additionalProperties": false
-      },
       "ApiResourceChanges[ApiOverfilledContainerEventExternalResource]": {
         "type": "object",
         "properties": {
@@ -2093,6 +297,28 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.OverfilledContainerEvent.ApiOverfilledContainerEventExternal"
+            },
+            "nullable": true
+          },
+          "extra": {
+            "$ref": "#/components/schemas/ApiResourceResultUpdatesExtra"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResourceChanges[Contamination EventResource]": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ApiResourceErrors"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiResourceStatus"
+          },
+          "resource": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Contamination Event"
             },
             "nullable": true
           },
@@ -2128,333 +354,6 @@
         },
         "additionalProperties": false
       },
-      "ApiResourceResultCollectionExtra": {
-        "type": "object",
-        "properties": {
-          "count": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultCollection[ApiIntegratorDeviceResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Device.ApiIntegratorDevice"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultCollectionExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultCollection[ApiIntegratorDeviceStatusResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorDeviceStatus"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultCollectionExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultCollection[ApiIntegratorDeviceTypeResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorDeviceType"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultCollectionExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultCollection[ApiIntegratorEventResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Event.ApiIntegratorEvent"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultCollectionExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultCollection[ApiIntegratorEventTypeResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorEventType"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultCollectionExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultCollection[ApiIntegratorVideoStatusResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorVideoStatus"
-            },
-            "nullable": true
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultCollectionExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntityExtra": {
-        "type": "object",
-        "properties": {
-          "expand": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": { },
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "include": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": { }
-              },
-              "nullable": true
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntityLinks": {
-        "type": "object",
-        "properties": {
-          "self": {
-            "type": "string",
-            "nullable": true
-          },
-          "associations": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "expand": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "operations": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntity[ApiIntegratorDeviceResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Device.ApiIntegratorDevice"
-          },
-          "links": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityLinks"
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntity[ApiIntegratorDeviceStatusResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorDeviceStatus"
-          },
-          "links": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityLinks"
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntity[ApiIntegratorDeviceTypeResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorDeviceType"
-          },
-          "links": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityLinks"
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntity[ApiIntegratorEventResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Event.ApiIntegratorEvent"
-          },
-          "links": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityLinks"
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntity[ApiIntegratorEventTypeResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorEventType"
-          },
-          "links": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityLinks"
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityExtra"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ApiResourceResultEntity[ApiIntegratorVideoStatusResource]": {
-        "type": "object",
-        "properties": {
-          "errors": {
-            "$ref": "#/components/schemas/ApiResourceErrors"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiResourceStatus"
-          },
-          "resource": {
-            "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Lists.ApiIntegratorVideoStatus"
-          },
-          "links": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityLinks"
-          },
-          "extra": {
-            "$ref": "#/components/schemas/ApiResourceResultEntityExtra"
-          }
-        },
-        "additionalProperties": false
-      },
       "ApiResourceResultUpdatesExtra": {
         "type": "object",
         "properties": {
@@ -2479,6 +378,80 @@
           },
           "isSuccess": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Contamination Event": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "companyOutletId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "customerSiteId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "vehicleId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "contaminationScore": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
