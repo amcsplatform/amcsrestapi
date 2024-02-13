@@ -169,7 +169,7 @@
           "Disbursements"
         ],
         "summary": "Add Disbursement",
-        "description": "This endpoint is used add disbursement to an account using ACH or Card.",
+        "description": "This endpoint is used add disbursement to an account using ACH, CARD, or CHEQUE.",
         "security": [],
         "requestBody": {
           "content": {
@@ -2241,52 +2241,99 @@
           "amount",
           "currency",
           "transactionType",
-          "disbursementNumber",
-          "expirationDate",
-          "identityId",
-          "instrumentId",
           "referenceId"
         ],
         "properties": {
           "amount": {
-            "type": "integer",
-            "example": 12.1,
+            "type": "number",
+            "example": 12.01,
             "description": "Provide the amount to be disbursed"
           },
           "currency": {
             "type": "string",
             "example": "USD",
-            "description": "The currency being used for the transaction. This is expressed as a three-letter currency code (ie., CAD for Canadian dollars, USD for United States dollars, etc.)."
+            "description": "The currency being used for the transaction.\nThis is expressed as a three-letter currency code (ie., CAD for Canadian dollars, USD for United States dollars, etc.)."
           },
           "transactionType": {
             "type": "string",
             "example": "CARD",
-            "description": "Provides a descriptor that expresses what kind of payment type is being processed. (ACH or Card)"
+            "description": "Provides a descriptor that expresses what kind of payment type is being processed. (ACH, CARD, or CHEQUE)"
+          },
+          "program": {
+            "type": "string",
+            "enum": [ "B2B", "B2C", "G2C", "PayrollAndPension", "RapidMerchantSettlement"],
+            "example" : "B2B",
+            "description" : "Program ID. This is a code to denote the use case for product, ie., why are you using AptPay? The use case will determine what additional information will be needed in order to process the transaction."
           },
           "disbursementNumber": {
             "type": "string",
             "example": "5454545454545454",
-            "description": "Information inputted should be a Card or Personal Account Number (PAN) and must be 15-19 digits in length."
+            "description": "Information inputted should be a Card or Personal Account Number (PAN) and must be 15-19 digits in length.<br/><span style='color: rgb(212, 31, 28)'>This is required if: This is a push to card disbursement or if instrumentId is not defined.</span>"
+          },
+          "chequeNumber": {
+            "type": "integer",
+            "example": 12345678,
+            "description": "The cheque number, <span style='color: rgb(212, 31, 28)'>this is required for Transaction Type CHEQUE.</span>"
+          },
+          "bankNumber": {
+            "type": "string",
+            "example": "123",
+            "description": "Provide the bank number, this is a 3-digit number.<br/><span style='color: rgb(212, 31, 28)'>This is required for EFT transfers.</span>"
+          },
+          "branchTransitNumber": {
+            "type": "string",
+            "example": "123456789",
+            "description": "ABA routing number\nACH transfers: 9-digit number<br/><span style='color: rgb(212, 31, 28)'>This is required for:- ACH transfers.</span>"
+          },
+          "accountNumber": {
+            "type": "string",
+            "example": "123456789",
+            "description": "Account number\nACH transfers: 9 or 10 digit number<br/><span style='color: rgb(212, 31, 28)'>This is required for:- ACH transfers</span>"
+          },
+          "instrumentId": {
+            "type": "string",
+            "example": "12345",
+            "description": "Provide the instrument ID. This is the ISIN and/or Common Code of the security that is the subject of the associated instruction.<br/><span style='color: rgb(212, 31, 28)'>This is required if transactionNumber is not defined.</span>"
           },
           "expirationDate": {
             "type": "string",
             "example": "2026-11",
-            "description": "Provide card expiration date.(Format: YYYY-MM)"
+            "description": "Provide card expiration date. (Format: YYYY-MM)"
           },
           "identityId": {
             "type": "string",
             "example": "762780560211",
-            "description": "Identity Id must be greater than 0."
-          },
-          "instrumentId": {
-            "type": "string",
-            "example": "",
-            "description": "Provide the instrument ID. This is the ISIN and/or Common Code of the security that is the subject of the associated instruction. (This is required if transactionNumber is not defined)"
+            "description": "Optional for transaction type CHEQUE if First Name and Last Name is provided for Individual Identities or BusinessName for Business Entities.<br/><span style='color: rgb(212, 31, 28)'>This is required for other transaction types. Identity Id must be greater than 0.</span>"
           },
           "referenceId": {
             "type": "string",
-            "example": "23232131554",
+            "example": "AMCSPAYREF-a4121922-e796-4de0-9058-b0fb00e3a46e",
             "description": "Reference transaction ID"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Jane",
+            "description": "Provide the first name for the individual (max 50 characters).<br/><span style='color: rgb(212, 31, 28)'>This is required for EFT/CHEQUE if identityId is not specified.<br/>This is a required field for individual identities.</span>"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "Provide the last name for the individual (max 50 characters).<br/><span style='color: rgb(212, 31, 28)'>This is required for EFT/CHEQUE if identityId is not specified.<br/>This is a required field for individual identities.</span>"
+          },
+          "businessName": {
+            "type": "string",
+            "example": "JD Inc.",
+            "description": "Provide the business entity name.<br/><span style='color: rgb(212, 31, 28)'>This is required for EFT/CHEQUE if identityId is not specified.<br/>This is required for business entities.</span>"
+          },
+          "supplierId": {
+            "type": "integer",
+            "example": 123,
+            "description": "The id of the supplier that you are making the invoice payment for."
+          },
+          "supplierBills": {
+            "type": "string",
+            "example": "[{\"financialDocumentId\":2496,\"companyOutletId\":1,\"customerId\":135,\"ticketNumber\":\"CI1027\",\"transactionDate\":\"2023-10-11T16:00:00.000Z\",\"financialDocumentStatusId\":1,\"numberOfTickets\":1,\"customerName\":\"Testing supplier\",\"amountDue\":37,\"currency\":\"$\",\"maxCashPaymentAmount\":null,\"maxChequePaymentAmount\":null,\"tickets\":[{\"financialDocumentId\":2496,\"weighingId\":75,\"ticketNumber\":\"SWPS1039\",\"transactionDate\":\"2023-10-11T16:00:00.000Z\",\"materials\":\"Wood Packaging\",\"taxAmount\":6.17,\"amountDue\":37,\"amountPaidByCash\":null,\"amountPaidByCheque\":null,\"currency\":\"$\",\"exceptions\":\"\",\"defaultImmediatePayablePaymentTypeId\":2}]}]",
+            "description": "List of supplier invoice tickets."
           }
         },
         "additionalProperties": false
