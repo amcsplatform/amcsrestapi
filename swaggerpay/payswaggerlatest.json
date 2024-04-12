@@ -1072,7 +1072,62 @@
           }
         }
       }
+    },
+
+    "/ServiceFee/GetServiceFee": {
+      "post": {
+        "tags": [
+          "ServiceFee"
+        ],
+        "summary": "Get ServiceFee",
+        "description": "This endpoint is used to get the service fee.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n|PaymentType               | Payment Type can be any of \"CARD\", \"ACH\", \"EFT\".                      |\r\n| Calling System                 | Calling System can be any of \"CUSTOMER PORTAL\", \"EXTERNAL\"         |\r\n| Currency                     |The currency associated to the payment request. |\r\n|PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| ServiceFee                      | The service fee associated to the response.        |\r\n| Percentage               |  The percentage associated to the response.                              |\r\n| PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| Total                     |  The total associated to the response. |\r\n| TermsAndConditions                     | The terms and conditions associated to the response.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayGetServiceFeeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayGetServiceFeeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
+
   },
   "components": {
     "securitySchemes": {
@@ -1552,6 +1607,41 @@
             "type": "boolean",
             "nullable": false,
             "description": "Returns true if it doesn't contains error; False if it contains error"
+          }
+        }
+      },
+      "AMCSPayGetServiceFeeRequest": {
+        "type": "object",
+        "required": [
+          "paymentType",
+          "callingSystem",
+          "currency",
+          "principalAmount"
+        ],
+        "properties": {
+          "paymentType": {
+            "type": "string",
+            "enum": [
+              "CARD",
+              "ACH",
+              "EFT"
+            ],
+            "nullable": false
+          },
+          "callingSystem": {
+            "type": "string",
+            "example": "EXTRENAL",
+            "nullable": false
+          },
+          "currency": {
+            "type": "string",
+            "example": "EUR",
+            "nullable": false
+          },   
+           "principalAmount": {
+            "type": "integer",
+            "example": 10,
+            "nullable": false
           }
         }
       },
@@ -2325,6 +2415,36 @@
         },
         "additionalProperties": false
       },
+      "AMCSPayGetServiceFeeResponse": {
+        "type": "object",
+        "properties": {
+          "serviceFee": {
+            "type": "decimal",
+            "format": "decimal",
+            "example": "2.0"
+          },
+          "percentage": {
+            "format": "decimal",
+            "example": "2.0",
+            "type": "decimal"
+          },
+          "principalAmount": {
+            "format": "decimal",
+            "example": "2",
+            "type": "decimal"
+          },
+          "total": {
+            "format": "decimal",
+            "example": "4",
+            "type": "decimal"
+          },
+          "termsAndConditions": {
+            "type": "object",
+            "$ref": "#/components/schemas/TermsAndConditions",
+            "nullable": false
+          }
+        }
+      },
       "AMCSPayInitiatePaymentResponse": {
         "type": "object",
         "properties": {
@@ -3012,6 +3132,36 @@
             "example": "EUR",
             "nullable": false,
             "description": "The currency associated to the payment request."
+          }
+        }
+      },
+      "TermsAndConditions": {
+        "type": "object",
+        "required": [
+          "TermsAndConditionsContent",
+          "TermsAndConditionsId",
+          "TermsAndConditionsContentId"
+        ],
+        "description": "The terms and conditions.",
+        "properties": {
+          "termsAndConditionsContent": {
+            "type": "string",
+            "nullable": false,
+            "description": "The terms and conditions content associated to the terms and conditions"
+          },
+          "termsAndConditionsId": {
+            "type": "number",
+            "format": "int32",
+            "example": 1,
+            "nullable": false,
+            "description": "The conditions Id associated to the terms and conditions."
+          },
+          "termsAndConditionsContentId": {
+            "type": "number",
+            "format": "int32",
+            "example": 1,
+            "nullable": false,
+            "description": "The terms and conditions ContentId associated to the terms and conditions content."
           }
         }
       },
