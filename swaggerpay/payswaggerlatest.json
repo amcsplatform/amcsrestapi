@@ -448,7 +448,7 @@
           "ExternalTransaction"
         ],
         "summary": "Poll Payment",
-        "description": "This endpoint is used to poll AmcsPay to ask for query transactions or to read the transaction response back to AmcsPay from the payment provider using CallerTransactionId or RequestId.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The AMCS generated Request GUID associated to the payments. |\n| RequestId | The Caller Supplied Request GUID associated to the payments. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The AMCS generated Request GUID associated to the payments. |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider.  |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\". |\n| TokenReference | The Token Reference sent by the provider associated to the original payment (Tokenisation Response). |\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Tokenisation Response). |\n| MaskedProfileNumber | The Profile/Card Number sent by the provider associated to the original payment (Tokenisation Response) (Conditionally required). |\n| ProfileType | The Profile/Card Type sent by the provider associated to the original payment (Tokenisation Response). |\n| ProfileHolder | The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response). |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| ErrorCondition                     |The error condition associated to the payment request.    ",
+        "description": "This endpoint is used to poll AmcsPay to ask for query transactions or to read the transaction response back to AmcsPay from the payment provider using CallerTransactionId or RequestId.\n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The AMCS generated Request GUID associated to the payments. |\n| RequestId | The Caller Supplied Request GUID associated to the payments. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| CallerTransactionId | The AMCS generated Request GUID associated to the payments. |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider.  |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\". |\n| TokenReference | The Token Reference sent by the provider associated to the original payment (Tokenisation Response). |\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Tokenisation Response). |\n| MaskedProfileNumber | The Profile/Card Number sent by the provider associated to the original payment (Tokenisation Response) (Conditionally required). |\n| ProfileType | The Profile/Card Type sent by the provider associated to the original payment (Tokenisation Response). |\n| ProfileHolder | The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response). |\n| ProfileExpiryDate | The Profile/Card expiry date sent by the  provider associated to the original payment in (MM/YY) format. |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| ErrorCondition                     |The error condition associated to the payment request.",
         "parameters": [
           {
             "name": "callerTransactionId",
@@ -801,8 +801,15 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayInfoResponse"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -2370,6 +2377,16 @@
             "example": "error message",
             "nullable": true,
             "description": "The stack trace of the error encountered."
+          }
+        }
+      },
+      "AMCSPayInfoResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "info message",
+            "nullable": true
           }
         }
       },
