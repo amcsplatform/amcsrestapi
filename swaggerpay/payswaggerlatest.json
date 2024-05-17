@@ -2436,24 +2436,24 @@
         "type": "object",
         "properties": {
           "serviceFee": {
-            "type": "decimal",
+            "type": "number",
             "format": "decimal",
             "example": "2.0"
           },
           "percentage": {
             "format": "decimal",
             "example": "2.0",
-            "type": "decimal"
+            "type": "number"
           },
           "principalAmount": {
             "format": "decimal",
             "example": "2",
-            "type": "decimal"
+            "type": "number"
           },
           "total": {
             "format": "decimal",
             "example": "4",
-            "type": "decimal"
+            "type": "number"
           },
           "termsAndConditions": {
             "type": "object",
