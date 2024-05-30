@@ -920,6 +920,59 @@
         }
       }
     },
+    "/ExternalTransaction/GetServiceFee": {
+      "post": {
+        "tags": [
+          "ExternalTransaction"
+        ],
+        "summary": "Get ServiceFee",
+        "description": "This endpoint is used to get the service fee.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayGetServiceFeeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayGetServiceFeeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Mobills/Ivr/Pay/GetCustomerInvoiceDetails": {
       "post": {
         "tags": [
@@ -1079,62 +1132,7 @@
           }
         }
       }
-    },
-
-    "/ServiceFee/GetServiceFee": {
-      "post": {
-        "tags": [
-          "ServiceFee"
-        ],
-        "summary": "Get ServiceFee",
-        "description": "This endpoint is used to get the service fee.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n|PaymentType               | Payment Type can be any of \"CARD\", \"ACH\", \"EFT\".                      |\r\n| Calling System                 | Calling System can be any of \"CUSTOMER PORTAL\", \"EXTERNAL\"         |\r\n| Currency                     |The currency associated to the payment request. |\r\n|PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| ServiceFee                      | The service fee associated to the response.        |\r\n| Percentage               |  The percentage associated to the response.                              |\r\n| PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| Total                     |  The total associated to the response. |\r\n| TermsAndConditions                     | The terms and conditions associated to the response.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AMCSPayGetServiceFeeRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayGetServiceFeeResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
     }
-
   },
   "components": {
     "securitySchemes": {
@@ -1621,7 +1619,6 @@
         "type": "object",
         "required": [
           "paymentType",
-          "callingSystem",
           "currency",
           "principalAmount"
         ],
@@ -1633,22 +1630,21 @@
               "ACH",
               "EFT"
             ],
-            "nullable": false
-          },
-          "callingSystem": {
-            "type": "string",
-            "example": "EXTRENAL",
-            "nullable": false
+            "nullable": false,
+            "description": "Payment Type can be any of \"CARD\", \"ACH\", \"EFT\".",
+            "example": "CARD"
           },
           "currency": {
             "type": "string",
-            "example": "EUR",
-            "nullable": false
+            "example": "USD",
+            "nullable": false,
+            "description": "The currency associated to the payment request."
           },   
            "principalAmount": {
             "type": "integer",
             "example": 10,
-            "nullable": false
+            "nullable": false,
+            "description": "The base amount associated to the payment request (This field is optional for Tokenization)."
           }
         }
       },
@@ -2437,28 +2433,33 @@
         "properties": {
           "serviceFee": {
             "type": "number",
-            "format": "decimal",
-            "example": "2.0"
+            "format": "double",
+            "example": "0.2",
+            "description": "The service fee associated to the response."
           },
           "percentage": {
-            "format": "decimal",
-            "example": "2.0",
-            "type": "number"
+            "type": "number",
+            "format": "double",
+            "example": "2",
+            "description": "The percentage associated to the response."
           },
           "principalAmount": {
-            "format": "decimal",
-            "example": "2",
-            "type": "number"
+            "type": "number",
+            "format": "double",
+            "example": "10",
+            "description": "The base amount associated to the payment request (This field is optional for Tokenization)."
           },
           "total": {
-            "format": "decimal",
-            "example": "4",
-            "type": "number"
+            "type": "number",
+            "format": "double",
+            "example": "10.2",
+            "description": "The total associated to the response."
           },
           "termsAndConditions": {
             "type": "object",
             "$ref": "#/components/schemas/TermsAndConditions",
-            "nullable": false
+            "nullable": false,
+            "description": "The terms and conditions associated to the response."
           }
         }
       },
@@ -3161,24 +3162,23 @@
         ],
         "description": "The terms and conditions.",
         "properties": {
-          "termsAndConditionsContent": {
-            "type": "string",
-            "nullable": false,
-            "description": "The terms and conditions content associated to the terms and conditions"
-          },
           "termsAndConditionsId": {
-            "type": "number",
-            "format": "int32",
+            "type": "integer",
             "example": 1,
-            "nullable": false,
+            "nullable": true,
             "description": "The conditions Id associated to the terms and conditions."
           },
           "termsAndConditionsContentId": {
-            "type": "number",
-            "format": "int32",
+            "type": "integer",
             "example": 1,
-            "nullable": false,
+            "nullable": true,
             "description": "The terms and conditions ContentId associated to the terms and conditions content."
+          },
+          "termsAndConditionsUrl": {
+            "type": "string",
+            "example": "https://na1-pay-dev.amcsplatform.com/TermsAndConditionsView/TermsAndConditions/54090c88-6451-485f-8e35-8037b9ae5ea0?termsAndConditionsContentId=3af76595-bf9d-4505-bef9-6e603dfc7ea8",
+            "nullable": true,
+            "description": "The terms and conditions associated to the service fee."
           }
         }
       },
