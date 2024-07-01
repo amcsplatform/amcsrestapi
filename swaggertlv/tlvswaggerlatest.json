@@ -1,0 +1,313 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+	 "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe Tracking Live View REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the Tracking Live View External REST API.\n\n## Security\n\nWe use PAT Tokens for authentication over HTTPS encrypted comms.\n\nA PAT token will be provided for you to use in your integration.\n\nYou will use this PAT token to authenticate as follows.\n\n### Request Format:\n\nPOST: /tlv/api/authTokens\n\nBody: {\"privateKey\":\"PATtokenstring\"}\n\n### Response Format:\n\nThe response passes a SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\n\nThe API endpoints that are currently available are detailed below.",
+    "title": "External API",
+    "version": "external"
+  },
+  "paths": {
+    "/integrator/gpsTrail": {
+      "post": {
+        "tags": [
+          "ApiGpsTrailExportService"
+        ],
+		"summary": "Get the list of assets gps trail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailExportService.ApiGpsTrailExportResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailExportService.ApiGpsTrailExportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrator/assets/changes": {
+      "get": {
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "since",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "links",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceChanges[ApiAssetExternalResource]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrator/assets": {
+      "post": {
+        "tags": [
+          "Asset"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiResourceId"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrator/outlets": {
+      "post": {
+        "tags": [
+          "Outlet"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiResourceId"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailExportService.ApiGpsTrailExportResponse": {
+        "type": "object",
+        "properties": {
+          "assetName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gpsTrail": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailService.ApiGpsPoint"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailService.ApiGpsPoint": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "lon": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.MapBasedAlerting.Server.Api.Integrator.Asset.ApiAssetExternal": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "assetId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "assetName": {
+            "type": "string",
+            "nullable": true
+          },
+          "assetType": {
+            "type": "string",
+            "nullable": true
+          },
+          "outletId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "outletName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResourceChanges[ApiAssetExternalResource]": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ApiResourceErrors"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiResourceStatus"
+          },
+          "resource": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Api.Integrator.Asset.ApiAssetExternal"
+            },
+            "nullable": true
+          },
+          "extra": {
+            "$ref": "#/components/schemas/ApiResourceResultUpdatesExtra"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResourceErrors": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResourceId": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ApiResourceErrors"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiResourceStatus"
+          },
+          "resource": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResourceResultUpdatesExtra": {
+        "type": "object",
+        "properties": {
+          "until": {
+            "type": "string",
+            "nullable": true
+          },
+          "cursor": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResourceStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isSuccess": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
