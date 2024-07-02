@@ -11,7 +11,8 @@
         "tags": [
           "ApiGpsTrailExportService"
         ],
-		"summary": "Get the list of assets gps trail",
+		"summary": "Get list of Vehicle Gps Trail",
+        "description": "# Get list of Vehicle Gps Trail\r\n\r\n## Input\r\n| Parameter\t\t\t  | Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t          |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |         \r\n| AssetName\t\t\t  | string   | Vehicle Registration Plate No                                                      |\r\n| DateFrom \t\t\t  | DateTime | Timestamp when the start date of the gps trail to be extracted                     |\r\n| DateTo              | DateTime | Timestamp when the end date of the gps trail to be extracted                       |\r\n\t\t\t\t                                              \r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetName\": \"M879 EUS\",\r\n  \"DateFrom\": \"2024-06-28\",\r\n  \"DateTo\": \"\"2024-06-30\"\r\n}\r\n```\r\n\r\n## Output\r\n| Property \t\t\t  | Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |                   \r\n| AssetName\t\t\t  | string   | Vehicle Registration Plate No                                                      |\r\n| Timestamp \t\t  | DateTime | Timestamp of the asset                                                      |\r\n| Lat\t\t\t\t  | DateTime | Latitude where the asset at that point                       |\r\n| Lon \t\t\t\t  | DateTime | Longitude where the asset at that point                    |\r\n\r\n",
         "requestBody": {
           "content": {
             "application/json": {
