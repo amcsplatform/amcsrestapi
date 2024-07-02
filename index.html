@@ -120,6 +120,7 @@
             document.getElementById( "scaleversions" ).style.display = "none";
             document.getElementById( "coreversions" ).style.display = "none";
             document.getElementById( "visionaiversions" ).style.display = "none";
+			document.getElementById( "tlvversions" ).style.display = "none";
             document.getElementById( component + "versions" ).style.display = "block";
             intRedoc( component, "latest" );
         }
@@ -133,6 +134,7 @@
         <option value="core">Core</option>
         <option value="scale">Scale</option>
         <option value="visionai">Vision AI</option>
+		<option value="tlv">TLV</option>
     </select></p>
     <p id="payversions" style="display:none">Pay Version <select onchange="intRedoc( 'pay', this.value )">
         <option value="latest">latest (9.1)</option>
@@ -160,6 +162,9 @@
         <option value="8-6-0">8.6.X</option>
     </select></p>
     <p id="visionaiversions" style="display:none">Vision AI Version <select onchange="intRedoc( 'visionai', this.value )">
+        <option value="latest">latest</option>
+    </select></p>
+	<p id="tlvversions" style="display:none">TLV Version <select onchange="intRedoc( 'tlv', this.value )">
         <option value="latest">latest</option>
     </select></p>
     </div>
