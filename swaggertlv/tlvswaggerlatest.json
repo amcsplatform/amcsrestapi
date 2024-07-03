@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-	 "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe Tracking Live View REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the Tracking Live View External REST API.\n\n## Security\n\nWe use PAT Tokens for authentication over HTTPS encrypted comms.\n\nA PAT token will be provided for you to use in your integration.\n\nYou will use this PAT token to authenticate as follows.\n\n### Request Format:\n\nPOST: /tlv/api/authTokens\n\nBody: {\"privateKey\":\"PATtokenstring\"}\n\n### Response Format:\n\nThe response passes a SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\n\nThe API endpoints that are currently available are detailed below.",
+	 "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe Transport Live View REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the Transport Live View External REST API.\n\n## Security\n\nWe use PAT Tokens for authentication over HTTPS encrypted comms.\n\nA PAT token will be provided for you to use in your integration.\n\nYou will use this PAT token to authenticate as follows.\n\n### Request Format:\n\nPOST: /tlv/api/authTokens\n\nBody: {\"privateKey\":\"PATtokenstring\"}\n\n### Response Format:\n\nThe response passes a SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\n\nThe API endpoints that are currently available are detailed below.",
     "title": "External API",
     "version": "external"
   },
