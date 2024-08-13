@@ -117,7 +117,10 @@
         {
             document.getElementById( "erpversions" ).style.display = "none";
             document.getElementById( "payversions" ).style.display = "none";
+            document.getElementById( "scaleversions" ).style.display = "none";
             document.getElementById( "coreversions" ).style.display = "none";
+            document.getElementById( "visionaiversions" ).style.display = "none";
+			document.getElementById( "tlvversions" ).style.display = "none";
             document.getElementById( component + "versions" ).style.display = "block";
             intRedoc( component, "latest" );
         }
@@ -129,11 +132,17 @@
         <option value="erp">ERP</option>
         <option value="pay">Pay</option>
         <option value="core">Core</option>
+        <option value="scale">Scale</option>
+        <option value="visionai">Vision AI</option>
+		<option value="tlv">TLV</option>
     </select></p>
     <p id="payversions" style="display:none">Pay Version <select onchange="intRedoc( 'pay', this.value )">
         <option value="latest">latest (9.1)</option>
     </select></p>
     <p id="coreversions" style="display:none">Core Version <select onchange="intRedoc( 'core', this.value )">
+        <option value="latest">latest (9.1)</option>
+    </select></p>
+    <p id="scaleversions"  style="display:none">Scale Version <select onchange="intRedoc( 'scale', this.value )">
         <option value="latest">latest (9.1)</option>
     </select></p>
     <p id="erpversions">Platform Version <select onchange="intRedoc( 'erp', this.value )">
@@ -151,6 +160,12 @@
         <option value="8-7-2">8.7.2</option>
         <option value="8-7-1">8.7.1</option>
         <option value="8-6-0">8.6.X</option>
+    </select></p>
+    <p id="visionaiversions" style="display:none">Vision AI Version <select onchange="intRedoc( 'visionai', this.value )">
+        <option value="latest">latest</option>
+    </select></p>
+	<p id="tlvversions" style="display:none">TLV Version <select onchange="intRedoc( 'tlv', this.value )">
+        <option value="latest">latest</option>
     </select></p>
     </div>
 </body>

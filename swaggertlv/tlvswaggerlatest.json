@@ -1,0 +1,80 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+	 "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe Transport Live View REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the Transport Live View External REST API.\n\n## Security\n\nWe use PAT Tokens for authentication over HTTPS encrypted comms.\n\nA PAT token will be provided for you to use in your integration.\n\nYou will use this PAT token to authenticate as follows.\n\n### Request Format:\n\nPOST: /tlv/api/authTokens\n\nBody: {\"privateKey\":\"PATtokenstring\"}\n\n### Response Format:\n\nThe response passes a SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\n\nThe API endpoints that are currently available are detailed below.",
+    "title": "External API",
+    "version": "external"
+  },
+  "paths": {
+    "/integrator/gpsTrail": {
+      "post": {
+        "tags": [
+          "ApiGpsTrailExportService"
+        ],
+		"summary": "Get list of Vehicle Gps Trail",
+        "description": "# Get list of Vehicle Gps Trail\r\n\r\n## Input\r\n| Parameter\t\t\t  | Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t          |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |         \r\n| AssetName\t\t\t  | string   | Vehicle Registration Plate No                                                      |\r\n| DateFrom \t\t\t  | DateTime | Timestamp when the start date of the gps trail to be extracted                     |\r\n| DateTo              | DateTime | Timestamp when the end date of the gps trail to be extracted                       |\r\n\t\t\t\t                                              \r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetName\": \"M879 EUS\",\r\n  \"DateFrom\": \"2024-06-28\",\r\n  \"DateTo\": \"\"2024-06-30\"\r\n}\r\n```\r\n\r\n## Output\r\n| Property \t\t\t  | Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |                   \r\n| AssetName\t\t\t  | string   | Vehicle Registration Plate No                                                      |\r\n| Timestamp \t\t  | DateTime | Timestamp of the asset                                                      |\r\n| Lat\t\t\t\t  | DateTime | Latitude where the asset at that point                       |\r\n| Lon \t\t\t\t  | DateTime | Longitude where the asset at that point                    |\r\n\r\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailExportService.ApiGpsTrailExportResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailExportService.ApiGpsTrailExportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailExportService.ApiGpsTrailExportResponse": {
+        "type": "object",
+        "properties": {
+          "assetName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gpsTrail": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailService.ApiGpsPoint"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.MapBasedAlerting.Server.Api.Integrator.ApiGpsTrailService.ApiGpsPoint": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "lon": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      }     
+    }
+  }
+}

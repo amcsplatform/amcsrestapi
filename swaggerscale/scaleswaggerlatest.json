@@ -1,0 +1,2016 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe Scale REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the Scale REST API. \n\n ## Security\n\nThe API uses HTTPS as transport layer for security and uses HTTP/1.1 – RFC 7230 for message syntax and routing.\n\nThere are 2 ways of authenticating in order to access the REST API.\n\n·    Requesting a bearer token from /authTokens using username and password\n\n·    Requesting a session log on from /authTokens using a PAT token\n\nAuthentication using username and password will be phased out after 8.6.\n\n##  GET /authTokens with username and password direct to the App server\n\nBefore using this method a user must be set up with access right “Can POST, PUT, GET to the REST API”. This can be done from User Management in the Scale UI.\n\n### Request format\n\nThe following table specifies the format and parameters for this request.\n\n| Method    | Type      | Name               | Type               |\n| --------- | --------- | ------------------ | ------------------ |\n| GET       | Parameter | Username           | URI encoded string |\n| Parameter | password  | URI encoded string |                    |\n\n### Response format\n\nThe following table specifies the format and parameters for the response.\n\n  \n\n| Successful response | Type      |      |\n| ------------------- | --------- | ---- |\n| Bearer token        | text/html |      |\n\nThe token returned is then uses as a Bearer token in the subsequent calls to the REST API\n\n### Example\n\nThe following shows an example of a request to the authentication endpoint:\n\nhttps://{scale-url}/scale/api/authTokens?username=john&password=password\n\nThe username and password in this request may need to be URI encoded.\n\nThe token in the response should be supplied in all subsequent requests in an authorization HTTP header.\n\nAuthorization: Bearer tcpRoNbIKOJZj9Yn0CL2oiX7m04JJmlAllaskd810incqjslasadjzxzza29axb\n\nNotes:\n\n·    No specific Accept or Content-Type header is required for the authentication endpoint as it will always return text/html as content.\n\n##  POST /scale/api/authTokens with PAT token\n\nBefore using this method, a user must be set up with:\n\n·    Access right “Can POST, PUT, GET to the REST API”\n\n·    A PAT token\n\nThis can be done from User Management in the Scale UI.\n\n### Request format\n\nThe following table specifies the format and parameters for this request.\n\n| Method | Body                           |\n| ------ | ------------------------------ |\n| POST   | { “privatekey”:”{PAT token}” } |\n\n### Response format\n\nThe response passes a Platform.ERP.SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\"",
+        "title": "Scale REST API",
+        "version": "9.1"
+    },
+    "host": "{env}-svc-core.amcsplatform.com",
+    "basePath":"/scale/api/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/integrator/areaOfOrigins/{id}": {
+            "get": {
+                "tags": [
+                    "AreaOfOrigin"
+                ],
+                "summary": "Find with GUID",
+                "description": "\r\n\r\n\r\n| Property                                              | Description                                                    |\r\n| ----------------------------------------------------- | -------------------------------------------------------------- |\r\n| SubscriberGUID                                        | The guid of the Subscriber                                     |\r\n| AreaOfOrigin[].AreaOfOriginGUID                       | The guid of the AreaOfOrigin                                   |\r\n| AreaOfOrigin[].AreaOfOrigin\t                        | The description of the AreaOfOrigin                            |\r\n| AreaOfOrigin[].AreaOfOriginShortCode\t                | The shortcode of the AreaOfOrigin\t\t\t\t\t\t\t\t |",
+                "operationId": "AreaOfOrigin_Get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultEntity[ApiSubscriberAreaOfOriginResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/checkBalances": {
+            "get": {
+                "tags": [
+                    "CheckBalance"
+                ],
+                "summary": "Find with Filters",
+                "description": "| Property                                             | Description                                                                        |\r\n| ---------------------------------------------------- | ---------------------------------------------------------------------------------- |\r\n| GUID                                                 | The Site order GUID. Filterable.                                                   |\r\n| CreditBalanceCheck                                   | If they can start a new weighing based on Credit balance                           |",
+                "operationId": "CheckBalance_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiCheckBalanceResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/jobMaterials/{id}": {
+            "get": {
+                "tags": [
+                    "JobMaterials"
+                ],
+                "summary": "Find with GUID",
+                "description": "| Property\t\t\t\t\t\t\t\t\t\t\t\t| Description                                                                       |\r\n|-------------------------------------------------------|-----------------------------------------------------------------------------------|\r\n| JobGUID\t\t\t\t\t\t\t\t\t\t\t\t| The Job GUID. Filterable.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedMaterials[]\t\t\t\t\t\t\t\t\t\t| The linked materials for the job.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedMaterials[].MaterialGUID\t\t\t\t\t\t| The Material Guid\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedMaterials[].Material\t\t\t\t\t\t\t| The Material Description.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedMaterials[].ShortCode\t\t\t\t\t\t\t| The Material ShortCode.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedMaterials[].AnalysisCode\t\t\t\t\t\t| The Material AnalysisCode.\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedMaterials[].EWCCode\t\t\t\t\t\t\t\t| The Material EWCCode.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|",
+                "operationId": "JobMaterials_Get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultEntity[ApiJobMaterialsResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/lists/outlets/{id}": {
+            "get": {
+                "tags": [
+                    "Outlet"
+                ],
+                "summary": "Find with GUID",
+                "description": "| Property                                             | Description                                                                        |\r\n| ---------------------------------------------------- | ---------------------------------------------------------------------------------- |\r\n| GUID                                                 | The GUID associated to the outlet                                                  |\r\n| Description                                          | The description of the outlet                                                      |\r\n| IsDeleted                                            | Whether the outlet is deleted                                                      |\r\n| AbbreviatedDescription                               | The abbreviated description of the outlet                                          |\r\n| AnalysisCode                                         | The analysis code of the outlet                                                    |\r\n| Location                                             | The description of the weighing type                                               |\r\n| Address                                              | The address object of the outlet                                                   |\r\n| Address.HouseNumber                                  | The house number of the address object of the outlet                               |\r\n| Address.Address1                                     | The Address1 of the address object of the outlet                                   |\r\n| Address.Address2                                     | The Address2 of the address object of the outlet                                   |\r\n| Address.Address3                                     | The Address3 of the address object of the outlet                                   |\r\n| Address.Address4                                     | The Address4 of the address object of the outlet                                   |\r\n| Address.Address5                                     | The Address5 of the address object of the outlet                                   |\r\n| Address.Postcode                                     | The Postcode of the address object of the outlet                                   |\r\n| CompanyOutletMaterial[]                              | The materials accepted of the outlet                                               |\r\n| CompanyOutletMaterial[].MaterialListItem             | The materialListItem of the materials accepted for the outlet                      |\r\n| CompanyOutletMaterial[].MaterialListItem.Description | The materialListItem material description of the materials accepted for the outlet |\r\n| CompanyOutletMaterial[].MaterialListItem.GUID        | The materialListItem material GUID of the materials accepted for the outlet        |\r\n| CompanyOutletMaterial[].Guid                         | The company outlet accepted material GUID                                          |\r\n| OutletSupplierSite[]                                 | The outlet Supplier Site Object                                                    |\r\n| OutletSupplierSite[].Address                         | The outlet Supplier Site Address Object                                            |\r\n| OutletSupplierSite[].Address.Location                | The Location of the outlet Supplier Site address                                   |\r\n| OutletSupplierSite[].Address.HouseNumber             | The House Number of the outlet Supplier Site address                               |\r\n| OutletSupplierSite[].Address.Address1                | Address1 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address2                | Address2 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address3                | Address3 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address4                | Address4 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address5                | Address5 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Postcode                | The outlet Supplier Site Postcode                                                  |\r\n| OutletSupplierSite[].SupplierName                    | The outlet Supplier Name                                                           |\r\n| OutletSupplierSite[].RelatedSupplierSiteGUID         | The Related Supplier Site GUID of the outlet                                       |\r\n| OutletSupplierSite[].GUID                            | The GUID of the Company Outlet Supplier Site                                       |\r\n| VATRegistrationNumber                                | The VAT Registration Number of the outlet                                          |\r\n| Company                                              | The Company that the outlet is associated with                                     |\r\n| NominalPrefix                                        | The Nominal Prefix of the outlet                                                   |\r\n| TelNo                                                | The Telephone number of the outlet                                                 |\r\n| ContactEmail                                         | The Contact Email of the outlet                                                    |\r\n| PremisesRegNo                                        | The Premises Registration Number of the outlet                                     |\r\n| WasteCarrierLicenceNumber                            | The Waste Carrier Licence Number of the outlet                                     |\r\n| WasteCarrierLicenceIssuedBy                          | Who the Waste Carrier Licence was issued by to the outlet                          |\r\n| IsDriversLicenceRequired                             | Whether Drivers Licence is required                                                |\r\n| IsCashDepositRequired                                | Whether Cash Deposit is required                                                   |\r\n| IsValidWasteCarrierLicenceRequired                   | Whether a Valid Waste Carrier Licence is required                                  |\r\n| DepositValueRequired                                 | Whether a Deposit Value is Required                                                |\r\n| WasteManagementLicenceNumber                         | The Waste Management Licence Number                                                |\r\n| WasteManagementIssuedBy                              | Who the Waste Management is issued by                                              |\r\n| IsAutoLoadVehicleStoredTares                         | Whether Auto Load Vehicle Stored Tares                                             |\r\n| ShowANPRReads                                        | Whether to Show ANPR Reads                                                         |\r\n| EPAId                                                | The EPAId of the outlet                                                            |\r\n| AmiceNumber                                          | The Amice Number of the outlet                                                     |\r\n| ReportToExternalAuthorities                          | Whether to Report to External Authorities                                          |\r\n| LegislationType                                      | The Legislation Type of the outlet                                                 |\r\n| WeightUnitOfMeasurement                              | The Weight Unit of Measurement of the outlet                                       |\r\n| ReportingUnitOfMeasurement                           | The Reporting Unit of Measurement of the outlet                                    |\r\n| VolumeUnitOfMeasurement                              | The Volume Unit of Measurement of the outlet                                       |\r\n| GateWeighbridgeDocket                                | The outlet Gete Weighbridge Docket report path                                     |\r\n| MaterialSaleWeighbridgeDocket                        | The outlet Material Sale Weighbridge Docket report path                            |\r\n| RouteWeighbridgeDocket                               | The outlet Route Weighbridge Docket report path                                    |\r\n| TransferOutWeighbridgeDocket                         | The outlet Transfer Out Weighbridge Docket report path                             |\r\n| TransferInWeighbridgeDocket                          | The outlet Transfer In Weighbridge Docket report path                              |\r\n| ScaleReceiptWeighbridgeDocket                        | The outlet Scale Reciept Weighbridge Docket report path                            |\r\n| BillOfLadingWeighbridgeDocket                        | The outlet Bill of Lading Weighbridge Docket report path                           |\r\n| VZCReport                                            | The outlet VZC report path                                                         |\r\n| CMRReport                                            | The outlet CMR report path                                                         |\r\n| CurrencyCode                                         | The Currency Code of the outlet                                                    |\r\n\t\t\t\t   ",
+                "operationId": "Outlet_Get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultEntity[ApiCompanyOutletResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/lists/outlets": {
+            "get": {
+                "tags": [
+                    "Outlet"
+                ],
+                "summary": "Find with Filters",
+                "description": "| Property                                             | Description                                                                        |\r\n| ---------------------------------------------------- | ---------------------------------------------------------------------------------- |\r\n| GUID                                                 | The GUID associated to the outlet                                                  |\r\n| Description                                          | The description of the outlet                                                      |\r\n| IsDeleted                                            | Whether the outlet is deleted                                                      |\r\n| AbbreviatedDescription                               | The abbreviated description of the outlet                                          |\r\n| AnalysisCode                                         | The analysis code of the outlet                                                    |\r\n| Location                                             | The description of the weighing type                                               |\r\n| Address                                              | The address object of the outlet                                                   |\r\n| Address.HouseNumber                                  | The house number of the address object of the outlet                               |\r\n| Address.Address1                                     | The Address1 of the address object of the outlet                                   |\r\n| Address.Address2                                     | The Address2 of the address object of the outlet                                   |\r\n| Address.Address3                                     | The Address3 of the address object of the outlet                                   |\r\n| Address.Address4                                     | The Address4 of the address object of the outlet                                   |\r\n| Address.Address5                                     | The Address5 of the address object of the outlet                                   |\r\n| Address.Postcode                                     | The Postcode of the address object of the outlet                                   |\r\n| CompanyOutletMaterial[]                              | The materials accepted of the outlet                                               |\r\n| CompanyOutletMaterial[].MaterialListItem             | The materialListItem of the materials accepted for the outlet                      |\r\n| CompanyOutletMaterial[].MaterialListItem.Description | The materialListItem material description of the materials accepted for the outlet |\r\n| CompanyOutletMaterial[].MaterialListItem.GUID        | The materialListItem material GUID of the materials accepted for the outlet        |\r\n| CompanyOutletMaterial[].Guid                         | The company outlet accepted material GUID                                          |\r\n| OutletSupplierSite[]                                 | The outlet Supplier Site Object                                                    |\r\n| OutletSupplierSite[].Address                         | The outlet Supplier Site Address Object                                            |\r\n| OutletSupplierSite[].Address.Location                | The Location of the outlet Supplier Site address                                   |\r\n| OutletSupplierSite[].Address.HouseNumber             | The House Number of the outlet Supplier Site address                               |\r\n| OutletSupplierSite[].Address.Address1                | Address1 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address2                | Address2 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address3                | Address3 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address4                | Address4 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Address5                | Address5 of the outlet Supplier Site address                                       |\r\n| OutletSupplierSite[].Address.Postcode                | The outlet Supplier Site Postcode                                                  |\r\n| OutletSupplierSite[].SupplierName                    | The outlet Supplier Name                                                           |\r\n| OutletSupplierSite[].RelatedSupplierSiteGUID         | The Related Supplier Site GUID of the outlet                                       |\r\n| OutletSupplierSite[].GUID                            | The GUID of the Company Outlet Supplier Site                                       |\r\n| VATRegistrationNumber                                | The VAT Registration Number of the outlet                                          |\r\n| Company                                              | The Company that the outlet is associated with                                     |\r\n| NominalPrefix                                        | The Nominal Prefix of the outlet                                                   |\r\n| TelNo                                                | The Telephone number of the outlet                                                 |\r\n| ContactEmail                                         | The Contact Email of the outlet                                                    |\r\n| PremisesRegNo                                        | The Premises Registration Number of the outlet                                     |\r\n| WasteCarrierLicenceNumber                            | The Waste Carrier Licence Number of the outlet                                     |\r\n| WasteCarrierLicenceIssuedBy                          | Who the Waste Carrier Licence was issued by to the outlet                          |\r\n| IsDriversLicenceRequired                             | Whether Drivers Licence is required                                                |\r\n| IsCashDepositRequired                                | Whether Cash Deposit is required                                                   |\r\n| IsValidWasteCarrierLicenceRequired                   | Whether a Valid Waste Carrier Licence is required                                  |\r\n| DepositValueRequired                                 | Whether a Deposit Value is Required                                                |\r\n| WasteManagementLicenceNumber                         | The Waste Management Licence Number                                                |\r\n| WasteManagementIssuedBy                              | Who the Waste Management is issued by                                              |\r\n| IsAutoLoadVehicleStoredTares                         | Whether Auto Load Vehicle Stored Tares                                             |\r\n| ShowANPRReads                                        | Whether to Show ANPR Reads                                                         |\r\n| EPAId                                                | The EPAId of the outlet                                                            |\r\n| AmiceNumber                                          | The Amice Number of the outlet                                                     |\r\n| ReportToExternalAuthorities                          | Whether to Report to External Authorities                                          |\r\n| LegislationType                                      | The Legislation Type of the outlet                                                 |\r\n| WeightUnitOfMeasurement                              | The Weight Unit of Measurement of the outlet                                       |\r\n| ReportingUnitOfMeasurement                           | The Reporting Unit of Measurement of the outlet                                    |\r\n| VolumeUnitOfMeasurement                              | The Volume Unit of Measurement of the outlet                                       |\r\n| GateWeighbridgeDocket                                | The outlet Gete Weighbridge Docket report path                                     |\r\n| MaterialSaleWeighbridgeDocket                        | The outlet Material Sale Weighbridge Docket report path                            |\r\n| RouteWeighbridgeDocket                               | The outlet Route Weighbridge Docket report path                                    |\r\n| TransferOutWeighbridgeDocket                         | The outlet Transfer Out Weighbridge Docket report path                             |\r\n| TransferInWeighbridgeDocket                          | The outlet Transfer In Weighbridge Docket report path                              |\r\n| ScaleReceiptWeighbridgeDocket                        | The outlet Scale Reciept Weighbridge Docket report path                            |\r\n| BillOfLadingWeighbridgeDocket                        | The outlet Bill of Lading Weighbridge Docket report path                           |\r\n| VZCReport                                            | The outlet VZC report path                                                         |\r\n| CMRReport                                            | The outlet CMR report path                                                         |\r\n| CurrencyCode                                         | The Currency Code of the outlet                                                    |\r\n\t\t\t\t   ",
+                "operationId": "Outlet_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiCompanyOutletResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/pictures": {
+            "post": {
+                "tags": [
+                    "Picture"
+                ],
+                "summary": "Create or update",
+                "description": "| Property\t\t\t\t\t\t\t\t| Description                                   | Required\t|\r\n|---------------------------------------|-----------------------------------------------|-----------|\r\n| DateTime\t\t\t\t\t\t\t\t| The date and time of the picture.\t\t\t\t|   Yes\t\t|\r\n| Description\t\t\t\t\t\t\t| The description of the picture.\t\t\t\t|   No\t\t|\r\n| RelatedVehicleReg\t\t\t\t\t\t| The related vehicle reg.\t\t\t\t\t\t|   No\t\t|\r\n| Base64Picture\t\t\t\t\t\t\t| The Base64Picture blob hash of the picture.\t|   Yes\t\t|\r\n| RelatedWeighingGuid\t\t\t\t\t| The weighing guid.\t\t\t\t\t\t\t|   No\t\t|\r\n| IsAnpr\t\t\t\t\t\t\t\t| The Anpr picture type.\t\t\t\t\t\t|   No\t\t|\r\n| CompanyOutletGuid\t\t\t\t\t\t| The CompanyOutlet guid.\t\t\t\t\t\t|   No\t\t|\r\n| SubscriberGuid\t\t\t\t\t\t| The Subscriber guid.\t\t\t\t\t\t\t|   Yes\t\t|\r\n\r\n## Extra validations\r\n\r\n| Condition | Error message |\r\n|-----------|---------------|\r\n| If RelatedVehicleReg and RelatedWeighingGuid are both null | Either RelatedVehicleReg or RelatedWeighingGuid property must have a value. |\r\n| If no Weighing is found associated to the ANPR data | Weighing not found for this ANPR data. |\r\n| If Subscriber isnt subscribed to Outlet | Subscriber isnt subscribed to Outlet. |\r\n| If no Outlets were found for Subscriber | No Outlets were found for Subscriber. |",
+                "operationId": "Picture_Create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/subscribers/{id}": {
+            "get": {
+                "tags": [
+                    "Subscriber"
+                ],
+                "summary": "Find with GUID",
+                "description": "| Property                                              | Description                                                    |\r\n| ----------------------------------------------------- | -------------------------------------------------------------- |\r\n| Name                                                  | The name of the Subscriber                                     |\r\n| CompanyOutlets[]                                      | The company outlets associated with the subscriber             |\r\n| CompanyOutlets[].SubscriberOutletListItem             | The SubscriberOutletListItem of the outlets for the subscriber |\r\n| CompanyOutlets[].SubscriberOutletListItem.Description | The company outlet description                                 |\r\n| CompanyOutlets[].SubscriberOutletListItem.AbbreviatedDescription | The company outlet abbreviated description                                 |\r\n| CompanyOutlets[].SubscriberOutletListItem.Guid        | The company Outlet Guid                                        |\r\n| RelatedSubscriberOutletGuid\t\t\t\t\t\t\t| The Related Subscriber Outlet Guid\t\t\t\t\t\t\t |\r\n| GUID                                                  | The Subscriber Guid                                            |",
+                "operationId": "Subscriber_Get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultEntity[ApiSubscriberResource]"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Subscriber"
+                ],
+                "summary": "Partial update",
+                "description": "| Property                                              | Description                                                            | Required |\r\n|-------------------------------------------------------|------------------------------------------------------------------------|----------|\r\n| Name                                                  | The name of the Subscriber                                             | No       |\r\n| CompanyOutlets[]                                      | The company outlets associated with the subscriber                     | Yes      |\r\n| CompanyOutlets[].SubscriberOutletListItem             | The SubscriberOutletListItem of the outlets for the subscriber         | Yes      |\r\n| CompanyOutlets[].SubscriberOutletListItem.Description | The company outlet description                                         | No       |\r\n| CompanyOutlets[].SubscriberOutletListItem.Guid        | The company Outlet Guid                                                | Yes      |\r\n| RelatedSubscriberOutletGuid\t\t\t\t\t\t\t| The Related Subscriber Outlet Guid, required if it needs to be updated | No       |\r\n| GUID                                                  | The Subscriber Guid                                                    | No       |",
+                "operationId": "Subscriber_Update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/subscribers": {
+            "get": {
+                "tags": [
+                    "Subscriber"
+                ],
+                "summary": "Find with Filters",
+                "description": "| Property                                              | Description                                                    |\r\n| ----------------------------------------------------- | -------------------------------------------------------------- |\r\n| Name                                                  | The name of the Subscriber                                     |\r\n| CompanyOutlets[]                                      | The company outlets associated with the subscriber             |\r\n| CompanyOutlets[].SubscriberOutletListItem             | The SubscriberOutletListItem of the outlets for the subscriber |\r\n| CompanyOutlets[].SubscriberOutletListItem.Description | The company outlet description                                 |\r\n| CompanyOutlets[].SubscriberOutletListItem.AbbreviatedDescription | The company outlet abbreviated description                                 |\r\n| CompanyOutlets[].SubscriberOutletListItem.Guid        | The company Outlet Guid                                        |\r\n| RelatedSubscriberOutletGuid\t\t\t\t\t\t\t| The Related Subscriber Outlet Guid\t\t\t\t\t\t\t |\r\n| GUID                                                  | The Subscriber Guid                                            |",
+                "operationId": "Subscriber_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiSubscriberResource]"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Subscriber"
+                ],
+                "summary": "Create or update",
+                "description": "\r\n\r\n# Subscribers\r\n\r\n| Property                                              | Description                                                    | Required |\r\n|-------------------------------------------------------|----------------------------------------------------------------|----------|\r\n| Name                                                  | The name of the Subscriber                                     | Yes      |\r\n| CompanyOutlets[]                                      | The company outlets associated with the subscriber             | Yes      |\r\n| CompanyOutlets[].SubscriberOutletListItem             | The SubscriberOutletListItem of the outlets for the subscriber | Yes      |\r\n| CompanyOutlets[].SubscriberOutletListItem.Description | The company outlet description                                 | No       |\r\n| CompanyOutlets[].SubscriberOutletListItem.Guid        | The company Outlet Guid                                        | Yes      |\r\n| RelatedSubscriberOutletGuid\t\t\t\t\t\t\t| The Related Subscriber Outlet Guid\t\t\t\t\t\t\t | No       |\r\n| GUID                                                  | The Subscriber Guid                                            | No       |",
+                "operationId": "Subscriber_Create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/validateVehicles": {
+            "get": {
+                "tags": [
+                    "ValidateVehicle"
+                ],
+                "summary": "Find with GUID",
+                "description": "| Property\t\t\t\t\t\t\t\t\t\t\t\t| Description                                                                       |\r\n|-------------------------------------------------------|-----------------------------------------------------------------------------------|\r\n| SubscriberGUID\t\t\t\t\t\t\t\t\t\t| The subscriber GUID Filterable.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Registration\t\t\t\t\t\t\t\t\t\t\t| The vehicle registration optional if Vehicle RFID has value. Filterable.\t\t\t|\r\n| RFID\t\t\t\t\t\t\t\t\t\t\t\t\t| The vehicle RFID optional if Vehicle registration has value. Filterable.\t\t\t|\r\n| IsDriverRequired\t\t\t\t\t\t\t\t\t\t| IF DriverNameRegex from SysConfig has value set to true else false.\t\t\t\t|\r\n| DriverNameRegex\t\t\t\t\t\t\t\t\t\t| IF DriverNameRegex from SysConfig.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[]\t\t\t\t\t\t\t\t\t\t\t| The vehicle associated with the subscriber.\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].VehicleGUID\t\t\t\t\t\t\t\t| The vehicle GUID.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].Registration\t\t\t\t\t\t\t\t| The vehicle registration.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].VehicleType\t\t\t\t\t\t\t\t| The vehicle vehicleType description .\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].VehicleTypeGUID\t\t\t\t\t\t\t| The vehicle vehicleType GUID.\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].TransportSupplierSiteGUID\t\t\t\t\t| The vehicle transportSupplierSiteGUID.\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].MaxWeight\t\t\t\t\t\t\t\t\t| The vehicle maxWeight.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].LiveTare\t\t\t\t\t\t\t\t\t| The vehicle liveTare.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].LastDriver\t\t\t\t\t\t\t\t\t| The vehicle lastDriver.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].IsExternalVehicle \t\t\t\t\t\t\t| The vehicle isExternalVehicle.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].IsValid\t\t\t\t\t\t\t\t\t| The vehicle isValid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].Carriers[]\t\t\t\t\t\t\t\t\t| The vehicle supplier site.\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| Vehicles[].SubscriberOutlet[]\t\t\t\t\t\t\t| The vehicle company outlet.\t\t\t\t\t\t\t\t\t\t\t\t\t\t|",
+                "operationId": "ValidateVehicle_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiValidateVehicleResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/vehicleCarrierWorks": {
+            "get": {
+                "tags": [
+                    "VehicleCarrierWork"
+                ],
+                "summary": "Find with Filters",
+                "description": "| Property\t\t\t\t\t\t\t\t\t\t\t\t\t\t| Description                                                                       |\r\n| --------------------------------------------------------------| ----------------------------------------------------------------------------------|\r\n| SubscriberGUID\t\t\t\t\t\t\t\t\t\t\t\t| The subscriber guid filterable and required.\t\t\t\t\t\t\t\t\t\t|\r\n| VehicleGUID\t\t\t\t\t\t\t\t\t\t\t\t\t| The vechicle guid filterable and required.\t\t\t\t\t\t\t\t\t\t|\r\n| CarrierGUID\t\t\t\t\t\t\t\t\t\t\t\t\t| The suppliersite guid  filterable and optional.\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[]\t\t\t\t\t\t\t\t\t\t\t\t| The weighing data is on stage status.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].WeighingGUID\t\t\t\t\t\t\t\t\t| The guid associated to the weighing.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].TicketNo\t\t\t\t\t\t\t\t\t\t| The ticketno associated to the weighing.\t\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].GrossWeight\t\t\t\t\t\t\t\t\t| The grossweight associated to the weighing.\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].TareWeight\t\t\t\t\t\t\t\t\t| The tareweight associated to the weighing.\t\t\t\t\t\t\t\t\t\t|\r\n| StageWeighing[].IsInboundWeighing\t\t\t\t\t\t\t\t| The isinboundweighing indicator of weighing base on weighing type\t\t\t\t\t|\r\n| CurrentLinkedJobs[]\t\t\t\t\t\t\t\t\t\t\t| The current linked jobs does not associated any weighning.\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].JobGUID\t\t\t\t\t\t\t\t\t| The job guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].TicketNo\t\t\t\t\t\t\t\t\t| The ticketno weighing associated to the job.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].DefaultMaterial\t\t\t\t\t\t\t| The defaultmaterial material assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialShortCode\t\t\t\t\t\t\t| The materialshortcode\tmaterial assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialAnalysisCode \t\t\t\t\t\t| The materialanalysiscode material assocaited to the job.\t\t\t\t\t\t\t|\r\n| CurrentLinkedJobs[].MaterialEWCCode \t\t\t\t\t\t\t| The materialewccode material assocaited to the job.\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[]\t\t\t\t\t\t\t\t\t\t\t| The current linked routes that are not completed.\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].RouteGUID\t\t\t\t\t\t\t\t| The route guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].RouteNo\t\t\t\t\t\t\t\t\t| The route number.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].DefaultMaterial\t\t\t\t\t\t\t| The default material associated to the route.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].MaterialShortCode\t\t\t\t\t\t| The material short code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].MaterialEWCCode\t\t\t\t\t\t\t| The material ew code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[]\t\t\t\t\t\t| The materials that are linked to the route.\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialGUID\t\t\t| The linked material guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].Material\t\t\t\t| The linked material description.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialShortCode\t\t| The linked material short code.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialAnalysisCode\t| The linked material analysis code.\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedRoutes[].LinkedMaterials[].MaterialEWCCode\t\t| The linked material ew code.\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| LinkedToMoreThanOneCustomers\t\t\t\t\t\t\t\t\t| The flag that tells a vehicle is linked one or more customers.\t\t\t\t\t|\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].CustomerGUID\t\t\t\t\t\t\t| The customer guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].CustomerSiteGUID\t\t\t\t\t\t| The customersite guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].Customer\t\t\t\t\t\t\t\t| The customer name.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedToMoreThanOneOrder\t\t\t\t| The flag that tells whether a customer has one or more orders.\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].OrderNo\t\t\t\t| The order number.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].OrderGUID\t\t\t\t| The order guid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].AreaOfOrigin\t\t\t| The area of origin description.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n| CurrentLinkedCustomers[].LinkedOrders[].ShortCode\t\t\t\t| The area of origin short code.\t\t\t\t\t\t\t\t\t\t\t\t\t|\r\n",
+                "operationId": "VehicleCarrierWork_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiVehicleCarrierWorkResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/lists/weighingTypes/{id}": {
+            "get": {
+                "tags": [
+                    "WeighingType"
+                ],
+                "summary": "Find with GUID",
+                "description": "| Property                  | Description\t\t\t\t\t\t\t\t\t\t\t|\r\n| ------------------------- | ----------------------------------------------------- |\r\n| GUID                      | The GUID associated to the weighing type\t\t\t\t|\r\n| Description               | The description of the weighing type\t\t\t\t\t|\r\n\t\t\t\t   ",
+                "operationId": "WeighingType_Get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "expand",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultEntity[ApiWeighingTypeResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/lists/weighingTypes": {
+            "get": {
+                "tags": [
+                    "WeighingType"
+                ],
+                "summary": "Find with Filters",
+                "description": "| Property                  | Description\t\t\t\t\t\t\t\t\t\t\t|\r\n| ------------------------- | ----------------------------------------------------- |\r\n| GUID                      | The GUID associated to the weighing type\t\t\t\t|\r\n| Description               | The description of the weighing type\t\t\t\t\t|\r\n\t\t\t\t   ",
+                "operationId": "WeighingType_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiWeighingTypeResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/weightBlobs": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "| Property\t\t\t\t\t\t| Description                               | Required\t|\r\n|-------------------------------|-------------------------------------------|-----------|\r\n| WeightId\t\t\t\t\t\t| The weight Id (Guid).\t\t\t\t\t\t|   Yes\t\t|\r\n| BlobURL\t\t\t\t\t\t| The blob url of the picture.\t\t\t\t|   Yes\t\t|\r\n\r\n\r\n## Extra validations\r\n\r\n| Condition | Error message |\r\n| --------- | ------------- |\r\n| Both WeightId and BlobURL property must have a value. |",
+                "operationId": "WeightBlob_Create",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                },
+                "summary": "Create or update",
+                "tags": [
+                    "WeightBlob"
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "ApiResourceResultEntity[ApiSubscriberAreaOfOriginResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "$ref": "#/definitions/ApiSubscriberAreaOfOriginResource"
+                },
+                "links": {
+                    "$ref": "#/definitions/ApiResourceResultEntityLinks"
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultEntityExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiSubscriberAreaOfOriginResource": {
+            "type": "object",
+            "properties": {
+                "SubscriberGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "AreaOfOrigin": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SubscriberAreaOfOriginResource"
+                    }
+                }
+            }
+        },
+        "ApiResourceResultEntityLinks": {
+            "type": "object",
+            "properties": {
+                "self": {
+                    "type": "string"
+                },
+                "associations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "expand": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "operations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "ApiResourceResultEntityExtra": {
+            "type": "object",
+            "properties": {
+                "expand": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "include": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "ApiResourceErrors": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiResourceStatus": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "isSuccess": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "SubscriberAreaOfOriginResource": {
+            "type": "object",
+            "properties": {
+                "AreaOfOriginGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "AreaOfOrigin": {
+                    "type": "string"
+                },
+                "AreaOfOriginShortCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiCheckBalanceResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiCheckBalanceResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiCheckBalanceResource": {
+            "type": "object",
+            "properties": {
+                "CreditBalanceCheck": {
+                    "type": "boolean"
+                },
+                "SiteOrderGuid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiResourceResultCollectionExtra": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "format": "int32",
+                    "type": "integer"
+                }
+            }
+        },
+        "ApiResourceResultEntity[ApiJobMaterialsResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "$ref": "#/definitions/ApiJobMaterialsResource"
+                },
+                "links": {
+                    "$ref": "#/definitions/ApiResourceResultEntityLinks"
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultEntityExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiJobMaterialsResource": {
+            "type": "object",
+            "properties": {
+                "JobGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LinkedMaterials": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiMaterialResource"
+                    }
+                }
+            }
+        },
+        "ApiMaterialResource": {
+            "type": "object",
+            "properties": {
+                "MaterialGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Material": {
+                    "type": "string"
+                },
+                "ShortCode": {
+                    "type": "string"
+                },
+                "AnalysisCode": {
+                    "type": "string"
+                },
+                "EWCCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiResourceResultEntity[ApiCompanyOutletResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "$ref": "#/definitions/ApiCompanyOutletResource"
+                },
+                "links": {
+                    "$ref": "#/definitions/ApiResourceResultEntityLinks"
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultEntityExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiCompanyOutletResource": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "IsDeleted": {
+                    "type": "boolean"
+                },
+                "AbbreviatedDescription": {
+                    "type": "string"
+                },
+                "AnalysisCode": {
+                    "type": "string"
+                },
+                "Location": {
+                    "type": "string"
+                },
+                "Address": {
+                    "$ref": "#/definitions/ApiCompanyOutletAddressResource"
+                },
+                "CompanyOutletMaterial": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiCompanyOutletAcceptedMaterialResource"
+                    }
+                },
+                "OutletSupplierSite": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiOutletSupplierSiteResource"
+                    }
+                },
+                "VATRegistrationNumber": {
+                    "type": "string"
+                },
+                "Company": {
+                    "type": "string"
+                },
+                "NominalPrefix": {
+                    "type": "string"
+                },
+                "TelNo": {
+                    "type": "string"
+                },
+                "ContactEmail": {
+                    "type": "string"
+                },
+                "PremisesRegNo": {
+                    "type": "string"
+                },
+                "WasteCarrierLicenceNumber": {
+                    "type": "string"
+                },
+                "WasteCarrierLicenceIssuedBy": {
+                    "type": "string"
+                },
+                "IsDriversLicenceRequired": {
+                    "type": "boolean"
+                },
+                "IsCashDepositRequired": {
+                    "type": "boolean"
+                },
+                "IsValidWasteCarrierLicenceRequired": {
+                    "type": "boolean"
+                },
+                "DepositValueRequired": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "WasteManagementLicenceNumber": {
+                    "type": "string"
+                },
+                "WasteManagementIssuedBy": {
+                    "type": "string"
+                },
+                "IsAutoLoadVehicleStoredTares": {
+                    "type": "boolean"
+                },
+                "ShowANPRReads": {
+                    "type": "boolean"
+                },
+                "EPAId": {
+                    "type": "string"
+                },
+                "AmiceNumber": {
+                    "type": "string"
+                },
+                "ReportToExternalAuthorities": {
+                    "type": "boolean"
+                },
+                "LegislationType": {
+                    "type": "string"
+                },
+                "WeightUnitOfMeasurement": {
+                    "type": "string"
+                },
+                "ReportingUnitOfMeasurement": {
+                    "type": "string"
+                },
+                "VolumeUnitOfMeasurement": {
+                    "type": "string"
+                },
+                "GateWeighbridgeDocket": {
+                    "type": "string"
+                },
+                "MaterialSaleWeighbridgeDocket": {
+                    "type": "string"
+                },
+                "RouteWeighbridgeDocket": {
+                    "type": "string"
+                },
+                "TransferOutWeighbridgeDocket": {
+                    "type": "string"
+                },
+                "TransferInWeighbridgeDocket": {
+                    "type": "string"
+                },
+                "ScaleReceiptWeighbridgeDocket": {
+                    "type": "string"
+                },
+                "BillOfLadingWeighbridgeDocket": {
+                    "type": "string"
+                },
+                "VZCReport": {
+                    "type": "string"
+                },
+                "CMRReport": {
+                    "type": "string"
+                },
+                "CurrencyCode": {
+                    "type": "string"
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiCompanyOutletAddressResource": {
+            "type": "object",
+            "properties": {
+                "HouseNumber": {
+                    "type": "string"
+                },
+                "Address1": {
+                    "type": "string"
+                },
+                "Address2": {
+                    "type": "string"
+                },
+                "Address3": {
+                    "type": "string"
+                },
+                "Address4": {
+                    "type": "string"
+                },
+                "Address5": {
+                    "type": "string"
+                },
+                "Postcode": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiCompanyOutletAcceptedMaterialResource": {
+            "type": "object",
+            "properties": {
+                "MaterialListItem": {
+                    "$ref": "#/definitions/ApiIntegratorListItemResource"
+                },
+                "Guid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiOutletSupplierSiteResource": {
+            "type": "object",
+            "properties": {
+                "Address": {
+                    "$ref": "#/definitions/ApiOutletSupplierSiteAddressResource"
+                },
+                "SupplierName": {
+                    "type": "string"
+                },
+                "RelatedSupplierSiteGuid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiIntegratorListItemResource": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "AbbreviatedDescription": {
+                    "type": "string"
+                },
+                "Guid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiOutletSupplierSiteAddressResource": {
+            "type": "object",
+            "properties": {
+                "Location": {
+                    "type": "string"
+                },
+                "HouseNumber": {
+                    "type": "string"
+                },
+                "Address1": {
+                    "type": "string"
+                },
+                "Address2": {
+                    "type": "string"
+                },
+                "Address3": {
+                    "type": "string"
+                },
+                "Address4": {
+                    "type": "string"
+                },
+                "Address5": {
+                    "type": "string"
+                },
+                "Postcode": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiCompanyOutletResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiCompanyOutletResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiResourceId": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiResourceResultEntity[ApiSubscriberResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "$ref": "#/definitions/ApiSubscriberResource"
+                },
+                "links": {
+                    "$ref": "#/definitions/ApiResourceResultEntityLinks"
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultEntityExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiSubscriberResource": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "CompanyOutlets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiSubscriberCompanyOutletResource"
+                    }
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiSubscriberCompanyOutletResource": {
+            "type": "object",
+            "properties": {
+                "SubscriberOutletListItem": {
+                    "$ref": "#/definitions/ApiIntegratorListItemResource"
+                },
+                "RelatedSubscriberOutletGuid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiSubscriberResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiSubscriberResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiValidateVehicleResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiValidateVehicleResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiValidateVehicleResource": {
+            "type": "object",
+            "properties": {
+                "SubscriberGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Registration": {
+                    "type": "string"
+                },
+                "RFID": {
+                    "type": "string"
+                },
+                "IsDriverRequired": {
+                    "type": "boolean"
+                },
+                "DriverNameRegex": {
+                    "type": "string"
+                },
+                "Vehicles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleResource"
+                    }
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiVehicleResource": {
+            "type": "object",
+            "properties": {
+                "VehicleGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Registration": {
+                    "type": "string"
+                },
+                "VehicleType": {
+                    "type": "string"
+                },
+                "VehicleTypeGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "TransportSupplierSiteGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "MaxWeight": {
+                    "format": "double",
+                    "type": "number"
+                },
+                "LiveTare": {
+                    "format": "double",
+                    "type": "number"
+                },
+                "LastDriver": {
+                    "type": "string"
+                },
+                "IsExternalVehicle": {
+                    "type": "boolean"
+                },
+                "IsValid": {
+                    "type": "boolean"
+                },
+                "SubscriberOutlet": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleSubscriberOutletResource"
+                    }
+                },
+                "Carriers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierResource"
+                    }
+                }
+            }
+        },
+        "ApiVehicleSubscriberOutletResource": {
+            "type": "object",
+            "properties": {
+                "OutletGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "AbbreviatedDescription": {
+                    "type": "string"
+                },
+                "IsStoreTareAllowed": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ApiVehicleCarrierResource": {
+            "type": "object",
+            "properties": {
+                "SupplierSiteGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "SupplierSite": {
+                    "type": "string"
+                },
+                "WasteCarrierLicense": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiVehicleCarrierWorkResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkResource": {
+            "type": "object",
+            "properties": {
+                "VehicleGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "CarrierGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "SubscriberGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "StageWeighing": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkStageWeighingResource"
+                    }
+                },
+                "CurrentLinkedRoutes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkCurrentLinkedRoutesResource"
+                    }
+                },
+                "CurrentLinkedJobs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkCurrentLinkedJobsResource"
+                    }
+                },
+                "LinkedToMoreThanOneCustomers": {
+                    "type": "boolean"
+                },
+                "CurrentLinkedCustomers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkCurrentLinkedCustomersResource"
+                    }
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkStageWeighingResource": {
+            "type": "object",
+            "properties": {
+                "WeighingGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "TicketNo": {
+                    "type": "string"
+                },
+                "WeighingDate": {
+                    "format": "dateTime",
+                    "type": "string",
+                    "example": "2000-01-01 00:00:00.000"
+                },
+                "IsInboundWeighing": {
+                    "type": "boolean"
+                },
+                "GrossWeight": {
+                    "format": "double",
+                    "type": "number"
+                },
+                "TareWeight": {
+                    "format": "double",
+                    "type": "number"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkCurrentLinkedRoutesResource": {
+            "type": "object",
+            "properties": {
+                "RouteGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "RouteNo": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "DefaultMaterial": {
+                    "type": "string"
+                },
+                "MaterialShortCode": {
+                    "type": "string"
+                },
+                "MaterialEWCCode": {
+                    "type": "string"
+                },
+                "LinkedMaterials": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkCurrentLinkedMaterialsResource"
+                    }
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LastChangeReasonId": {
+                    "format": "int32",
+                    "type": "integer"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkCurrentLinkedJobsResource": {
+            "type": "object",
+            "properties": {
+                "JobGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "TicketNo": {
+                    "type": "string"
+                },
+                "DefaultMaterial": {
+                    "type": "string"
+                },
+                "MaterialShortCode": {
+                    "type": "string"
+                },
+                "MaterialAnalysisCode": {
+                    "type": "string"
+                },
+                "MaterialEWCCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkCurrentLinkedCustomersResource": {
+            "type": "object",
+            "properties": {
+                "CustomerGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "CustomerSiteGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Customer": {
+                    "type": "string"
+                },
+                "CustomerSite": {
+                    "type": "string"
+                },
+                "LinkedToMoreThanOneOrder": {
+                    "type": "boolean"
+                },
+                "LinkedOrders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkLinkedToCustomerLinkedOrdersResource"
+                    }
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LastChangeReasonId": {
+                    "format": "int32",
+                    "type": "integer"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkCurrentLinkedMaterialsResource": {
+            "type": "object",
+            "properties": {
+                "MaterialGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Material": {
+                    "type": "string"
+                },
+                "MaterialShortCode": {
+                    "type": "string"
+                },
+                "MaterialAnalysisCode": {
+                    "type": "string"
+                },
+                "MaterialEWCCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkLinkedToCustomerLinkedOrdersResource": {
+            "type": "object",
+            "properties": {
+                "OrderNo": {
+                    "type": "string"
+                },
+                "OrderGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "AreaOfOriginGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "AreaOfOrigin": {
+                    "type": "string"
+                },
+                "ShortCode": {
+                    "type": "string"
+                },
+                "InboundOrder": {
+                    "type": "boolean"
+                },
+                "LinkedMaterials": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiVehicleCarrierWorkLinkedToCustomerLinkedOrderMaterialsResource"
+                    }
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LastChangeReasonId": {
+                    "format": "int32",
+                    "type": "integer"
+                }
+            }
+        },
+        "ApiVehicleCarrierWorkLinkedToCustomerLinkedOrderMaterialsResource": {
+            "type": "object",
+            "properties": {
+                "MaterialGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Material": {
+                    "type": "string"
+                },
+                "ShortCode": {
+                    "type": "string"
+                },
+                "MaterialAnalysisCode": {
+                    "type": "string"
+                },
+                "MaterialEWCCode": {
+                    "type": "string"
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "LastChangeReasonId": {
+                    "format": "int32",
+                    "type": "integer"
+                }
+            }
+        },
+        "ApiResourceResultEntity[ApiWeighingTypeResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "$ref": "#/definitions/ApiWeighingTypeResource"
+                },
+                "links": {
+                    "$ref": "#/definitions/ApiResourceResultEntityLinks"
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultEntityExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiWeighingTypeResource": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "GUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiWeighingTypeResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiWeighingTypeResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        }
+    }
+}
