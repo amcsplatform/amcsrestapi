@@ -3765,7 +3765,9 @@
           "providerType",
           "transactionAmount",
           "originalPaymentReference",
-          "originalAmount"
+          "originalAmount",
+          "tokenValue",
+          "profileExpiryDate"
         ],
         "type": "object",
         "properties": {
@@ -3817,8 +3819,8 @@
               "PaymentExpress",
               "Realex",
               "TerminalPay",
-              "ElavonTerminalPay",
-              "EftCanada"
+              "EftCanada",
+              "ElavonTerminalPay"
             ],
             "example": "ACICards",
             "nullable": false
@@ -3842,12 +3844,12 @@
           },
           "tokenValue": {
             "type": "string",
-            "nullable": true,
+            "nullable": false,
             "example": "iLGOd76VSiaAQBcZswQf"
           },
           "profileExpiryDate": {
             "type": "string",
-            "nullable": true,
+            "nullable": false,
             "format": "datetime",
             "example": "MM/YY"
           }
