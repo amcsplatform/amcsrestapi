@@ -3765,9 +3765,7 @@
           "providerType",
           "transactionAmount",
           "originalPaymentReference",
-          "originalAmount",
-          "tokenValue",
-          "profileExpiryDate"
+          "originalAmount"
         ],
         "type": "object",
         "properties": {
@@ -3844,14 +3842,17 @@
           },
           "tokenValue": {
             "type": "string",
-            "nullable": false,
-            "example": "iLGOd76VSiaAQBcZswQf"
+            "nullable": true,
+            "example": "iLGOd76VSiaAQBcZswQf",
+            "description": "<span style='color: rgb(212, 31, 28)'>Required if payment type is elavon terminal or verifone terminal.</span>"
           },
           "profileExpiryDate": {
             "type": "string",
-            "nullable": false,
+            "nullable": true,
             "format": "datetime",
-            "example": "MM/YY"
+            "example": "MM/YY",
+            "description": "<span style='color: rgb(212, 31, 28)'>Required if payment type is elavon terminalPay.</span>"
+
           }
         }
       },
