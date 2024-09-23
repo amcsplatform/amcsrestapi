@@ -3844,7 +3844,7 @@
             "type": "string",
             "nullable": true,
             "example": "iLGOd76VSiaAQBcZswQf",
-            "description": "<span style='color: rgb(212, 31, 28)'>Required if payment type is elavon terminal or verifone terminal.</span>"
+            "description": "<span style='color: rgb(212, 31, 28)'>Required if payment type is elavon terminalPay or verifone terminalPay.</span>"
           },
           "profileExpiryDate": {
             "type": "string",
