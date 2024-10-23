@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "AMCS Platform REST API",
-    "description": "[![latest End points](/diagram/endpointslatest.svg)](/diagram/endpointslatest.svg)\n\n# Overview\n\n## Who Should Read this Document\n\nThis document contains a technical description of the AMCS Platform REST API. It is intended for:\n\n·    System integrators\n\n·    Customer IT team looking to integrate AMCS Platform with another system\n\n·    Third parties looking to integrate their system with AMCS Platform\n\n## Document Scope\n\nThis document introduces the technical aspects of the AMCS Platform REST API. The purpose of this document is to provide readers with detail on how to:\n\n·    Access the REST API\n\n·    Make calls to the API to retrieve, append and update resources\n\n·    Retrieve the incremental changes to a collection\n\n·    Find more detail on the end points that are available from an environment.\n\n## Summary\n\nAMCS Platform REST API is designed to support the integration of AMCS Platform with other systems. With care and additional infrastructure, the REST API can be used to build functionality on top of Platform but that is not it’s primary purpose.\n\nThe ‘changes since’ process provides the main means of performing an initial synchronisation of the AMCS Platform and another system, and then keeping them synchronised. Methods are also provided to create and update resources.\n\n# Integration Patterns and Tools\n\nThe AMCS Platform provides a number of tools that can be used to connect systems. Care should be taken to match the right tooling to the intended pattern of integration.\n\n·    When an extract-based approach is needed, use BI reporting.\n\n·    When derived values are require, use the data mart.\n\n·    When business processes on different systems need to be integrated by synchronising the data on each through an event style interface, use the REST API.\n\nAn integration using the REST API will need to take full responsibility for all aspects of the integration including:\n\n·    Pulling change events from AMCS Platform\n\n·    Filtering the changed resources for the ones that are of interest\n\n·    Pulling additional resources from the REST API in order the retrieve all the properties needed by the destination\n\n·    Mashing resources to create the complete view required\n\n·    Translating that into the form required by the destination\n\n·    Validating this to ensure it meet the entry rules of the destination\n\n·    Pushing the result to the destination\n\nIn the early stages of designing the interface care should be taken to ensure that the need for caching/staging has been considered. The changes since functionality is effectively a means of pulling create/change events from platform. The only filters available enable retrieval of related resources to build a view external to AMCS Platform\n\n# Basics\n\nThe AMCS REST API provides a RESTful interface that allows access to the primary business resources of the AMCS platform. The interface follows general HATEOAS compliance principles.\n\n## Quick start\n\nA quickstart walkthrough based on node.js and covering authentication and getting a page of customers [can be found here](./quickstart/index.html).\n\n## Interface definitions\n\nSwagger documentation for the end points available on an environment can be found at:\n\nBefore 8.5: https://{environment domain name}/swagger/ui/index\n\nFrom 8.5: https://{environment domain name}/erp/api/swagger/ui/index\n\n## HTTP Interface\n\nThe following HTTP RESTful methods are provided as part of this API:\n\n·    GET: Provides read access to retrieve details of one or more resources.\n\n·    POST: Creates or updates a single resource or a set of resources.\n\n·    PUT: Updates a single resource or a set of resources.\n\nNote:\n\n·    DELETE methods are currently not provided as part of the API.\n\nThe REST API URIs begin with\n\nhttps://{environment domain name}/erp/api/integrator/erp\n\nFor example:\n https://prod.amcs-at-mycompany.com/erp/api/integrator/erp\n\nThis should be used as the base of the URI. For instance, the full URI for the partial URI /directory/customers would be:\n\n[https://prod.amcs-at-mycompany.com\n /erp/api/integrator/erp/directory/customers](https://prod.amcs-at-mycompany.com/erp/api/integrator/erp/directory/customers)\n\n### Versioning\n\nThe x-api-version HTTP header should be used to indicate a specific version of an endpoint. e.g. x-api-version:8.3 will make a request to the version of endpoint released with 8.3 of the AMCS Platform.\n\nA request without the x-api-version HTTP header will default to the latest version of the endpoint available.\n\n### Content type and encoding\n\nAll requests should contain the correct content type. Content can be requested and passed in any encoding that can be mapped to utf-16. The AMCS REST API requires the following headers where applicable (i.e.: sending a JSON payload).\n\n·    Content-Type:application/json\n\n·    Accept:application/json\n\n### Result codes\n\nAppendix A contains a comprehensive list of possible HTTP status codes.\n\n## Naming Conventions\n\nThe AMCS REST API follows JSON and mixed Camel and Pascal notation on the format of the fields and entities returned.\n\n### Related properties\n\nProperties that link a resource with another resource begin with related. Most related properties have the GUID of the related resource as a value. i.e.: relatedCustomerGuid in a /sites resource endpoint contains the Guid for the customer that site belongs to.\n\nWhere more than one resource may be related the related property will consist of a list. This list may contain a simple list of GUIDs or it may contain a list of objects, with each object giving the detail of a relationship. The properties of these objects are the properties of the relationship, rather than the properties of the related resource.\n\n### ListItem properties\n\nProperties that are based on a selection from a list are named with ListItem at the end. The possible options for these properties are static or change via configuration. The list of possible values can be found by making a GET request to /lists/{property name with ListItem removed and pluralised}.\n\nThe response contains a JSON object containing an array of objects, each containing the GUID and details for each possible value.\n\nGET /integrator/lists/{property name with Enum removed and pluralized }/{guid} is also supported if you only want the details of an individual property.\n\n### Standard-compliant properties\n\nProperties with the following ending must comply with the indicated standard:\n\n| Type        | Standard                  |\n| ----------- | ------------------------- |\n| Dates       | RFC3339 subset of ISO8601 |\n| Identifiers | RFC4122                   |\n\n# Methods\n\nThis chapter specifies the different methods to be used when using the AMCS REST API.\n\n## Retrieving resources\n\nRetrieving a resource or list of resources is done with the GET request. The request could be sent to the resource collection or the specific GUID of a resource. \n\n/{grouping}/{collection} - requests the properties for all the resources in a collection.\n /{grouping}/{collection}/{guid} - requests the properties for a single resource\n\nThe result of either request is an array of resources for instance:\n\nGET /accounting/payments\n\nResponse:\n\n```\n{\n    resource: [\n        {\n            resource: {\n                Name: Test,\n                Reference: null,\n                ARAccountCode: null,\n                FederalId: null,\n                IsInternal: false,\n        ...\n       }\n    ]\n}\n```\n\nGET /payments/12345678-1234-1234-12345678ab\n\nResponse:\n\n```\n{\n    resource: {\n        Name: Hany,\n        Reference: null,\n        ARAccountCode: null,\n        FederalId: null,\n        IsInternal: false,\n        ReceiveServiceUpdatesByEmail: false,\n     ...\n   }\n}\n```\n\n### Pagination\n\nA GET to a collection results in a paginated response. To select the page use the page and max query parameters. For instance, the following request will return 100 items for page 3.\n\n/{grouping}/{collection}?page=3&max=100\n\n### Filters\n\nTo receive a filtered set of resources from a collection, the API offers as part of the GET request to /{collection} a filter parameter that can be specified with a selector property.\n\nFor instance: /{collection}?filter={property} eq {value}\n\nThe properties that can be filtered are called out in the Swagger documentation. These are typically the properties starting “Related” plus the references that allow resources to be unequally identified.\n\n## Retrieving changed resources\n\nThe AMCS REST API provides a way to retrieve changes that have been made since a point in the collection history by using the following URI /{collection}/changes?since={bookmark}\n\nThe API will provide as response a resource array containing the resources that have been created or updated since the bookmark. \n\nAs part of the response a next URI is provided. This URI that can be called to get the next batch of resources. A new bookmark is also provided for use in one of two ways:\n\nWhen there are more changes available to be retrieved the bookmark is provided via a cursor property.  A new cursor bookmark is provided with each response. The URI needs updating with the new bookmark each time, or just call the next URI that is provided with each response.\n\nUse the following URI to get the next batch of new or updated resources:\n\n/{collection}/changes?cursor={bookmark}\n\nWhen the response contains all the changes available the bookmark is provided via an until property. The next time you are ready to check for resources use this in a URI as follows. Cursor bookmarks cannot be used in a changes?since URI. Until bookmarks cannot be used in a changes?cursor URI.\n\nUse the following URI to get the resources changed since:\n\n/{collection}/changes?since={bookmark}\n\nNotes:\n\n·    The number of resources in the response is limited in order to maintain the overall performance of the AMCS Platform.\n\n·    It is expected that API clients make more than one call to retrieve all the changes that have been made to the collection. \n\nFor example:\n\n/customers/changes?since=890099ab99c0f\n\nResponse:\n\n```\n{\n    resource:[\n        ...\n    ],\n    links:{\n        next:#/customers/changes?cursor=absle3290\n    },\n    extra:{\n        cursor:absle3290\n    }\n}\n```\n\n##  How to create resources\n\nThe AMCS API Platform will create a resource when the client sends a POST request to a /{grouping}/{collection} without a GUID. The body of the request should contain a single JSON object containing all the properties of the resource. The value of Enum properties should an object containing a Guid property with the GUID of the value required.\n\nFor example, to create a customer:\n\nPOST /customers\n\n```\n{\n    Name:My Customer,\n    CustomerTypeEnum:{\n        guid:12345678-1234-1234-1234-12345678ab\n    },\n    ...\n}\n```\n\nExample 1: Create a resource\n\n##  How to update resources\n\nThe AMCS Platform API will create a resource when the client sends a POST request to a /{collection} without a GUID. The body of the request should contain a single JSON object containing all the properties of the resource. The value of Enum properties should an object containing a Guid property with the GUID of the value required.\n\nNotes:\n\n·    A POST request with a GUID to a collection replaces the entire resource. Any properties that are not supplied will result in their value being lost (set to NULL).\n\n\n·    To update part of a resource without impacting the other properties a PUT request to /{collection}/{resource guid} should be used. The request body should contain a JSON object containing the properties to be updated.\n\nFor example, to update a customer:\n\nPOST /customers\n\n```\n{\n    GUID:12345678-1234-1234-1234-12345678ab,\n    Name:My Customer,\n    CustomerTypeEnum:{\n        guid:12345678-1234-1234-1234-12345678ab\n    },\n    ...\n}\n```\n\n#   Security\n\nThe API uses HTTPS as transport layer for security and uses HTTP/1.1 – RFC 7230 for message syntax and routing.\n\nThere are 2 ways of authenticating in order to access the REST API.\n\n·    Requesting a bearer token from /authTokens using username and password\n\n·    Requesting a session log on from /authTokens using a PAT token\n\nAuthentication using username and password will be phased out after 8.6.\n\n##  GET /authTokens with username and password direct to the App server\n\nBefore using this method a user must be set up with access right “Can POST, PUT, GET to the REST API”. This can be done from User Management in the AMCS Platform UI.\n\n### Request format\n\nThe following table specifies the format and parameters for this request.\n\n| Method    | Type      | Name               | Type               |\n| --------- | --------- | ------------------ | ------------------ |\n| GET       | Parameter | Username           | URI encoded string |\n| Parameter | password  | URI encoded string |                    |\n\n### Response format\n\nThe following table specifies the format and parameters for the response.\n\n  \n\n| Successful response | Type      |      |\n| ------------------- | --------- | ---- |\n| Bearer token        | text/html |      |\n\nThe token returned is then uses as a Bearer token in the subsequent calls to the REST API\n\n### Example\n\nThe following shows an example of a request to the authentication endpoint:\n\nhttps://{elemos-url}/authTokens?username=john&password=password\n\nThe username and password in this request may need to be URI encoded.\n\nThe token in the response should be supplied in all subsequent requests in an authorization HTTP header.\n\nAuthorization: Bearer tcpRoNbIKOJZj9Yn0CL2oiX7m04JJmlAllaskd810incqjslasadjzxzza29axb\n\nNotes:\n\n·    No specific Accept or Content-Type header is required for the authentication endpoint as it will always return text/html as content.\n\n##  POST /erp/api/authTokens with PAT token\n\nBefore using this method, a user must be set up with:\n\n·    Access right “Can POST, PUT, GET to the REST API”\n\n·    A PAT token\n\nThis can be done from User Management in the AMCS Platform UI.\n\n### Request format\n\nThe following table specifies the format and parameters for this request.\n\n| Method | Body                           |\n| ------ | ------------------------------ |\n| POST   | { “privatekey”:”{PAT token}” } |\n\n### Response format\n\nThe response passes a Platform.ERP.SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\"",
+    "description": "[![latest End points](/amcsrestapi/diagram/endpointslatest.svg)](/amcsrestapi/diagram/endpointslatest.svg)\n\n# Overview\n\n## Who Should Read this Document\n\nThis document contains a technical description of the AMCS Platform REST API. It is intended for:\n\n·    System integrators\n\n·    Customer IT team looking to integrate AMCS Platform with another system\n\n·    Third parties looking to integrate their system with AMCS Platform\n\n## Document Scope\n\nThis document introduces the technical aspects of the AMCS Platform REST API. The purpose of this document is to provide readers with detail on how to:\n\n·    Access the REST API\n\n·    Make calls to the API to retrieve, append and update resources\n\n·    Retrieve the incremental changes to a collection\n\n·    Find more detail on the end points that are available from an environment.\n\n## Summary\n\nAMCS Platform REST API is designed to support the integration of AMCS Platform with other systems. With care and additional infrastructure, the REST API can be used to build functionality on top of Platform but that is not it’s primary purpose.\n\nThe ‘changes since’ process provides the main means of performing an initial synchronisation of the AMCS Platform and another system, and then keeping them synchronised. Methods are also provided to create and update resources.\n\n# Integration Patterns and Tools\n\nThe AMCS Platform provides a number of tools that can be used to connect systems. Care should be taken to match the right tooling to the intended pattern of integration.\n\n·    When an extract-based approach is needed, use BI reporting.\n\n·    When derived values are require, use the data mart.\n\n·    When business processes on different systems need to be integrated by synchronising the data on each through an event style interface, use the REST API.\n\nAn integration using the REST API will need to take full responsibility for all aspects of the integration including:\n\n·    Pulling change events from AMCS Platform\n\n·    Filtering the changed resources for the ones that are of interest\n\n·    Pulling additional resources from the REST API in order the retrieve all the properties needed by the destination\n\n·    Mashing resources to create the complete view required\n\n·    Translating that into the form required by the destination\n\n·    Validating this to ensure it meet the entry rules of the destination\n\n·    Pushing the result to the destination\n\nIn the early stages of designing the interface care should be taken to ensure that the need for caching/staging has been considered. The changes since functionality is effectively a means of pulling create/change events from platform. The only filters available enable retrieval of related resources to build a view external to AMCS Platform\n\n# Basics\n\nThe AMCS REST API provides a RESTful interface that allows access to the primary business resources of the AMCS platform. The interface follows general HATEOAS compliance principles.\n\n## Quick start\n\nA quickstart walkthrough based on node.js and covering authentication and getting a page of customers [can be found here](./quickstart/index.html).\n\n## Interface definitions\n\nSwagger documentation for the end points available on an environment can be found at:\n\nBefore 8.5: https://{environment domain name}/swagger/ui/index\n\nFrom 8.5: https://{environment domain name}/erp/api/swagger/ui/index\n\n## HTTP Interface\n\nThe following HTTP RESTful methods are provided as part of this API:\n\n·    GET: Provides read access to retrieve details of one or more resources.\n\n·    POST: Creates or updates a single resource or a set of resources.\n\n·    PUT: Updates a single resource or a set of resources.\n\nNote:\n\n·    DELETE methods are currently not provided as part of the API.\n\nThe REST API URIs begin with\n\nhttps://{environment domain name}/erp/api/integrator/erp\n\nFor example:\n https://prod.amcs-at-mycompany.com/erp/api/integrator/erp\n\nThis should be used as the base of the URI. For instance, the full URI for the partial URI /directory/customers would be:\n\n[https://prod.amcs-at-mycompany.com\n /erp/api/integrator/erp/directory/customers](https://prod.amcs-at-mycompany.com/erp/api/integrator/erp/directory/customers)\n\n### Versioning\n\nThe x-api-version HTTP header should be used to indicate a specific version of an endpoint. e.g. x-api-version:8.3 will make a request to the version of endpoint released with 8.3 of the AMCS Platform.\n\nA request without the x-api-version HTTP header will default to the latest version of the endpoint available.\n\n### Content type and encoding\n\nAll requests should contain the correct content type. Content can be requested and passed in any encoding that can be mapped to utf-16. The AMCS REST API requires the following headers where applicable (i.e.: sending a JSON payload).\n\n·    Content-Type:application/json\n\n·    Accept:application/json\n\n### Result codes\n\nAppendix A contains a comprehensive list of possible HTTP status codes.\n\n## Naming Conventions\n\nThe AMCS REST API follows JSON and mixed Camel and Pascal notation on the format of the fields and entities returned.\n\n### Related properties\n\nProperties that link a resource with another resource begin with related. Most related properties have the GUID of the related resource as a value. i.e.: relatedCustomerGuid in a /sites resource endpoint contains the Guid for the customer that site belongs to.\n\nWhere more than one resource may be related the related property will consist of a list. This list may contain a simple list of GUIDs or it may contain a list of objects, with each object giving the detail of a relationship. The properties of these objects are the properties of the relationship, rather than the properties of the related resource.\n\n### ListItem properties\n\nProperties that are based on a selection from a list are named with ListItem at the end. The possible options for these properties are static or change via configuration. The list of possible values can be found by making a GET request to /lists/{property name with ListItem removed and pluralised}.\n\nThe response contains a JSON object containing an array of objects, each containing the GUID and details for each possible value.\n\nGET /integrator/lists/{property name with Enum removed and pluralized }/{guid} is also supported if you only want the details of an individual property.\n\n### Standard-compliant properties\n\nProperties with the following ending must comply with the indicated standard:\n\n| Type        | Standard                  |\n| ----------- | ------------------------- |\n| Dates       | RFC3339 subset of ISO8601 |\n| Identifiers | RFC4122                   |\n\n# Methods\n\nThis chapter specifies the different methods to be used when using the AMCS REST API.\n\n## Retrieving resources\n\nRetrieving a resource or list of resources is done with the GET request. The request could be sent to the resource collection or the specific GUID of a resource. \n\n/{grouping}/{collection} - requests the properties for all the resources in a collection.\n /{grouping}/{collection}/{guid} - requests the properties for a single resource\n\nThe result of either request is an array of resources for instance:\n\nGET /accounting/payments\n\nResponse:\n\n```\n{\n    resource: [\n        {\n            resource: {\n                Name: Test,\n                Reference: null,\n                ARAccountCode: null,\n                FederalId: null,\n                IsInternal: false,\n        ...\n       }\n    ]\n}\n```\n\nGET /payments/12345678-1234-1234-12345678ab\n\nResponse:\n\n```\n{\n    resource: {\n        Name: Hany,\n        Reference: null,\n        ARAccountCode: null,\n        FederalId: null,\n        IsInternal: false,\n        ReceiveServiceUpdatesByEmail: false,\n     ...\n   }\n}\n```\n\n### Pagination\n\nA GET to a collection results in a paginated response. To select the page use the page and max query parameters. For instance, the following request will return 100 items for page 3.\n\n/{grouping}/{collection}?page=3&max=100\n\n### Filters\n\nTo receive a filtered set of resources from a collection, the API offers as part of the GET request to /{collection} a filter parameter that can be specified with a selector property.\n\nFor instance: /{collection}?filter={property} eq {value}\n\nThe properties that can be filtered are called out in the Swagger documentation. These are typically the properties starting “Related” plus the references that allow resources to be unequally identified.\n\n## Retrieving changed resources\n\nThe AMCS REST API provides a way to retrieve changes that have been made since a point in the collection history by using the following URI /{collection}/changes?since={bookmark}\n\nThe API will provide as response a resource array containing the resources that have been created or updated since the bookmark. \n\nAs part of the response a next URI is provided. This URI that can be called to get the next batch of resources. A new bookmark is also provided for use in one of two ways:\n\nWhen there are more changes available to be retrieved the bookmark is provided via a cursor property.  A new cursor bookmark is provided with each response. The URI needs updating with the new bookmark each time, or just call the next URI that is provided with each response.\n\nUse the following URI to get the next batch of new or updated resources:\n\n/{collection}/changes?cursor={bookmark}\n\nWhen the response contains all the changes available the bookmark is provided via an until property. The next time you are ready to check for resources use this in a URI as follows. Cursor bookmarks cannot be used in a changes?since URI. Until bookmarks cannot be used in a changes?cursor URI.\n\nUse the following URI to get the resources changed since:\n\n/{collection}/changes?since={bookmark}\n\nNotes:\n\n·    The number of resources in the response is limited in order to maintain the overall performance of the AMCS Platform.\n\n·    It is expected that API clients make more than one call to retrieve all the changes that have been made to the collection. \n\nFor example:\n\n/customers/changes?since=890099ab99c0f\n\nResponse:\n\n```\n{\n    resource:[\n        ...\n    ],\n    links:{\n        next:#/customers/changes?cursor=absle3290\n    },\n    extra:{\n        cursor:absle3290\n    }\n}\n```\n\n##  How to create resources\n\nThe AMCS API Platform will create a resource when the client sends a POST request to a /{grouping}/{collection} without a GUID. The body of the request should contain a single JSON object containing all the properties of the resource. The value of Enum properties should an object containing a Guid property with the GUID of the value required.\n\nFor example, to create a customer:\n\nPOST /customers\n\n```\n{\n    Name:My Customer,\n    CustomerTypeEnum:{\n        guid:12345678-1234-1234-1234-12345678ab\n    },\n    ...\n}\n```\n\nExample 1: Create a resource\n\n##  How to update resources\n\nThe AMCS Platform API will create a resource when the client sends a POST request to a /{collection} without a GUID. The body of the request should contain a single JSON object containing all the properties of the resource. The value of Enum properties should an object containing a Guid property with the GUID of the value required.\n\nNotes:\n\n·    A POST request with a GUID to a collection replaces the entire resource. Any properties that are not supplied will result in their value being lost (set to NULL).\n\n\n·    To update part of a resource without impacting the other properties a PUT request to /{collection}/{resource guid} should be used. The request body should contain a JSON object containing the properties to be updated.\n\nFor example, to update a customer:\n\nPOST /customers\n\n```\n{\n    GUID:12345678-1234-1234-1234-12345678ab,\n    Name:My Customer,\n    CustomerTypeEnum:{\n        guid:12345678-1234-1234-1234-12345678ab\n    },\n    ...\n}\n```\n\n#   Security\n\nThe API uses HTTPS as transport layer for security and uses HTTP/1.1 – RFC 7230 for message syntax and routing.\n\nThere are 2 ways of authenticating in order to access the REST API.\n\n·    Requesting a bearer token from /authTokens using username and password\n\n·    Requesting a session log on from /authTokens using a PAT token\n\nAuthentication using username and password will be phased out after 8.6.\n\n##  GET /authTokens with username and password direct to the App server\n\nBefore using this method a user must be set up with access right “Can POST, PUT, GET to the REST API”. This can be done from User Management in the AMCS Platform UI.\n\n### Request format\n\nThe following table specifies the format and parameters for this request.\n\n| Method    | Type      | Name               | Type               |\n| --------- | --------- | ------------------ | ------------------ |\n| GET       | Parameter | Username           | URI encoded string |\n| Parameter | password  | URI encoded string |                    |\n\n### Response format\n\nThe following table specifies the format and parameters for the response.\n\n  \n\n| Successful response | Type      |      |\n| ------------------- | --------- | ---- |\n| Bearer token        | text/html |      |\n\nThe token returned is then uses as a Bearer token in the subsequent calls to the REST API\n\n### Example\n\nThe following shows an example of a request to the authentication endpoint:\n\nhttps://{elemos-url}/authTokens?username=john&password=password\n\nThe username and password in this request may need to be URI encoded.\n\nThe token in the response should be supplied in all subsequent requests in an authorization HTTP header.\n\nAuthorization: Bearer tcpRoNbIKOJZj9Yn0CL2oiX7m04JJmlAllaskd810incqjslasadjzxzza29axb\n\nNotes:\n\n·    No specific Accept or Content-Type header is required for the authentication endpoint as it will always return text/html as content.\n\n##  POST /erp/api/authTokens with PAT token\n\nBefore using this method, a user must be set up with:\n\n·    Access right “Can POST, PUT, GET to the REST API”\n\n·    A PAT token\n\nThis can be done from User Management in the AMCS Platform UI.\n\n### Request format\n\nThe following table specifies the format and parameters for this request.\n\n| Method | Body                           |\n| ------ | ------------------------------ |\n| POST   | { “privatekey”:”{PAT token}” } |\n\n### Response format\n\nThe response passes a Platform.ERP.SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\"",
     "version": "latest"
   },
   "servers": [
@@ -6365,7 +6365,7 @@
           "Driver"
         ],
         "summary": "Find with GUID",
-        "description": "| Property             | Description                                                           |\r\n| -------------------- | --------------------------------------------------------------------- |\r\n| GUID                 | The GUID associated to the driver.                                    |\r\n| CompanyOutletListItem | The GUID and description of the company outlet.   |\r\n| StaffTypeListItem    | The GUID and description of the staff type.   |\r\n| Username             | The username of the driver.                                           |\r\n| Lastname             | The last name of the driver.                                          |\r\n| Forename             | The forename of the driver.                                           |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 |\r\n| UniqueIdentifier     | The unique identifier of the driver.   |\r\n| LocaleListItem       | The GUID and description of the locale.   |",
+        "description": "| Property             | Description                                                           |\r\n| -------------------- | --------------------------------------------------------------------- |\r\n| GUID                 | The GUID associated to the driver.                                    |\r\n| CompanyOutletListItem | The GUID and description of the company outlet.                      |\r\n| StaffTypeListItem    | The GUID and description of the staff type.                           |\r\n| Username             | The username of the driver.                                           |\r\n| Lastname             | The last name of the driver.                                          |\r\n| Forename             | The forename of the driver.                                           |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 |\r\n| UniqueIdentifier     | The unique identifier of the driver.                                  |\r\n| LocaleListItem       | The GUID and description of the locale.                               |\r\n| PayrollNo            | The payroll number of the driver.                                     |\r\n| Mobile               | The mobile number of the driver.                                      |\r\n| Email                | The email address of the driver.                                      |\r\n| OwnerDriver          | Indicates if the driver is an owner.                                  |\r\n| ForcePasswordChangeAtNextLogin | Indicates if driver needs to change password on next login. |",
         "operationId": "Driver_Get",
         "parameters": [
           {
@@ -6403,7 +6403,7 @@
           "Driver"
         ],
         "summary": "Partial update",
-        "description": "| Property             | Description                                                           | Required |\r\n| -------------------- | --------------------------------------------------------------------- | -------- |\r\n| GUID                 | The GUID associated to the driver.                                  | No |\r\n| CompanyOutletListItem         | The GUID and description of the company outlet.              | Yes |\r\n| StaffTypeListItem    | The GUID and description of the staff type.   | Yes |\r\n| Username             | The username of the driver.                                           | Yes |\r\n| Lastname             | The last name of the driver.                                          | Yes |\r\n| Forename             | The forename of the driver.                                           | Yes |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 | Yes |\r\n| UniqueIdentifier     | The unique identifier of the driver.   | No |\r\n| LocaleListItem       | The GUID and description of the locale.   | No |\r\n\r\n\r\n**Extra validations**\r\n\r\n| Condition | Error message |\r\n| --------- | ------------- |\r\n| If Forename is more than 50 characters long | Forename must be no more than 50 characters long.|\r\n| If Lastname is more than 50 characters long | Lastname must be no more than 50 characters long.|\r\n| If Username is more than 510 characters long | Username must be no more than 510 characters long.|\r\n| If StaffTypeListItem is not Driver | StaffTypeListItem is a read-only property|\r\n",
+        "description": "| Property             | Description                                                           | Required |\r\n| -------------------- | --------------------------------------------------------------------- | -------- |\r\n| GUID                 | The GUID associated to the driver.                                    | No |\r\n| CompanyOutletListItem | The GUID and description of the company outlet.                      | Yes |\r\n| StaffTypeListItem    | The GUID and description of the staff type.                           | Yes |\r\n| Username             | The username of the driver.                                           | Yes |\r\n| Lastname             | The last name of the driver.                                          | Yes |\r\n| Forename             | The forename of the driver.                                           | Yes |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 | Yes |\r\n| UniqueIdentifier     | The unique identifier of the driver.                                  | No |\r\n| LocaleListItem       | The GUID and description of the locale.                               | No |\r\n| PayrollNo            | The payroll number of the driver.                                     | Yes |\r\n| Mobile               | The mobile number of the driver.                                      | No |\r\n| Email                | The email address of the driver.                                      | Yes |\r\n| OwnerDriver          | Indicates if the driver is an owner.                                  | No |\r\n| Password             | The password of the driver                                            | No |\r\n| ForcePasswordChangeAtNextLogin | Indicates if driver needs to change password on next login. | No |\r\n\r\n\r\n**Extra validations**\r\n\r\n| Condition | Error message |\r\n| --------- | ------------- |\r\n| If Forename is more than 50 characters long | Forename must be no more than 50 characters long.|\r\n| If Lastname is more than 50 characters long | Lastname must be no more than 50 characters long.|\r\n| If Username is more than 510 characters long | Username must be no more than 510 characters long.|\r\n| If PayrollNo is more than 15 characters long | PayrollNo must be no more than 15 characters long.|\r\n| If Mobile is more than 30 characters long | Mobile must be no more than 30 characters long.|\r\n| If Email is more than 50 characters long | Email must be no more than 50 characters long.|\r\n| If Password is more than 50 characters long | Password must be no more than 50 characters long.|\r\n| If StaffTypeListItem is not Driver | StaffTypeListItem is a read-only property|\r\n",
         "operationId": "Driver_Update",
         "parameters": [
           {
@@ -6447,7 +6447,7 @@
           "Driver"
         ],
         "summary": "Find with Filters",
-        "description": "| Property             | Description                                                           |\r\n| -------------------- | --------------------------------------------------------------------- |\r\n| GUID                 | The GUID associated to the driver.                                    |\r\n| CompanyOutletListItem | The GUID and description of the company outlet.   |\r\n| StaffTypeListItem    | The GUID and description of the staff type.   |\r\n| Username             | The username of the driver.                                           |\r\n| Lastname             | The last name of the driver.                                          |\r\n| Forename             | The forename of the driver.                                           |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 |\r\n| UniqueIdentifier     | The unique identifier of the driver.   |\r\n| LocaleListItem       | The GUID and description of the locale.   |",
+        "description": "| Property             | Description                                                           |\r\n| -------------------- | --------------------------------------------------------------------- |\r\n| GUID                 | The GUID associated to the driver.                                    |\r\n| CompanyOutletListItem | The GUID and description of the company outlet.                      |\r\n| StaffTypeListItem    | The GUID and description of the staff type.                           |\r\n| Username             | The username of the driver.                                           |\r\n| Lastname             | The last name of the driver.                                          |\r\n| Forename             | The forename of the driver.                                           |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 |\r\n| UniqueIdentifier     | The unique identifier of the driver.                                  |\r\n| LocaleListItem       | The GUID and description of the locale.                               |\r\n| PayrollNo            | The payroll number of the driver.                                     |\r\n| Mobile               | The mobile number of the driver.                                      |\r\n| Email                | The email address of the driver.                                      |\r\n| OwnerDriver          | Indicates if the driver is an owner.                                  |\r\n| ForcePasswordChangeAtNextLogin | Indicates if driver needs to change password on next login. |",
         "operationId": "Driver_GetCollection",
         "parameters": [
           {
@@ -6506,7 +6506,7 @@
           "Driver"
         ],
         "summary": "Create or update",
-        "description": "| Property             | Description                                                           | Required |\r\n| -------------------- | --------------------------------------------------------------------- | -------- |\r\n| GUID                 | The GUID associated to the driver.                                  | No |\r\n| CompanyOutletListItem         | The GUID and description of the company outlet.              | Yes |\r\n| StaffTypeListItem    | The GUID and description of the staff type.   | No |\r\n| Username             | The username of the driver.                                           | Yes |\r\n| Lastname             | The last name of the driver.                                          | Yes |\r\n| Forename             | The forename of the driver.                                           | Yes |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 | Yes |\r\n| UniqueIdentifier     | The unique identifier of the driver.   | No |\r\n| LocaleListItem       | The GUID and description of the locale.   | No |\r\n\r\n\r\n**Extra validations**\r\n\r\n| Condition | Error message |\r\n| --------- | ------------- |\r\n| If Forename is more than 50 characters long | Forename must be no more than 50 characters long.|\r\n| If Lastname is more than 50 characters long | Lastname must be no more than 50 characters long.|\r\n| If Username is more than 510 characters long | Username must be no more than 510 characters long.|\r\n| If StaffTypeListItem is supplied | StaffTypeListItem is not supported|\r\n",
+        "description": "| Property             | Description                                                           | Required |\r\n| -------------------- | --------------------------------------------------------------------- | -------- |\r\n| GUID                 | The GUID associated to the driver.                                    | No |\r\n| CompanyOutletListItem | The GUID and description of the company outlet.                      | Yes |\r\n| StaffTypeListItem    | The GUID and description of the staff type.                           | No |\r\n| Username             | The username of the driver.                                           | Yes |\r\n| Lastname             | The last name of the driver.                                          | Yes |\r\n| Forename             | The forename of the driver.                                           | Yes |\r\n| IsDeleted            | Whether or not the driver is deleted.                                 | Yes |\r\n| UniqueIdentifier     | The unique identifier of the driver.                                  | No |\r\n| LocaleListItem       | The GUID and description of the locale.                               | No |\r\n| PayrollNo            | The payroll number of the driver.                                     | Yes |\r\n| Mobile               | The mobile number of the driver.                                      | No |\r\n| Email                | The email address of the driver.                                      | Yes |\r\n| OwnerDriver          | Indicates if the driver is an owner.                                  | No |\r\n| Password             | The password of the driver                                            | Yes |\r\n| ForcePasswordChangeAtNextLogin | Indicates if driver needs to change password on next login. | No |\r\n\r\n\r\n**Extra validations**\r\n\r\n| Condition | Error message |\r\n| --------- | ------------- |\r\n| If Forename is more than 50 characters long | Forename must be no more than 50 characters long.|\r\n| If Lastname is more than 50 characters long | Lastname must be no more than 50 characters long.|\r\n| If Username is more than 510 characters long | Username must be no more than 510 characters long.|\r\n| If PayrollNo is more than 15 characters long | PayrollNo must be no more than 15 characters long.|\r\n| If Mobile is more than 30 characters long | Mobile must be no more than 30 characters long.|\r\n| If Email is more than 50 characters long | Email must be no more than 50 characters long.|\r\n| If Password is more than 50 characters long | Password must be no more than 50 characters long.|\r\n| If StaffTypeListItem is supplied | StaffTypeListItem is not supported|\r\n",
         "operationId": "Driver_Create",
         "requestBody": {
           "content": {
@@ -7751,6 +7751,231 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorInspectionTypeResource]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mirror/imm/inventoryProductionShifts": {
+      "post": {
+        "tags": [
+          "InventoryProductionShift"
+        ],
+        "summary": "Create or update",
+        "operationId": "InventoryProductionShift_Create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiIntegratorInventoryProductionShiftResource"
+              }
+            }
+          },
+          "required": true,
+          "x-bodyName": null
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mirror/imm/inventoryProductionShifts/{guid}": {
+      "put": {
+        "tags": [
+          "InventoryProductionShift"
+        ],
+        "summary": "Partial update",
+        "operationId": "InventoryProductionShift_Update",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiIntegratorInventoryProductionShiftResource"
+              }
+            }
+          },
+          "required": true,
+          "x-bodyName": null
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mirror/imm/inventoryProductionShiftMaterialIns": {
+      "post": {
+        "tags": [
+          "InventoryProductionShiftMaterialIn"
+        ],
+        "summary": "Create or update",
+        "operationId": "InventoryProductionShiftMaterialIn_Create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiIntegratorInventoryProductionShiftMaterialInResource"
+              }
+            }
+          },
+          "required": true,
+          "x-bodyName": null
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mirror/imm/inventoryProductionShiftMaterialIns/{guid}": {
+      "put": {
+        "tags": [
+          "InventoryProductionShiftMaterialIn"
+        ],
+        "summary": "Partial update",
+        "operationId": "InventoryProductionShiftMaterialIn_Update",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiIntegratorInventoryProductionShiftMaterialInResource"
+              }
+            }
+          },
+          "required": true,
+          "x-bodyName": null
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mirror/imm/inventoryProductionShiftMaterialOuts": {
+      "post": {
+        "tags": [
+          "InventoryProductionShiftMaterialOut"
+        ],
+        "summary": "Create or update",
+        "operationId": "InventoryProductionShiftMaterialOut_Create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiIntegratorInventoryProductionShiftMaterialOutResource"
+              }
+            }
+          },
+          "required": true,
+          "x-bodyName": null
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mirror/imm/inventoryProductionShiftMaterialOuts/{guid}": {
+      "put": {
+        "tags": [
+          "InventoryProductionShiftMaterialOut"
+        ],
+        "summary": "Partial update",
+        "operationId": "InventoryProductionShiftMaterialOut_Update",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiIntegratorInventoryProductionShiftMaterialOutResource"
+              }
+            }
+          },
+          "required": true,
+          "x-bodyName": null
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
                 }
               }
             }
@@ -26603,6 +26828,24 @@
           "LocaleListItem": {
             "$ref": "#/components/schemas/ApiIntegratorListItemResource"
           },
+          "PayrollNo": {
+            "type": "string"
+          },
+          "Mobile": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "OwnerDriver": {
+            "type": "boolean"
+          },
+          "ForcePasswordChangeAtNextLogin": {
+            "type": "boolean"
+          },
+          "Password": {
+            "type": "string"
+          },
           "GUID": {
             "type": "string",
             "format": "uuid",
@@ -27677,6 +27920,172 @@
           },
           "status": {
             "$ref": "#/components/schemas/ApiResourceStatus"
+          }
+        }
+      },
+      "ApiIntegratorInventoryProductionShiftResource": {
+        "type": "object",
+        "properties": {
+          "CompanyOutletGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "Reference": {
+            "type": "string"
+          },
+          "StartDate": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "EndDate": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "StartTime": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "EndTime": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "CustomerGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "IsCompleted": {
+            "type": "boolean"
+          },
+          "Notes": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "CreatedByGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "GUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "ApiIntegratorInventoryProductionShiftMaterialInResource": {
+        "type": "object",
+        "properties": {
+          "InventoryProductionShiftGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "MaterialClassGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "MaterialFinishedStateGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "TipLocationGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "Percentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "Weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "UnitCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "TotalCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "GUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "ApiIntegratorInventoryProductionShiftMaterialOutResource": {
+        "type": "object",
+        "properties": {
+          "InventoryProductionShiftGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "MaterialClassGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "MaterialFinishedStateGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "TipLocationGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "Percentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "Weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "UnitCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "CostRatio": {
+            "type": "number",
+            "format": "double"
+          },
+          "TotalCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "Units": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "IsDeleted": {
+            "type": "boolean"
+          },
+          "GUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
           }
         }
       },
@@ -30904,6 +31313,14 @@
           },
           "WorkOrderStatus": {
             "type": "string"
+          },
+          "OrderNumber": {
+            "type": "string"
+          },
+          "OrderNumberGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
           }
         }
       },
