@@ -12,12 +12,12 @@
           "Asset"
         ],
         "summary": "Create or Update an Asset (Vehicle)",
-        "description": "# Create or Update an Asset (Vehicle)\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| AssetId         \t\t| GUID     | ID of the Asset                                                                    |\r\n| AssetName\t\t\t\t\t\t| string   | Display name\t(vehicle registration plate)                                          |\r\n| AssetType \t\t\t\t\t| string   | Front Loader, Side Loader, Rear End Loader                                         |\r\n| OutletId            | GUID     | ID of the Company Outlet associated with the Asset                                 |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Asset is no longer in use\t\t\t\t\t\t                                              |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"AssetName\": \"VEH 001\",\r\n  \"AssetType\": \"Front Loader\",\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\"\r\n}\r\n```",
+        "description": "# Create or Update an Asset (Vehicle)\r\n\r\n| Parameter    | Type   | Description                                                     |\r\n|--------------|--------|-----------------------------------------------------------------|\r\n| AssetId      | GUID   | ID of the Asset                                                 |\r\n| AssetName    | string | Display name (vehicle registration plate)                       |\r\n| AssetType    | string | Front Loader, Side Loader, Rear End Loader                      |\r\n| OutletId     | GUID   | ID of the Company Outlet associated with the Asset              |\r\n| IsDeleted    | bool   | Asset is no longer in use                                       |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"AssetName\": \"VEH 001\",\r\n  \"AssetType\": \"Front Loader\",\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\",\r\n  \"IsDeleted\": false \r\n}\r\n```",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
+                "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Asset.ApiAsset"
               }
             }
           }
@@ -41,7 +41,7 @@
         "tags": [
           "ContaminationEvent"
         ],
-      "summary": "Request list of Contamination Event changes",
+        "summary": "Request list of Contamination Event changes",
         "description": "# Request list of Contamination Event changes\r\n\r\nRetrieve changes in the list of Contamination Events for all tenants, that have been made since a specific point in the history\r\n\r\n## Input\r\n\r\n| Parameter               | Description                |\r\n| ----------------------- | -------------------------- |\r\n| since                   | Bookmark from extra.until  |\r\n| cursor                  | Bookmark from extra.cursor |\r\n| links                   | N/A                        |\r\n\r\n## Output\r\n\r\n| Property\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| GUID\t\t\t\t\t\t\t\t| GUID     | ID of the Contamination Event.\t\t\t\t\t\t\t\t\t\t\t\t\t                          \t|\r\n| TenantId\t\t\t\t\t\t| GUID     | ID of the Tenant associated with the Contamination Event\t\t                        |\r\n| CustomerName\t\t\t\t\t|string| Name of the customer of the Contamination Event|\r\n| CompanyOutletId\t\t\t| GUID     | ID of the Company Outlet associated with the Contamination Event                  \t|\r\n| OutletName\t\t\t| string     | Name of the Company Outlet associated with the Contamination Event                  \t|\r\n| CustomerSiteId\t\t\t| GUID     | ID of the Customer Site associated with the Contamination Event                     |\r\n| SiteName\t\t\t| string     | Name of the Site associated with the Contamination Event                     |\r\n| CustomerType\t\t\t| string     | Type of customer associated with the Contamination Event                     |\r\n| CustomerAddress\t\t\t| string     | Address of customer associated with the Contamination Event                     |\r\n| VehicleId\t\t\t\t\t\t| GUID     | ID of the Vehicle associated with the Contamination Event\t\t\t\t                  \t|\r\n| Latitude\t   \t\t\t  | double   | Location of the Contamination Event                                                |\r\n| Longitude\t\t\t\t\t\t| double   | Location of the Contamination Event                                                |\r\n| Timestamp\t\t\t\t\t\t| DateTime | Timestamp of the Contamination Event\t                                              |\r\n| ContaminationScore \t| int      | Degree of Contamination found                                                      |\r\n| GrossWeight\t\t\t|double|Gross weight of the Contamination Event\t|\r\n| TareWeight\t\t\t\t|double| Tare weight of the Contamination Event |\r\n| NetWeight\t\t\t\t|double| Net weight of the Contamination Event|\r\n| Seq\t\t\t\t\t|int|Sequence of the Contamination Event |\r\n| Lifter\t\t\t\t|int|Lifter of the Contamination Event\t|\r\n| ContainerId\t\t\t|string|Conntainer Id of the Contamination Event |\r\n| WasteType\t\t\t\t|string|Waste type of the Contamination Event |\r\n| QRCodeRawText\t\t\t|string| Raw QR code value of the COntamination Event\r\n| extra.until         | string   | Bookmark to put in as \"since\" later - appears when there are no more pages for now |\r\n| link.next           | URI      | Link to follow to get next page with changes                                       |",
         "parameters": [
           {
@@ -86,12 +86,12 @@
           "CustomerSite"
         ],
         "summary": "Create or Update a Customer Site",
-        "description": "# Create or Update a Customer Site\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| CustomerSiteId\t  \t| GUID     | ID of the Customer Site                                                            |\r\n| Name\t\t\t\t\t\t\t\t| string   | Display name\tof the Customer Site (Customer Name)                                  |\r\n| Country \t\t\t\t\t\t| string   | Address part                                                                       |\r\n| City          \t\t\t| string   | Address part                                                                       |\r\n| Street              | string   | Address part                                                                       |\r\n| Address1            | string   | Address part                                                                       |\r\n| Address2            | string   | Address part                                                                       |\r\n| Address3            | string   | Address part                                                                       |\r\n| PostalCode          | string   | Address part                                                                       |\r\n| HouseNumber         | string   | Address part                                                                       |\r\n| Latitude            | double   | Geographic coordinate                                                              |\r\n| Longitude           | double   | Geographic coordinate                                                              |\r\n| OutletId            | GUID     | ID of the Company Outlet associated with the Customer Site                         |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Customer Site is no longer in use\t\t                                              |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"CustomerSiteId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"Name\": \"Alterwerth Group\",\r\n  \"Country\": \"Unites States\",\r\n  \"City\": \"Upper Marlboro\",\r\n  \"Street\": \"Trent Oval\",\r\n  \"PostalCode\": \"MD 20792\",\r\n  \"HouseNumber\": \"1762\",\r\n  \"Latitude\": 38.82000560748161, \r\n  \"Longitude\": -76.75000011205616,\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\"\r\n}\r\n```",
+        "description": "# Create or Update a Customer Site\r\n\r\n| Parameter          | Type     | Description                                                               |\r\n| -------------------| -------- | ------------------------------------------------------------------------- |\r\n| CustomerSiteId     | GUID     | ID of the Customer Site                                                   |\r\n| Name               | string   | Display name of the Customer Site (Customer Name)                         |\r\n| Country            | string   | Address part                                                              |\r\n| City               | string   | Address part                                                              |\r\n| Street             | string   | Address part                                                              |\r\n| Address1           | string   | Address part                                                              |\r\n| Address2           | string   | Address part                                                              |\r\n| Address3           | string   | Address part                                                              |\r\n| Address4           | string   | Additional address part                                                   |\r\n| Address5           | string   | Additional address part                                                   |\r\n| PostalCode         | string   | Address part                                                              |\r\n| HouseNumber        | string   | Address part                                                              |\r\n| Latitude           | double   | Geographic coordinate                                                     |\r\n| Longitude          | double   | Geographic coordinate                                                     |\r\n| OutletId           | GUID     | ID of the Company Outlet associated with the Customer Site                |\r\n| IsDeleted          | bool     | Indicates if the Customer Site is no longer in use                        |\r\n| SiteType           | string   | Type of the site                                                          |\r\n| CustomerType       | string   | Type of the customer                                                      |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"CustomerSiteId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"Name\": \"Alterwerth Group\",\r\n  \"Country\": \"United States\",\r\n  \"City\": \"Upper Marlboro\",\r\n  \"Street\": \"Trent Oval\",\r\n  \"PostalCode\": \"MD 20792\",\r\n  \"HouseNumber\": \"1762\",\r\n  \"Address1\": \"Building A\",\r\n  \"Address2\": \"Suite 5\",\r\n  \"Address3\": \"Near Landmark Mall\",\r\n  \"Address4\": \"PO Box 123\",\r\n  \"Address5\": \"Additional Info\",\r\n  \"Latitude\": 38.82000560748161,\r\n  \"Longitude\": -76.75000011205616,\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\",\r\n  \"IsDeleted\": false,\r\n  \"SiteType\": \"\",\r\n  \"CustomerType\": \"\"\r\n}\r\n```\r\n",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
+                "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.CustomerSite.ApiCustomerAddress"
               }
             }
           }
@@ -141,12 +141,12 @@
           "Outlet"
         ],
         "summary": "Create or Update an Outlet",
-        "description": "# Create or Update an Outlet\r\n\r\n| Parameter\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| OutletId         \t\t| GUID     | ID of the Outlet                                                                   |\r\n| OutletName\t\t\t\t\t| string   | Display name                                                                       |\r\n| IsDeleted\t\t\t\t\t\t| bool     | Outlet is no longer in use \t\t\t\t\t                                              |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"OutletId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"OutletName\": \"Primary Company Outlet\"\r\n}\r\n```",
+        "description": "# Create or Update an Outlet\r\n\r\n| Parameter   | Type   | Description                      |\r\n|-------------|--------|----------------------------------|\r\n| OutletId    | GUID   | ID of the Outlet                 |\r\n| OutletName  | string | Display name                     |\r\n| IsDeleted   | bool   | Outlet is no longer in use       |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"OutletId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"OutletName\": \"Primary Company Outlet\",\r\n  \"IsDeleted\": false\r\n}\r\n```",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApiResourceId"
+                "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Outlet.ApiOutlet"
               }
             }
           }
@@ -212,6 +212,66 @@
   },
   "components": {
     "schemas": {
+      "AMCS.IoT.Contamination.Api.Integrator.Asset.ApiAsset": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "assetId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "assetName": {
+            "type": "string",
+            "nullable": true
+          },
+          "assetType": {
+            "type": "string",
+            "nullable": true
+          },
+          "outletId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "outletName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "AMCS.IoT.Contamination.Api.Integrator.ContaminationEvent.ApiContaminationEventExternal": {
         "type": "object",
         "properties": {
@@ -248,9 +308,17 @@
             "type": "string",
             "format": "uuid"
           },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
           "companyOutletId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true
+          },
+          "outletName": {
+            "type": "string",
             "nullable": true
           },
           "customerSiteId": {
@@ -258,9 +326,25 @@
             "format": "uuid",
             "nullable": true
           },
+          "siteName": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerType": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerAddress": {
+            "type": "string",
+            "nullable": true
+          },
           "vehicleId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true
+          },
+          "vehicleReg": {
+            "type": "string",
             "nullable": true
           },
           "latitude": {
@@ -282,6 +366,204 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "grossWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "tareWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "netWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "seq": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rfid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "weighErrorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lifter": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "containerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "wasteType": {
+            "type": "string",
+            "nullable": true
+          },
+          "qrCodeRawText": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Contamination.Api.Integrator.CustomerSite.ApiCustomerAddress": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerSiteId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "houseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "address1": {
+            "type": "string",
+            "nullable": true
+          },
+          "address2": {
+            "type": "string",
+            "nullable": true
+          },
+          "address3": {
+            "type": "string",
+            "nullable": true
+          },
+          "address4": {
+            "type": "string",
+            "nullable": true
+          },
+          "address5": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "outletId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "outletName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "siteType": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Contamination.Api.Integrator.Outlet.ApiOutlet": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "outletId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "outletName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "tenantId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -322,9 +604,17 @@
             "type": "string",
             "format": "uuid"
           },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
           "companyOutletId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true
+          },
+          "outletName": {
+            "type": "string",
             "nullable": true
           },
           "customerSiteId": {
@@ -332,9 +622,25 @@
             "format": "uuid",
             "nullable": true
           },
+          "siteName": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerType": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerAddress": {
+            "type": "string",
+            "nullable": true
+          },
           "vehicleId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true
+          },
+          "vehicleReg": {
+            "type": "string",
             "nullable": true
           },
           "latitude": {
@@ -351,6 +657,251 @@
             "type": "string",
             "format": "dateTime",
             "example": "2000-01-01 00:00:00.000"
+          },
+          "grossWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "tareWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "netWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "seq": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rfid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "weighErrorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "containerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "wasteType": {
+            "type": "string",
+            "nullable": true
+          },
+          "qrCodeRawText": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Contamination.Api.Integrator.SmartDispatchWasteStream.ApiSmartDispatchWasteStream": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenantId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/AMCS.IoT.Shared.Data.TenantEntity"
+          },
+          "smartDispatchWasteStreamId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Shared.Data.CustomAttributes": {
+        "type": "object",
+        "properties": {
+          "erpSync": {
+            "type": "boolean"
+          },
+          "entities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCS.IoT.Shared.Data.ErpSyncAttribute"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Shared.Data.ErpSyncAttribute": {
+        "type": "object",
+        "properties": {
+          "entityName": {
+            "enum": [
+              "Site",
+              "Outlet",
+              "Vehicle",
+              "MaterialClass"
+            ],
+            "type": "string"
+          },
+          "sync": {
+            "type": "boolean"
+          },
+          "sinceToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "sinceTokenDateTime": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Shared.Data.TenantCustomAttribute": {
+        "type": "object",
+        "properties": {
+          "erpSync": {
+            "type": "boolean"
+          },
+          "entities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCS.IoT.Shared.Data.ErpSyncAttribute"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Shared.Data.TenantEntity": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "coreAppServiceRoot": {
+            "type": "string",
+            "nullable": true
+          },
+          "locale": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "deploymentStage": {
+            "type": "string",
+            "nullable": true
+          },
+          "customAttributesJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "customAttributes": {
+            "$ref": "#/components/schemas/AMCS.IoT.Shared.Data.CustomAttributes"
+          },
+          "tenantCustomAttribute": {
+            "$ref": "#/components/schemas/AMCS.IoT.Shared.Data.TenantCustomAttribute"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResourceChanges[ApiAssetResource]": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "$ref": "#/components/schemas/ApiResourceErrors"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiResourceStatus"
+          },
+          "resource": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Asset.ApiAsset"
+            },
+            "nullable": true
+          },
+          "extra": {
+            "$ref": "#/components/schemas/ApiResourceResultUpdatesExtra"
           }
         },
         "additionalProperties": false
