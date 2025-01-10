@@ -1,17 +1,83 @@
 {
   "openapi": "3.0.1",
   "info": {
-	 "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe Transport Live View REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the Transport Live View External REST API.\n\n## Security\n\nWe use PAT Tokens for authentication over HTTPS encrypted comms.\n\nA PAT token will be provided for you to use in your integration.\n\nYou will use this PAT token to authenticate as follows.\n\n### Request Format:\n\nPOST: /tlv/api/authTokens\n\nBody: {\"privateKey\":\"PATtokenstring\"}\n\n### Response Format:\n\nThe response passes a SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\n\nThe API endpoints that are currently available are detailed below.",
+    "description": "# Getting Started\n\n## Document Purpose and Scope\n\nThe Transport Live View REST API endpoints are technically described in this document. This document's goal is to instruct readers on how to interface with the Transport Live View External REST API.\n\n## Security\n\nWe use PAT Tokens for authentication over HTTPS encrypted comms.\n\nA PAT token will be provided for you to use in your integration.\n\nYou will use this PAT token to authenticate as follows.\n\n### Request Format:\n\nPOST: /tlv/api/authTokens\n\nBody: {\"privateKey\":\"PATtokenstring\"}\n\n### Response Format:\n\nThe response passes a SessionToken as a cookie.\n\nThis cookie should be included in the subsequent calls to the REST API.\n\nThe API endpoints that are currently available are detailed below.",
     "title": "External API",
     "version": "external"
   },
   "paths": {
+    "/integrator/gpsdata/changes": {
+      "get": {
+        "tags": [
+          "ApiGpsDataExternal"
+        ],
+        "summary": "Response: API GPS Data External",
+        "description": "# Response: API GPS Data External\r\n\r\nProvides a structured response for changes in GPS Data Points.\r\n\r\n## Output Structure\r\n\r\n### Main Response Object\r\n| Property   | Type                          | Description                                                   |\r\n|------------|-------------------------------|---------------------------------------------------------------|\r\n| Resource   | List\\<GpsDataPointChangeDto\\> | List of GPS data point changes.                               |\r\n| Links      | Links                         | Links object containing navigation links.                     |\r\n| Extra      | Extra                         | Extra information for pagination, including cursors and until.|\r\n\r\n---\r\n\r\n### Links Object\r\n| Property   | Type   | Description                     |\r\n|------------|--------|---------------------------------|\r\n| Next       | string | Link to the next page of data. |\r\n\r\n---\r\n\r\n### Extra Object\r\n| Property   | Type   | Description                                 |\r\n|------------|--------|---------------------------------------------|\r\n| Cursor     | string | Bookmark for navigating through pages.     |\r\n| Until      | string | Timestamp indicating the end of the range. |\r\n\r\n---\r\n\r\n### GpsDataPointChangeDto Object\r\n| Property     | Type       | Description                                 |\r\n|--------------|------------|---------------------------------------------|\r\n| Id           | string     | Unique identifier for the GPS data point.  |\r\n| PlateNo      | string     | Vehicle plate number associated with the data point. |\r\n| Timestamp    | DateTime   | Date and time of the GPS data point.       |\r\n| Latitude     | double     | Latitude of the GPS data point.            |\r\n| Longitude    | double     | Longitude of the GPS data point.           |\r\n| SpeedKmh     | int        | Speed in kilometers per hour.              |\r\n| TenantId     | Guid       | Identifier for the associated tenant.      |\r\n",
+        "parameters": [
+          {
+            "name": "TenantId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Since",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "dateTime",
+              "example": "2000-01-01 00:00:00.000"
+            }
+          },
+          {
+            "name": "Cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MaxItemCount",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/integrator/gpsTrail": {
       "post": {
         "tags": [
           "ApiGpsTrailExportService"
         ],
-		"summary": "Get list of Vehicle Gps Trails",
+        "summary": "Get list of Vehicle Gps Trails",
         "description": "# Get list of Vehicle Gps Trail\r\n\r\n## Input\r\n| Parameter\t\t\t  | Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t          |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |         \r\n| AssetName\t\t\t  | string   | Vehicle Registration Plate No                                                      |\r\n| DateFrom \t\t\t  | DateTime | Timestamp when the start date of the gps trail to be extracted                     |\r\n| DateTo              | DateTime | Timestamp when the end date of the gps trail to be extracted                       |\r\n\t\t\t\t                                              \r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetName\": \"M879 EUS\",\r\n  \"DateFrom\": \"2024-06-28\",\r\n  \"DateTo\": \"\"2024-06-30\"\r\n}\r\n```\r\n\r\n## Output\r\n| Property \t\t\t  | Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |                   \r\n| AssetName\t\t\t  | string   | Vehicle Registration Plate No                                                      |\r\n| Timestamp \t\t  | DateTime | Timestamp of the asset                                                      |\r\n| Lat\t\t\t\t  | DateTime | Latitude where the asset at that point                       |\r\n| Lon \t\t\t\t  | DateTime | Longitude where the asset at that point                    |\r\n\r\n",
         "requestBody": {
           "content": {
@@ -74,7 +140,85 @@
           }
         },
         "additionalProperties": false
-      }     
+      },
+      "AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "plateNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "speedKmh": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesExtra": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "nullable": true
+          },
+          "until": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesLink": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesResponse": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangeDto"
+            },
+            "nullable": true
+          },
+          "links": {
+            "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesLink"
+          },
+          "extra": {
+            "$ref": "#/components/schemas/AMCS.MapBasedAlerting.Server.Services.TimeSeriesDB.CosmosDB.GpsDataPointChangesExtra"
+          }
+        },
+        "additionalProperties": false
+      }
     }
   }
 }
