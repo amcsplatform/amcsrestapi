@@ -145,6 +145,107 @@
         }
       }
     },
+    "/accounting/accountBalances/{guid}": {
+      "get": {
+        "tags": [
+          "AccountBalance"
+        ],
+        "summary": "Find with GUID",
+        "description": "| Property                  | Description                                                              |\r\n| ------------------------- | ------------------------------------------------------------------------ |\r\n| APInvoice                      | The accounts payable invoice associated with the account balance.                                     |\r\n| CreditLimit                      | The maximum credit limit for the account.                                                     |\r\n| GUID                 | The GUID associated to the account balance.                               |\r\n| InvoiceableWork                 | The amount of work that can be invoiced.             |\r\n| POInvoice                | The purchase order invoice associated with the account balance.                            |\r\n| RelatedCustomerGuid             | The GUID associated to the customer.           |\r\n| RelatedCustomerSiteGuid             | The GUID associated to the customer site.                   |\r\n| RemainingCredit| The remaining credit available for the account.   |\r\n| OutstandingAmount| The total outstanding amount for the account.   |\r\n| UnallocatedAmount| The amount that has not been allocated to any specific purpose.   |\r\n| UnconfirmedBalance               | The balance that has not been confirmed.|",
+        "operationId": "AccountBalance_Get",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "udf",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceResultEntity[ApiIntegratorAccountBalance]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounting/accountBalances": {
+      "get": {
+        "tags": [
+          "AccountBalance"
+        ],
+        "summary": "Find with Filters",
+        "description": "| Property                  | Description                                                              |\r\n| ------------------------- | ------------------------------------------------------------------------ |\r\n| APInvoice                      | The accounts payable invoice associated with the account balance.                                     |\r\n| CreditLimit                      | The maximum credit limit for the account.                                                     |\r\n| GUID                 | The GUID associated to the account balance.                               |\r\n| InvoiceableWork                 | The amount of work that can be invoiced.             |\r\n| POInvoice                | The purchase order invoice associated with the account balance.                            |\r\n| RelatedCustomerGuid             | The GUID associated to the customer.           |\r\n| RelatedCustomerSiteGuid             | The GUID associated to the customer site.                   |\r\n| RemainingCredit| The remaining credit available for the account.   |\r\n| OutstandingAmount| The total outstanding amount for the account.   |\r\n| UnallocatedAmount| The amount that has not been allocated to any specific purpose.   |\r\n| UnconfirmedBalance               | The balance that has not been confirmed.|",
+        "operationId": "AccountBalance_GetCollection",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "max",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "includeCount",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "udf",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceResultCollection[ApiIntegratorAccountBalance]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/accounting/accountCustomers/changes": {
       "get": {
         "tags": [
@@ -21154,6 +21255,89 @@
           }
         }
       },
+      "ApiResourceResultEntity[ApiIntegratorAccountBalance]": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "$ref": "#/components/schemas/ApiIntegratorAccountBalance"
+          },
+          "errors": {
+            "$ref": "#/components/schemas/ApiResourceErrors"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiResourceStatus"
+          }
+        }
+      },
+      "ApiResourceResultCollection[ApiIntegratorAccountBalance]": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiIntegratorAccountBalance"
+            }
+          },
+          "errors": {
+            "$ref": "#/components/schemas/ApiResourceErrors"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiResourceStatus"
+          }
+        }
+      },
+      "ApiIntegratorAccountBalance": {
+        "type": "object",
+        "properties": {
+          "InvoiceableWork": {
+            "type": "number",
+            "format": "double"
+          },
+          "OutstandingAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "UnallocatedAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "UnconfirmedBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "APInvoice": {
+            "type": "number",
+            "format": "double"
+          },
+          "POInvoice": {
+            "type": "number",
+            "format": "double"
+          },
+          "CreditLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "RemainingCredit": {
+            "type": "number",
+            "format": "double"
+          },
+          "RelatedCustomerGUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "RelatedCustomerSiteGUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "GUID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
       "ApiResourceChanges[ApiIntegratorAccountCustomerResource]": {
         "type": "object",
         "properties": {
@@ -24985,7 +25169,7 @@
               "$ref": "#/components/schemas/ApiIntegratorCreditNoteOutputResource"
             }
           },
-		  "UnallocatedAmount": {
+          "UnallocatedAmount": {
             "type": "number",
             "format": "double"
           },
@@ -28308,7 +28492,7 @@
               "$ref": "#/components/schemas/ApiIntegratorInvoiceOutputResource"
             }
           },
-		  "UnallocatedAmount": {
+          "UnallocatedAmount": {
             "type": "number",
             "format": "double"
           },
@@ -33025,7 +33209,7 @@
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000"
           },
-		  "UnallocatedAmount": {
+          "UnallocatedAmount": {
             "type": "number",
             "format": "double"
           },
