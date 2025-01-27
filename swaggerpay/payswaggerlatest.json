@@ -1783,9 +1783,8 @@
               5
             ],
             "description": [
-              "1 for CARD",
-              "2 for ACH",
-              "5 for EFT"
+              "ACH",
+              "EFT"
             ],            
             "nullable": false
           },
@@ -1805,7 +1804,7 @@
               9
             ],
             "description": [
-              "9 for APG"
+              "APG"
             ],
             "nullable": false
           },
