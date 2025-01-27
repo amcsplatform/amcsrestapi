@@ -1783,8 +1783,8 @@
               5
             ],
             "description": [
-              "2 for ACH",
-              "5 for EFT"
+              "ACH",
+              "EFT"
             ],            
             "nullable": false
           },
