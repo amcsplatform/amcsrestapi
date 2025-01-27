@@ -1783,7 +1783,6 @@
               5
             ],
             "description": [
-              "1 for CARD",
               "2 for ACH",
               "5 for EFT"
             ],            
@@ -1805,7 +1804,7 @@
               9
             ],
             "description": [
-              "9 for APG"
+              "APG"
             ],
             "nullable": false
           },
