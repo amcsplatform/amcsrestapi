@@ -1767,8 +1767,8 @@
           "requestType": {
             "type": "string",
             "enum": [
-              1,
-              2
+              "1",
+              "2"
             ],
             "description": [
               "1 for OneOffPayment",
@@ -1779,8 +1779,8 @@
           "paymentType": {
             "type": "string",
             "enum": [
-              2,
-              5
+              "2",
+              "5"
             ],
             "description": [
               "ACH",
@@ -1801,7 +1801,7 @@
           "providerType": {
             "type": "string",
             "enum": [
-              9
+              "9"
             ],
             "description": [
               "APG"
