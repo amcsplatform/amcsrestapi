@@ -1770,10 +1770,7 @@
               "1",
               "2"
             ],
-            "description": [
-              "1 for OneOffPayment",
-              "2 for Tokenization"
-            ],
+            "description": "OneOffPayment, Tokenization",      
             "nullable": false
           },
           "paymentType": {
@@ -1782,10 +1779,7 @@
               "2",
               "5"
             ],
-            "description": [
-              "ACH",
-              "EFT"
-            ],            
+            "description": "ACH, EFT",           
             "nullable": false
           },
           "callerIdentifier": {
@@ -1803,9 +1797,7 @@
             "enum": [
               "9"
             ],
-            "description": [
-              "APG"
-            ],
+            "description": "APG",      
             "nullable": false
           },
           "transactionAmount": {
