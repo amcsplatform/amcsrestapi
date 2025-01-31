@@ -1767,19 +1767,17 @@
           "requestType": {
             "type": "string",
             "enum": [
-              "1",
-              "2"
+              "OneOffPayment",
+              "Tokenization"
             ],
-            "description": "OneOffPayment, Tokenization",      
             "nullable": false
           },
           "paymentType": {
             "type": "string",
             "enum": [
-              "2",
-              "5"
+              "ACH",
+              "EFT"
             ],
-            "description": "ACH, EFT",           
             "nullable": false
           },
           "callerIdentifier": {
@@ -1795,9 +1793,8 @@
           "providerType": {
             "type": "string",
             "enum": [
-              "9"
+              "APG"
             ],
-            "description": "APG",      
             "nullable": false
           },
           "transactionAmount": {
