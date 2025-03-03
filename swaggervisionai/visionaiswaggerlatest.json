@@ -562,15 +562,16 @@
             "type": "string",
             "nullable": true
           },
-		  "totalSurfaceAreaVolume": {
-            "type": "double",
+	  "totalSurfaceAreaVolume": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           },
-		  "materials": {
+	   "materials": {
             "type": "string",
             "nullable": true
           },
-		  "binaryImage": {
+	   "binaryImage": {
             "type": "string",
             "format": "byte",
             "nullable": true
@@ -808,15 +809,16 @@
             "type": "string",
             "nullable": true
           },
-		  "totalSurfaceAreaVolume": {
-            "type": "double",
+	  "totalSurfaceAreaVolume": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           },
-		  "materials": {
+	    "materials": {
             "type": "string",
             "nullable": true
           },
-		  "binaryImage": {
+	   "binaryImage": {
             "type": "string",
             "format": "byte",
             "nullable": true
