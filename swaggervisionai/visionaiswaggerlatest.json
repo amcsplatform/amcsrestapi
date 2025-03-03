@@ -70,7 +70,7 @@
         ],
         "operationId": "GetContaminationEventChanges",
         "summary": "Request list of Contamination Event changes",
-        "description": "# Request list of Contamination Event changes\r\n\r\nRetrieve changes in the list of Contamination Events for all tenants, that have been made since a specific point in the history\r\n\r\n## Input\r\n\r\n| Parameter               | Description                |\r\n| ----------------------- | -------------------------- |\r\n| since                   | Bookmark from extra.until  |\r\n| cursor                  | Bookmark from extra.cursor |\r\n| links                   | N/A                        |\r\n\r\n## Output\r\n\r\n| Property\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| GUID\t\t\t\t\t\t\t\t| GUID     | ID of the Contamination Event.\t\t\t\t\t\t\t\t\t\t\t\t\t                          \t|\r\n| TenantId\t\t\t\t\t\t| GUID     | ID of the Tenant associated with the Contamination Event\t\t                        |\r\n| CustomerName\t\t\t\t\t|string| Name of the customer of the Contamination Event|\r\n| CompanyOutletId\t\t\t| GUID     | ID of the Company Outlet associated with the Contamination Event                  \t|\r\n| OutletName\t\t\t| string     | Name of the Company Outlet associated with the Contamination Event                  \t|\r\n| CustomerSiteId\t\t\t| GUID     | ID of the Customer Site associated with the Contamination Event                     |\r\n| SiteName\t\t\t| string     | Name of the Site associated with the Contamination Event                     |\r\n| CustomerType\t\t\t| string     | Type of customer associated with the Contamination Event                     |\r\n| CustomerAddress\t\t\t| string     | Address of customer associated with the Contamination Event                     |\r\n| VehicleId\t\t\t\t\t\t| GUID     | ID of the Vehicle associated with the Contamination Event\t\t\t\t                  \t|\r\n| Latitude\t   \t\t\t  | double   | Location of the Contamination Event                                                |\r\n| Longitude\t\t\t\t\t\t| double   | Location of the Contamination Event                                                |\r\n| Timestamp\t\t\t\t\t\t| DateTime | Timestamp of the Contamination Event\t                                              |\r\n| ContaminationScore \t| int      | Degree of Contamination found                                                      |\r\n| GrossWeight\t\t\t|double|Gross weight of the Contamination Event\t|\r\n| TareWeight\t\t\t\t|double| Tare weight of the Contamination Event |\r\n| NetWeight\t\t\t\t|double| Net weight of the Contamination Event|\r\n| Seq\t\t\t\t\t|int|Sequence of the Contamination Event |\r\n| Lifter\t\t\t\t|int|Lifter of the Contamination Event\t|\r\n| ContainerId\t\t\t|string|Conntainer Id of the Contamination Event |\r\n| WasteType\t\t\t\t|string|Waste type of the Contamination Event |\r\n| QRCodeRawText\t\t\t|string| Raw QR code value of the COntamination Event\r\n| extra.until         | string   | Bookmark to put in as \"since\" later - appears when there are no more pages for now |\r\n| link.next           | URI      | Link to follow to get next page with changes                                       |",
+        "description": "# Request list of Contamination Event changes\r\n\r\nRetrieve changes in the list of Contamination Events for all tenants, that have been made since a specific point in the history\r\n\r\n## Input\r\n\r\n| Parameter               | Description                |\r\n| ----------------------- | -------------------------- |\r\n| since                   | Bookmark from extra.until  |\r\n| cursor                  | Bookmark from extra.cursor |\r\n| links                   | N/A                        |\r\n\r\n## Output\r\n\r\n| Property\t\t\t\t\t\t| Type     | Description\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t                              |\r\n| ------------------- | -------- | ---------------------------------------------------------------------------------- |\r\n| GUID\t\t\t\t\t\t\t\t| GUID     | ID of the Contamination Event.\t\t\t\t\t\t\t\t\t\t\t\t\t                          \t|\r\n| TenantId\t\t\t\t\t\t| GUID     | ID of the Tenant associated with the Contamination Event\t\t                        |\r\n| CustomerName\t\t\t\t\t|string| Name of the customer of the Contamination Event|\r\n| CompanyOutletId\t\t\t| GUID     | ID of the Company Outlet associated with the Contamination Event                  \t|\r\n| OutletName\t\t\t| string     | Name of the Company Outlet associated with the Contamination Event                  \t|\r\n| CustomerSiteId\t\t\t| GUID     | ID of the Customer Site associated with the Contamination Event                     |\r\n| SiteName\t\t\t| string     | Name of the Site associated with the Contamination Event                     |\r\n| CustomerType\t\t\t| string     | Type of customer associated with the Contamination Event                     |\r\n| CustomerAddress\t\t\t| string     | Address of customer associated with the Contamination Event                     |\r\n| VehicleId\t\t\t\t\t\t| GUID     | ID of the Vehicle associated with the Contamination Event\t\t\t\t                  \t|\r\n| Latitude\t   \t\t\t  | double   | Location of the Contamination Event                                                |\r\n| Longitude\t\t\t\t\t\t| double   | Location of the Contamination Event                                                |\r\n| Timestamp\t\t\t\t\t\t| DateTime | Timestamp of the Contamination Event\t                                              |\r\n| ContaminationScore \t| int      | Degree of Contamination found                                                      |\r\n| GrossWeight\t\t\t|double|Gross weight of the Contamination Event\t|\r\n| TareWeight\t\t\t\t|double| Tare weight of the Contamination Event |\r\n| NetWeight\t\t\t\t|double| Net weight of the Contamination Event|\r\n| Seq\t\t\t\t\t|int|Sequence of the Contamination Event |\r\n| Lifter\t\t\t\t|int|Lifter of the Contamination Event\t|\r\n| ContainerId\t\t\t|string|Conntainer Id of the Contamination Event |\r\n| WasteType\t\t\t\t|string|Waste type of the Contamination Event |\r\n| QRCodeRawText\t\t\t|string| Raw QR code value of the COntamination Event\r\n| TotalSurfaceAreaVolume\t\t\t|double| The total surface area of the Contamination Event\r\n|  Materials\t\t\t|string| The materials detected of the Contamination Event\r\n| BinaryImage\t\t\t|byte[]| Binary image associated with the Contamination Event\r\n|extra.until         | string   | Bookmark to put in as \"since\" later - appears when there are no more pages for now |\r\n| link.next           | URI      | Link to follow to get next page with changes                                       |",
         "parameters": [
           {
             "name": "since",
@@ -561,6 +561,19 @@
           "qrCodeRawText": {
             "type": "string",
             "nullable": true
+          },
+		  "totalSurfaceAreaVolume": {
+            "type": "double",
+            "nullable": true
+          },
+		  "materials": {
+            "type": "string",
+            "nullable": true
+          },
+		  "binaryImage": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -793,6 +806,19 @@
           },
           "qrCodeRawText": {
             "type": "string",
+            "nullable": true
+          },
+		  "totalSurfaceAreaVolume": {
+            "type": "double",
+            "nullable": true
+          },
+		  "materials": {
+            "type": "string",
+            "nullable": true
+          },
+		  "binaryImage": {
+            "type": "string",
+            "format": "byte",
             "nullable": true
           }
         },
