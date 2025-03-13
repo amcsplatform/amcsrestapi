@@ -28,7 +28,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResourceId"
+                  "$ref": "#/components/schemas/ApiauthTokens200"
                 }
               }
             }
@@ -46,7 +46,14 @@
             "$ref": "#/components/responses/NotFound"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiauthTokens500Error"
+                }
+              }
+            }
           },
           "501": {
             "$ref": "#/components/responses/NotImplemented"
@@ -75,12 +82,14 @@
           {
             "name": "since",
             "in": "query",
+            "required": false,
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "cursor",
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -88,6 +97,7 @@
           },
           {
             "name": "links",
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -223,7 +233,21 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/BadRequest"
+            "description": "Bad Request - Invalid Guid Please check your Guid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid Guid Please check your Guid."
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -320,6 +344,7 @@
         "parameters": [
           {
             "name": "since",
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -327,6 +352,7 @@
           },
           {
             "name": "cursor",
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -334,6 +360,7 @@
           },
           {
             "name": "links",
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -562,16 +589,16 @@
             "type": "string",
             "nullable": true
           },
-	  "totalSurfaceAreaVolume": {
+          "totalSurfaceAreaVolume": {
             "type": "number",
             "format": "double",
             "nullable": true
           },
-	   "materials": {
+          "materials": {
             "type": "string",
             "nullable": true
           },
-	   "binaryImage": {
+          "binaryImage": {
             "type": "string",
             "format": "byte",
             "nullable": true
@@ -680,21 +707,6 @@
       "AMCS.IoT.Contamination.Api.Integrator.OverfilledContainerEvent.ApiOverfilledContainerEventExternalResourceItem": {
         "type": "object",
         "properties": {
-          "isValid": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true,
-            "readOnly": true
-          },
-          "id32": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
           "guid": {
             "type": "string",
             "format": "uuid",
@@ -703,10 +715,6 @@
           "lastChangeReasonId": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
-          },
-          "tempIdentifier": {
-            "type": "string",
             "nullable": true
           },
           "tenantId": {
@@ -809,16 +817,16 @@
             "type": "string",
             "nullable": true
           },
-	  "totalSurfaceAreaVolume": {
+          "totalSurfaceAreaVolume": {
             "type": "number",
             "format": "double",
             "nullable": true
           },
-	    "materials": {
+          "materials": {
             "type": "string",
             "nullable": true
           },
-	   "binaryImage": {
+          "binaryImage": {
             "type": "string",
             "format": "byte",
             "nullable": true
@@ -1098,6 +1106,67 @@
         },
         "additionalProperties": false
       },
+      "ApiauthTokens200": {
+        "type": "object",
+        "properties": {
+          "authResult": {
+            "type": "string",
+            "readOnly": true
+          },
+          "username": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "userIdentity": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "sysUserId": {
+            "type": "string",
+            "readOnly": true,
+            "nullable": true
+          },
+          "userGuid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "companyoutletid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "companyOutletGuid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "stayLoggedIn": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        }
+      },
+      "ApiauthTokens500Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "stackTrace": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ApiResourceResultUpdatesExtra": {
         "type": "object",
         "properties": {
@@ -1201,7 +1270,7 @@
         }
       },
       "InternalServerError": {
-        "description": "Something went wrong. Please try again later.",
+        "description": "Supplied properties are not valid, please try again with proper request.",
         "content": {
           "application/json": {
             "schema": {
@@ -1209,7 +1278,7 @@
               "properties": {
                 "error": {
                   "type": "string",
-                  "example": "Something went wrong. Please try again later."
+                  "example": "Supplied properties are not valid, please try again with proper request."
                 }
               },
               "additionalProperties": false
