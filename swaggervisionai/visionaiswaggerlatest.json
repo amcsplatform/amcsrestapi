@@ -70,6 +70,63 @@
         }
       }
     },
+	"/visionai/api/integrator/cameraEvents": {
+      "post": {
+        "tags": [
+          "CameraEvent"
+        ],
+        "summary": "Create a contamination/overfilled from  camera",
+        "description": "# Create a contamination/overfilled from camera\r\n\r\n| Parameter   | Type   | Description                      |\r\n|-------------|--------|----------------------------------|\r\n| Asset\t\t  | string | Vehicle Identified Registration or Asset Id|\r\n| Timestamp   | DateTime | Local time or UTC time of the event|\r\n| Lat         | double   | Latitude       |\r\n| Lon         | double   | Longitude       |\r\n| EventType   | string   | Contamination or Overfilled event       |\r\n| EventId     | string   | Unique Id for each event       |\r\n| WasteType   | string   | The waste stream the truck is collecting       |\r\n| MediaLink   | string   | URL to access the media file associate with each event    |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n    \"Asset\": \"M879 EUS\",\r\n    \"Timestamp\": \"2025-04-23 11:00:00\",\r\n    \"Lon\":-121.56767,\r\n    \"Lat\":39.49120,\r\n    \"EventType\": \"Contamination\",\r\n    \"EventId\": \"12345\",\r\n    \"WasteType\": \"General Waste\",\r\n    \"MediaLink\" :\"https://tem-production.s3.amazonaws.com/final_files/2025_03_14/82416/AWTI_VIN_2025_03_14_14_19_19_14019_c2_1ffdc5a0-0c80-4f15-b8be-9a16f690b2d0.mp4\"\r\n}\r\n```\r\n\r\n## Sample API Response\r\n```\r\n{\r\n    \"resource\" : 1\r\n}\r\n```",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.CameraEvent.ApiCameraEvent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          },
+		   "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "501": {
+            "$ref": "#/components/responses/NotImplemented"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/GatewayTimeout"
+          }
+        }
+      }
+    },
     "/visionai/api/integrator/contaminationEvents/changes": {
       "get": {
         "tags": [
@@ -434,6 +491,74 @@
           },
           "isDeleted": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+	   "AMCS.IoT.Contamination.Api.Integrator.CameraEvent.ApiCameraEvent": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "asset": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "dateTime",
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "lon": {
+            "type": "number",
+            "format": "double"
+          },
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "eventType": {
+            "type": "string",
+            "nullable": true
+          },
+          "eventId": {
+            "type": "string",
+            "nullable": true
+          },
+          "wasteType": {
+            "type": "string",
+            "nullable": true
+          },
+          "mediaLink": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
