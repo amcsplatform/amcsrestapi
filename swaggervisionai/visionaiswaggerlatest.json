@@ -5,7 +5,58 @@
     "title": "External API",
     "version": "external"
   },
+  "security": [
+    {
+      "cookieAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://o1-dev-svc-core.amcsplatform.com/",
+      "description": "AMCS VisionAI Developer Environment"
+    }
+  ],
   "paths": {
+	"/visionai/api/authTokens": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Auth by Private Key",
+        "description": "This endpoint is used for authentication and authorisation of a calling application by supplying the Tenant Private Key in the privateKey property. When successful, Platform.VisionAI.SessionToken is added to the cookie. \n\n## Request\n\n| **Property** | **Description** |\n| --- | --- |\n| PrivateKey | This is a Personal Access Token (PAT), generated during Tenant Registration. |\n\n## Response\nAdditional fields from the response, other from the one below, can be disregarded.\n\n| **Property** | **Description** |\n| --- | --- |\n| AuthResult | The authentication and authorization result. Returns \"ok\" if successful otherwise returns \"invalidCredentials\".",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.IoT.UserCredentials"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string",
+                  "example": "Platform.VisionAI.SessionToken=abcde12345; Path=/; HttpOnly",
+                  "description": "Subsequent calls to the REST API will use this cookie to authenticate and authorize requests."
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.IoT.LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/visionai/api/integrator/assets": {
       "post": {
         "tags": [
@@ -37,7 +88,7 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -101,7 +152,7 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -176,7 +227,7 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": ""
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -233,7 +284,7 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -307,7 +358,7 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": ""
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -364,7 +415,7 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -439,7 +490,7 @@
             "$ref": "#/components/responses/BadRequest"
           },
           "401": {
-            "$ref": "#/components/responses/Unauthorized"
+            "description": "Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -468,6 +519,69 @@
   },
   "components": {
     "schemas": {
+	  "AMCS.IoT.UserCredentials": {
+        "type": "object",
+        "required": [
+          "privateKey"
+        ],
+        "properties": {
+          "privateKey": {
+            "type": "string",
+            "nullable": false,
+            "example": "1zEFtwJQE0cmKUE3AvnzBbm5"
+          }
+        },
+        "additionalProperties": false
+      },
+	  "AMCS.IoT.LoginResponse": {
+        "type": "object",
+        "properties": {
+          "authResult": {
+            "type": "string",
+            "nullable": false,
+            "example": "ok"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true,
+            "example": "ADMIN01"
+          },
+          "userIdentity": {
+            "type": "string",
+            "nullable": true,
+            "example": "ADMIN"
+          },
+          "sysUserId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "example": 3
+          },
+          "userGuid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "607e37cd-4f51-4148-af23-4459b74fc3b2"
+          },
+          "companyOutletId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "example": 10
+          },
+          "companyOutletGuid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "5feaaae5-7733-4e45-ac39-87d46cf138e0"
+          },
+          "stayLoggedIn": {
+            "type": "boolean",
+            "example": false,
+            "nullable": true
+          }
+        }
+      },
       "AMCS.IoT.Contamination.Api.Integrator.Asset.ApiAsset": {
         "type": "object",
         "properties": {
@@ -495,7 +609,7 @@
         },
         "additionalProperties": false
       },
-	   "AMCS.IoT.Contamination.Api.Integrator.CameraEvent.ApiCameraEvent": {
+	  "AMCS.IoT.Contamination.Api.Integrator.CameraEvent.ApiCameraEvent": {
         "type": "object",
         "properties": {
           "isValid": {
