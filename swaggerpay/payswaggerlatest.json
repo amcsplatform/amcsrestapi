@@ -973,6 +973,96 @@
         }
       }
     },
+    "/ExternalTransaction/CreateCustomer": {
+      "post": {
+        "tags": [
+          "ExternalTransaction"
+        ],
+        "summary": "Create Customer",
+        "description": "This endpoint is used to create a new customer and optionally create a payment account for that customer with the specified payment provider.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Mobills/Ivr/Pay/GetCustomerInvoiceDetails": {
       "post": {
         "tags": [
@@ -4169,6 +4259,173 @@
             "$ref": "#/components/schemas/AMCSAptPayAddDisbursementDataResponse"
           }
         }
+      },
+      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest": {
+        "required": [
+          "customerInfo",
+          "isCreatePaymentAccount",
+          "providerType"
+        ],
+        "type": "object",
+        "properties": {
+          "providerType": {
+            "enum": [
+              "Stripe"
+            ],
+            "type": "string",
+            "example": "Stripe",
+            "description": "The payment provider to be used. For example, <b>\"Stripe\"</b> indicates that Stripe will handle the customer account creation."
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerDetail"
+          },
+          "isCreatePaymentAccount": {
+            "type": "boolean",
+            "nullable": false,
+            "example": true,
+            "description": "Flag to indicate if a payment account should be created immediately for the new customer. <b>true</b> to create, otherwise <b>false</b>."
+          },
+          "paymentAccount": {
+            "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.PaymentAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse": {
+        "type": "object",
+        "properties": {
+          "providerCustomerAccount": {
+            "type": "string",
+            "nullable": true,
+            "example": "cus_N6mXoX2aG2e4eH",
+            "description": "The unique identifier for the customer account created by the payment provider. For example, <b>\"cus_N6mXoX2aG2e4eH\"</b> is a Stripe customer ID."
+          },
+          "paymentAccount": {
+            "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreatePaymentAccountResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreatePaymentAccountResponse": {
+        "required": [
+          "currency",
+          "paymentType"
+        ],
+        "type": "object",
+        "description": "Details of the customer account and payment account created if <b>isCreatePaymentAccount</b> is set to <b>true</b> in the request.",
+        "properties": {
+          "currency": {
+            "enum": [
+              "EUR"
+            ],
+            "type": "string",
+            "example": "EUR",
+            "description": "The three-letter ISO currency code associated with the payment account. For example, <b>\"EUR\"</b> indicates that the account will operate in Euros."
+          },
+          "paymentType": {
+            "enum": [
+              "CREDIT_TRANSFER"
+            ],
+            "type": "string",
+            "example": "CREDIT_TRANSFER",
+            "description": "The type of payment account created. For example, <b>\"CREDIT_TRANSFER\"</b> indicates that a credit transfer account has been created."
+          },
+          "accountHolderName": {
+            "type": "string",
+            "nullable": true,
+            "example": "Waste Management Ltd",
+            "description": "The name of the account holder for the payment account."
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true,
+            "example": "IE531653294928618999391",
+            "description": "The account number for the payment account."
+          },
+          "routingNumber": {
+            "type": "string",
+            "nullable": true,
+            "example": "IRBBIE12XXX",
+            "description": "The routing number for the payment account."  
+          },
+          "countryCode": {
+            "type": "string",
+            "nullable": true,
+            "example": "IE",
+            "description": "The two-letter ISO country code representing the country where the payment account is held. For example, <b>\"IE\"</b> indicates Ireland."
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.PaymentAccount": {
+        "required": [
+          "currency",
+          "paymentType"
+        ],
+        "type": "object", 
+        "description": "Details of the payment account to create if <b>isCreatePaymentAccount</b> is set to <b>true</b>.",
+        "properties": {
+          "currency": {
+            "enum": [
+              "EUR"
+            ],
+            "type": "string",
+            "example": "EUR",
+            "description": "The currency code for the payment account. For example, <b>\"EUR\"</b> indicates that the account will operate in Euros."
+          },
+          "paymentType": {
+            "enum": [
+              "CREDIT_TRANSFER"
+            ],
+            "type": "string",
+            "example": "CREDIT_TRANSFER",
+            "description": "The type of payment account to create. For example, <b>\"CREDIT_TRANSFER\"</b> indicates that a credit transfer account will be created."
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerDetail": {
+        "type": "object",
+        "description": "Contains details about the customer to be created.",
+        "properties": {
+          "customerName": {
+            "type": "string",
+            "nullable": false,
+            "example": "Jane Doe",
+            "description": "The full name of the customer being created."
+          },
+          "customerId": {
+            "type": "string",
+            "nullable": false,
+            "example": "8114533e-7968-4b67-a600-832d29a0e1c8",
+            "description": "A unique identifier or external reference for the customer (could be from your system or an external system)."
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "description": "The exception message.",
+            "example": "Payment Provider APG is not supported."
+          },
+          "type": {
+            "type": "string",
+            "nullable": true,
+            "description": "The exception type.",
+            "example": "System.Exception"
+          },
+          "stackTrace": {
+            "type": "string",
+            "nullable": true,
+            "description": "The stack trace of the exception.",
+            "example": "   at AMCS.Pay.Api.Controllers.PaymentsController.CreateCustomer(CreateCustomerRequest request) in /src/swaggerpay/AMCS.Pay.Api/Controllers/PaymentsController.cs:line 123"
+          }
+        },
+        "additionalProperties": false
       }
     }
   }
