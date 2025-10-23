@@ -984,17 +984,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest"
+                "$ref": "#/components/schemas/AMCSPayCreateCustomerRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest"
+                "$ref": "#/components/schemas/AMCSPayCreateCustomerRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest"
+                "$ref": "#/components/schemas/AMCSPayCreateCustomerRequest"
               }
             }
           }
@@ -1003,19 +1003,14 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse"
-                }
-              },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse"
+                  "$ref": "#/components/schemas/AMCSPayCreateCustomerResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse"
+                  "$ref": "#/components/schemas/AMCSPayCreateCustomerResponse"
                 }
               }
             }
@@ -1023,11 +1018,6 @@
           "400": {
             "description": "Bad Request",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
@@ -1043,11 +1033,6 @@
           "500": {
             "description": "Server Error",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse"
@@ -4260,7 +4245,7 @@
           }
         }
       },
-      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerRequest": {
+      "AMCSPayCreateCustomerRequest": {
         "required": [
           "customerInfo",
           "isCreatePaymentAccount",
@@ -4277,7 +4262,7 @@
             "description": "The payment provider to be used. For example, <b>\"Stripe\"</b> indicates that Stripe will handle the customer account creation."
           },
           "customerInfo": {
-            "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerDetail"
+            "$ref": "#/components/schemas/AMCSPayCreateCustomerDetail"
           },
           "isCreatePaymentAccount": {
             "type": "boolean",
@@ -4286,12 +4271,12 @@
             "description": "Flag to indicate if a payment account should be created immediately for the new customer. <b>true</b> to create, otherwise <b>false</b>."
           },
           "paymentAccount": {
-            "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.PaymentAccount"
+            "$ref": "#/components/schemas/AMCSPayPaymentAccount"
           }
         },
         "additionalProperties": false
       },
-      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerResponse": {
+      "AMCSPayCreateCustomerResponse": {
         "type": "object",
         "properties": {
           "providerCustomerAccount": {
@@ -4301,26 +4286,53 @@
             "description": "The unique identifier for the customer account created by the payment provider. For example, <b>\"cus_N6mXoX2aG2e4eH\"</b> is a Stripe customer ID."
           },
           "paymentAccount": {
-            "$ref": "#/components/schemas/AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreatePaymentAccountResponse"
+            "$ref": "#/components/schemas/AMCSPayCreatePaymentAccountResponse"
           }
         },
         "additionalProperties": false
       },
-      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreatePaymentAccountResponse": {
-        "required": [
-          "currency",
-          "paymentType"
-        ],
+      "AMCSPayCreatePaymentAccountResponse": {
         "type": "object",
         "description": "Details of the customer account and payment account created if <b>isCreatePaymentAccount</b> is set to <b>true</b> in the request.",
         "properties": {
+          "accountHolderName": {
+            "type": "string",
+            "nullable": true,
+            "example": "Waste Management Ltd",
+            "description": "The name of the account holder for the payment account."
+          },
+          "bankName": {
+            "type": "string",
+            "nullable": true,
+            "example": "HSBC",
+            "description": "The name of the bank where the payment account is held."
+          },
+          "bankCode": {
+            "type": "string",
+            "nullable": true,
+            "example": "341-000",
+            "description": "The bank code for the payment account."
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true,
+            "example": "IE531653294928618999391",
+            "description": "The account number for the payment account."
+          },
+          "swiftCode": {
+            "type": "string",
+            "nullable": true,
+            "example": "HSBCAUTTXXX",
+            "description": "The SWIFT code for the payment account."
+          },
           "currency": {
             "enum": [
+              "AUD",
               "EUR"
             ],
             "type": "string",
-            "example": "EUR",
-            "description": "The three-letter ISO currency code associated with the payment account. For example, <b>\"EUR\"</b> indicates that the account will operate in Euros."
+            "example": "AUD",
+            "description": "The three-letter ISO currency code associated with the payment account. For example, <b>\"AUD\"</b> indicates that the account will operate in Australian Dollars."
           },
           "paymentType": {
             "enum": [
@@ -4330,49 +4342,30 @@
             "example": "CREDIT_TRANSFER",
             "description": "The type of payment account created. For example, <b>\"CREDIT_TRANSFER\"</b> indicates that a credit transfer account has been created."
           },
-          "accountHolderName": {
+          "country": {
+            "enum": [
+              "AU",
+              "DE",
+              "FR",
+              "IE",
+              "NL"
+            ],
             "type": "string",
-            "nullable": true,
-            "example": "Waste Management Ltd",
-            "description": "The name of the account holder for the payment account."
-          },
-          "accountNumber": {
-            "type": "string",
-            "nullable": true,
-            "example": "IE531653294928618999391",
-            "description": "The account number for the payment account."
-          },
-          "routingNumber": {
-            "type": "string",
-            "nullable": true,
-            "example": "IRBBIE12XXX",
-            "description": "The routing number for the payment account."  
-          },
-          "countryCode": {
-            "type": "string",
-            "nullable": true,
-            "example": "IE",
-            "description": "The two-letter ISO country code representing the country where the payment account is held. For example, <b>\"IE\"</b> indicates Ireland."
+            "example": "AU",
+            "description": "The two-letter ISO country code representing the country where the payment account is held. For example, <b>\"AU\"</b> indicates Australia."
           }
         },
         "additionalProperties": false
       },
-      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.PaymentAccount": {
+      "AMCSPayPaymentAccount": {
         "required": [
+          "paymentType",
           "currency",
-          "paymentType"
+          "country"
         ],
         "type": "object", 
         "description": "Details of the payment account to create if <b>isCreatePaymentAccount</b> is set to <b>true</b>.",
         "properties": {
-          "currency": {
-            "enum": [
-              "EUR"
-            ],
-            "type": "string",
-            "example": "EUR",
-            "description": "The currency code for the payment account. For example, <b>\"EUR\"</b> indicates that the account will operate in Euros."
-          },
           "paymentType": {
             "enum": [
               "CREDIT_TRANSFER"
@@ -4380,25 +4373,50 @@
             "type": "string",
             "example": "CREDIT_TRANSFER",
             "description": "The type of payment account to create. For example, <b>\"CREDIT_TRANSFER\"</b> indicates that a credit transfer account will be created."
+          },
+          "currency": {
+            "enum": [
+              "AUD",
+              "EUR"
+            ],
+            "type": "string",
+            "example": "AUD",
+            "description": "The currency code for the payment account. For example, <b>\"AUD\"</b> indicates that the account will operate in Australian Dollars."
+          },
+          "country": {
+            "enum": [
+              "AU",
+              "DE",
+              "FR",
+              "IE",
+              "NL"
+            ],
+            "type": "string",
+            "example": "AU",
+            "description": "The two-letter ISO country code representing the country where the payment account is held. For example, <b>\"AU\"</b> indicates Australia."
           }
         },
         "additionalProperties": false
       },
-      "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.CreateCustomerDetail": {
+      "AMCSPayCreateCustomerDetail": {
+        "required": [
+          "customerId",
+          "customerName"
+        ],
         "type": "object",
         "description": "Contains details about the customer to be created.",
         "properties": {
-          "customerName": {
-            "type": "string",
-            "nullable": false,
-            "example": "Jane Doe",
-            "description": "The full name of the customer being created."
-          },
           "customerId": {
             "type": "string",
             "nullable": false,
             "example": "8114533e-7968-4b67-a600-832d29a0e1c8",
             "description": "A unique identifier or external reference for the customer (could be from your system or an external system)."
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": false,
+            "example": "Jane Doe",
+            "description": "The full name of the customer being created."
           }
         },
         "additionalProperties": false
