@@ -1708,6 +1708,12 @@
             ],
             "nullable": false
           },
+          "configurationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
+            "nullable": true
+          },
           "transactionAmount": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayAmount",
@@ -1796,6 +1802,12 @@
               "EftCanada"
             ],
             "nullable": false
+          },
+          "configurationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
+            "nullable": true
           },
           "transactionAmount": {
             "type": "object",
