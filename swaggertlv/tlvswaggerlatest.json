@@ -31,17 +31,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "A cursor for paginated results."
-			
-		   
-								   
-						  
-							 
-					   
-								
-							   
-			  
-																   
+            "description": "A cursor for paginated results."											   
           }
         ],
         "responses": {
@@ -90,6 +80,56 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/integrator/trips/changes": {
+      "get": {
+        "tags": [
+          "ApiTripExternal"
+        ],
+        "summary": "Get List of Completed Trip Changes",
+        "description": "# Get List of Completed Trip Changes\n\nRetrieves completed trips with their associated vehicle information and trip summaries. This endpoint supports incremental data extraction by tracking changes using SQL Server's row version mechanism.\n\n---\n\n## Query Parameters\n| Parameter | Type   | Required | Description                                                                 |\n|-----------|--------|----------|-----------------------------------------------------------------------------|\n| since     | string | No       | Base64-encoded row version (from `@@DBTS`). Only returns trips changed after this version. **Must be URL-encoded.** |\n| cursor    | string | No       | Pagination cursor for retrieving next page of results (not used with row version tracking). |\n\n---\n\n## Authentication\nRequires authentication via the standard authentication mechanism. The tenant context is automatically determined from the authenticated user.\n\n---\n\n## Output Structure\n\n### Main Response Object\n| Property | Type                          | Description                                    |\n|----------|-------------------------------|------------------------------------------------|\n| Resource | List\\<ApiTripExternalDto\\>    | List of completed trips with summaries.        |\n| Extra    | object                        | Additional pagination information (if needed). |\n\n---\n\n### ApiTripExternalDto Object\n| Property     | Type              | Description                                           |\n|--------------|-------------------|-------------------------------------------------------|\n| VehicleId    | Guid?             | Unique identifier for the vehicle (Asset GUID).      |\n| VehicleName  | string            | Name of the vehicle.                                 |\n| TripId       | int               | Unique identifier for the trip.                      |\n| StartTime    | DateTimeOffset    | Trip start timestamp.                                |\n| EndTime      | DateTimeOffset?   | Trip end timestamp.                                  |\n| Status       | int               | Trip status (0=Started, 1=Completed, 2=Invalid).     |\n| TripSummary  | ApiTripSummary    | Calculated trip summary with metrics.                |\n\n---\n\n### ApiTripSummary Object\n| Property                         | Type    | Description                                                  |\n|----------------------------------|---------|--------------------------------------------------------------|\n| TripId                           | int     | Trip identifier.                                            |\n| TotalTripMileage                 | decimal | Total mileage covered during the trip. Unit of Measure - Liters                 |\n| TotalPloughEnabledMileage        | decimal | Mileage covered while plough was enabled. Unit of Measure - Meters                |\n| TotalSpreaderEnabledMileage      | decimal | Mileage covered while spreader was enabled. Unit of Measure - Meters               |\n| SpreaderWidth                    | decimal | Spreader width setting. Unit of Measure - Meters                   |\n| TotalSolidMaterialDelivered      | decimal | Total solid material delivered during the trip. Unit of Measure - KG     |\n| TotalPrewetMaterialDelivered    | decimal | Total prewet material delivered during the trip. Unit of Measure - Liters    |\n| TotalTripDuration                | decimal | Total trip duration in minutes. Unit of Measure - Minutes      |\n\n---",
+        "parameters": [
+          {
+            "name": "since",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must be URL-encoded."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Pagination cursor for retrieving next page of results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with completed trip changes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TripChangesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters."
+          },
+          "401": {
+            "description": "Unauthorized - authentication required."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         }
       }
@@ -205,6 +245,107 @@
           "TenantId": {
             "type": "string",
             "format": "uuid"
+          }
+        }
+      },
+      "TripChangesResponse": {
+        "type": "object",
+        "properties": {
+          "Resource": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiTripExternalDto"
+            }
+          },
+          "Extra": {
+            "type": "object",
+            "nullable": true
+          }
+        }
+      },
+      "ApiTripExternalDto": {
+        "type": "object",
+        "properties": {
+          "VehicleId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "Unique identifier for the vehicle (Asset GUID)."
+          },
+          "VehicleName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name of the vehicle."
+          },
+          "TripId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Unique identifier for the trip."
+          },
+          "StartTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Trip start timestamp."
+          },
+          "EndTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Trip end timestamp."
+          },
+          "Status": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Trip status (0=Started, 1=Completed, 2=Invalid)."
+          },
+          "TripSummary": {
+            "$ref": "#/components/schemas/ApiTripSummary",
+            "description": "Calculated trip summary with metrics."
+          }
+        }
+      },
+      "ApiTripSummary": {
+        "type": "object",
+        "properties": {
+          "TripId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Trip identifier."
+          },
+          "TotalTripMileage": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Total mileage covered during the trip. Unit of Measure - Liters"
+          },
+          "TotalPloughEnabledMileage": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Mileage covered while plough was enabled. Unit of Measure - Meters"
+          },
+          "TotalSpreaderEnabledMileage": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Mileage covered while spreader was enabled. Unit of Measure - Meters"
+          },
+          "SpreaderWidth": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Spreader width setting. Unit of Measure - Meters"
+          },
+          "TotalSolidMaterialDelivered": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Total solid material delivered during the trip. Unit of Measure - KG"
+          },
+          "TotalPrewetMaterialDelivered": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Total prewet material delivered during the trip. Unit of Measure - Liters"
+          },
+          "TotalTripDuration": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Total trip duration in minutes. Unit of Measure - Minutes"
           }
         }
       }
