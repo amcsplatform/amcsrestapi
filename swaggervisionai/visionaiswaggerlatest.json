@@ -151,7 +151,7 @@
           "Asset"
         ],
         "summary": "Create or Update an Asset (Vehicle)",
-        "description": "# Create or Update an Asset (Vehicle)\r\n\r\n| Parameter    | Type   | Description                                                     |\r\n|--------------|--------|-----------------------------------------------------------------|\r\n| AssetId      | GUID   | ID of the Asset                                                 |\r\n| AssetName    | string | Display name (vehicle registration plate)                       |\r\n| AssetType    | string | Front Loader, Side Loader, Rear End Loader                      |\r\n| OutletId     | GUID   | ID of the Company Outlet associated with the Asset              |\r\n| IsDeleted    | bool   | Asset is no longer in use                                       |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"AssetName\": \"VEH 001\",\r\n  \"AssetType\": \"Front Loader\",\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\",\r\n  \"IsDeleted\": false \r\n}\r\n```",
+        "description": "# Create or Update an Asset (Vehicle)\r\n\r\n| Parameter    | Type   | Description                                                     |\r\n|--------------|--------|-----------------------------------------------------------------|\r\n| AssetId      | GUID   | ID of the Asset                                                 |\r\n| AssetName    | string | Display name (vehicle registration plate)                       |\r\n| AssetType    | string | Front Loader, Side Loader, Rear End Loader                      |\r\n| OutletId     | GUID   | ID of the Company Outlet associated with the Asset              |\r\n| CompanyCode  | string | Company code associated with the Asset              |\r\n| IsDeleted    | bool   | Asset is no longer in use                                       |\r\n\r\n## Sample API Requests\r\n\r\n```\r\n{\r\n  \"AssetId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"AssetName\": \"VEH 001\",\r\n  \"AssetType\": \"Front Loader\",\r\n  \"OutletId\": \"2FAD788D-A748-4520-9120-923DA1E42942\",\r\n  \"CompanyCode\": \"Trux Company 1\",\r\n  \"IsDeleted\": false \r\n}\r\n```\r\n\r\n## Sample API Response\r\n```\r\n{\r\n    \"resource\" : \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\"\r\n}",
         "requestBody": {
           "content": {
             "application/json": {
@@ -167,7 +167,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiauthTokens200"
+                  "$ref": "#/components/schemas/ApiResourceId"
                 }
               }
             }
@@ -603,6 +603,36 @@
           }
         }
       }
+    },
+      "/visionai/api/integrator/truxRoutes": {
+      "post": {
+        "tags": [
+          "TruxRoute"
+        ],
+        "summary": "Create or Update Trux Route Information",
+        "description": "# Create or Update Trux Route Information\r\n\r\nThis endpoint allows external systems to submit route information from Trux, which updates associated assets (vehicles) and creates or updates customer address records.\r\n\r\n| Parameter       | Type     | Description                                                         |\r\n|-----------------|----------|---------------------------------------------------------------------|\r\n| RouteNumber     | long     | Route identification number                                         |\r\n| RouteDate       | DateTime | Date and time of the route                                          |\r\n| VehicleId       | GUID     | ID of the vehicle (Asset) performing the route                      |\r\n| CompanyCode     | string   | Company code associated with the route                              |\r\n| CustomerNumber  | string   | Customer identification number                                      |\r\n| SiteNumber      | string   | Site identification number                                          |\r\n| ServiceNumber   | string   | Service type identification number                                  |\r\n| Country         | string   | Country of the customer address                                     |\r\n| City            | string   | City of the customer address                                        |\r\n| District        | string   | District of the customer address                                    |\r\n| Street          | string   | Street address of the customer                                      |\r\n| PostalCode      | string   | Postal/ZIP code of the customer address                             |\r\n| Latitude        | double   | Latitude coordinate of the customer address                         |\r\n| Longitude       | double   | Longitude coordinate of the customer address                        |\r\n| JobId           | string   | Job identification for the route                                    |\r\n\r\n## Sample API Request\r\n\r\n```json\r\n{\r\n  \"RouteNumber\": 12345678901,\r\n  \"RouteDate\": \"2026-01-26T08:30:00\",\r\n  \"VehicleId\": \"B3E43C4D-BC76-4E59-9E2E-25BC33EA2EC4\",\r\n  \"CompanyCode\": \"COMP123\",\r\n  \"CustomerNumber\": \"CUST-456789\",\r\n  \"SiteNumber\": \"SITE-001\",\r\n  \"ServiceNumber\": \"SVC-789\",\r\n  \"Country\": \"USA\",\r\n  \"City\": \"Los Angeles\",\r\n  \"District\": \"Downtown\",\r\n  \"Street\": \"123 Main Street\",\r\n  \"PostalCode\": \"90001\",\r\n  \"Latitude\": 34.0522,\r\n  \"Longitude\": -118.2437,\r\n  \"JobId\": \"JOB-2026-001\"\r\n}\r\n```\r\n\r\n## Sample API Response\r\n```json\r\n{\r\n  \"resource\": 1\r\n}\r\n```\r\n\r\n## Behavior\r\n\r\n- The system finds the asset by `VehicleId` and updates it with `RouteNumber`, `RouteDate`, and `JobId`\r\n- The system finds or creates a customer address record using `CustomerNumber` as the foreign ID\r\n- All address information (location, coordinates, site details) is saved to the customer address record\r\n- The tenant must be configured with Trux sync type for this endpoint to process data\r\n- If the vehicle is not found, a warning is logged but the customer address is still created/updated\r\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCS.IoT.Contamination.Api.Integrator.Trux.ApiTruxRoute"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResourceId"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -689,6 +719,10 @@
           "outletId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
             "nullable": true
           },
           "isDeleted": {
@@ -1237,6 +1271,106 @@
           },
           "isDeleted": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AMCS.IoT.Contamination.Api.Integrator.Trux.ApiTruxRoute": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "readOnly": true
+          },
+          "id32": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "guid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "lastChangeReasonId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "routeNumber": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "routeDate": {
+            "type": "string",
+            "format": "dateTime",
+            "nullable": true,
+            "example": "2000-01-01 00:00:00.000"
+          },
+          "vehicleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "serviceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "district": {
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "jobId": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
