@@ -84,13 +84,16 @@
           }
         },
         "url": {
-          "raw": "http://localhost:46749/integrator/TruxRoutes",
-          "protocol": "http",
+          "raw": "https://o1-dev-svc-core.amcsplatform.com/visionai/api/integrator/TruxRoutes",
+          "protocol": "https",
           "host": [
-            "localhost"
+            "o1-dev-svc-core",
+            "amcsplatform",
+            "com"
           ],
-          "port": "46749",
           "path": [
+            "visionai",
+            "api",
             "integrator",
             "TruxRoutes"
           ]
@@ -104,13 +107,16 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:46749/integrator/trux/contaminationevents?vehicleId=0a36529c-099d-f011-bbf0-c84bd653ec89&datefrom=2026-02-01T00:00:00Z&dateto=2026-02-07T00:00:00Z&skip=5&take=10",
-          "protocol": "http",
+          "raw": "https://o1-dev-svc-core.amcsplatform.com/visionai/api/integrator/trux/contaminationevents?vehicleId=540B32A7-4A6C-4E2F-9B0D-B01900E4CC7D&datefrom=2026-02-01T00:00:00Z&dateto=2026-02-07T00:00:00Z",
+          "protocol": "https",
           "host": [
-            "localhost"
+            "o1-dev-svc-core",
+            "amcsplatform",
+            "com"
           ],
-          "port": "46749",
           "path": [
+            "visionai",
+            "api",
             "integrator",
             "trux",
             "contaminationevents"
@@ -118,7 +124,7 @@
           "query": [
             {
               "key": "vehicleId",
-              "value": "0a36529c-099d-f011-bbf0-c84bd653ec89"
+              "value": "540B32A7-4A6C-4E2F-9B0D-B01900E4CC7D"
             },
             {
               "key": "datefrom",
@@ -127,16 +133,6 @@
             {
               "key": "dateto",
               "value": "2026-02-07T00:00:00Z"
-            },
-            {
-              "key": "skip",
-              "value": "5",
-              "type": "text"
-            },
-            {
-              "key": "take",
-              "value": "10",
-              "type": "text"
             }
           ]
         }
