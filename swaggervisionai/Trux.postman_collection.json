@@ -1,0 +1,185 @@
+{
+  "info": {
+    "_postman_id": "c3ef36de-dd4c-4902-a345-312637c116bd",
+    "name": "Trux",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29878047"
+  },
+  "item": [
+    {
+      "name": "authenticate",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"PrivateKey\": \"Personal Access Token Here\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://o1-dev-svc-core.amcsplatform.com/visionai/api/authTokens",
+          "protocol": "https",
+          "host": [
+            "o1-dev-svc-core",
+            "amcsplatform",
+            "com"
+          ],
+          "path": [
+            "visionai",
+            "api",
+            "authTokens"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "asset",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"AssetId\": \"0a36529c-099d-f011-bbf0-c84bd653ec89\",\r\n    \"AssetName\": \"Asset Trux 1\",\r\n    \"AssetType\": \"Commercial\",\r\n    \"CompanyCode\": \"Trux Company 1\",\r\n    \"IsDeleted\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://o1-dev-svc-core.amcsplatform.com/visionai/api/integrator/assets",
+          "protocol": "https",
+          "host": [
+            "o1-dev-svc-core",
+            "amcsplatform",
+            "com"
+          ],
+          "path": [
+            "visionai",
+            "api",
+            "integrator",
+            "assets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "truxroute",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"RouteNumber\": 12345678901,\r\n  \"RouteDate\": \"2026-01-23T08:30:00\",\r\n  \"VehicleId\": \"0a36529c-099d-f011-bbf0-c84bd653ec89\",\r\n  \"CompanyCode\": \"Trux Company 1\",\r\n  \"CustomerNumber\": \"CUST-456789\",\r\n  \"SiteNumber\": \"SITE-001\",\r\n  \"ServiceNumber\": \"SVC-789\",\r\n  \"City\": \"Los Angeles\",\r\n  \"Country\": \"CA\",\r\n  \"PostalCode\": \"90001\",\r\n  \"Street\":\"Test Street\",\r\n  \"District\":\"Test District\",\r\n  \"Latitude\": 34.0522,\r\n  \"Longitude\": -118.2437,\r\n  \"JobId\": \"JOB-2026-001\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:46749/integrator/TruxRoutes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "46749",
+          "path": [
+            "integrator",
+            "TruxRoutes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "contamination",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:46749/integrator/trux/contaminationevents?vehicleId=0a36529c-099d-f011-bbf0-c84bd653ec89&datefrom=2026-02-01T00:00:00Z&dateto=2026-02-07T00:00:00Z&skip=5&take=10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "46749",
+          "path": [
+            "integrator",
+            "trux",
+            "contaminationevents"
+          ],
+          "query": [
+            {
+              "key": "vehicleId",
+              "value": "0a36529c-099d-f011-bbf0-c84bd653ec89"
+            },
+            {
+              "key": "datefrom",
+              "value": "2026-02-01T00:00:00Z"
+            },
+            {
+              "key": "dateto",
+              "value": "2026-02-07T00:00:00Z"
+            },
+            {
+              "key": "skip",
+              "value": "5",
+              "type": "text"
+            },
+            {
+              "key": "take",
+              "value": "10",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "overfilled",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://o1-dev-svc-core.amcsplatform.com/visionai/api/integrator/trux/overfilledevents?vehicleId=540B32A7-4A6C-4E2F-9B0D-B01900E4CC7D&datefrom=2026-02-01T00:00:00Z&dateto=2026-02-07T00:00:00Z",
+          "protocol": "https",
+          "host": [
+            "o1-dev-svc-core",
+            "amcsplatform",
+            "com"
+          ],
+          "path": [
+            "visionai",
+            "api",
+            "integrator",
+            "trux",
+            "overfilledevents"
+          ],
+          "query": [
+            {
+              "key": "vehicleId",
+              "value": "540B32A7-4A6C-4E2F-9B0D-B01900E4CC7D"
+            },
+            {
+              "key": "datefrom",
+              "value": "2026-02-01T00:00:00Z"
+            },
+            {
+              "key": "dateto",
+              "value": "2026-02-07T00:00:00Z"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
