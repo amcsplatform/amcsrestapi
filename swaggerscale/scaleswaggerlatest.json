@@ -890,6 +890,38 @@
                 }
             }
         },
+        "/integrator/weighings": {
+            "post": {
+                "tags": [
+                    "Weighing"
+                ],
+                "summary": "Create or update",
+                "description": "# Applies to integrator/Weighings/ POST Weighings.\r\n\r\n# Weighings\r\n\r\n| Property                                              | Description                                                    | Required\t\t\t\t|\r\n|-------------------------------------------------------|--------------------------------------------------------------- |----------------------|\r\n| SiteOrderGUID                                         | The GUID of the siteorder.                                     | Gate, MaterialSale   |\r\n| RouteGUID                                             | The GUID of the route.\t\t\t\t\t\t\t\t\t\t | Route\t\t\t\t|\r\n| WeighingTypeGuid                                      | The Guid of the  weighingtype.                                 | Yes\t\t\t\t\t|\r\n| GrossWeight                                           | The GrossWeight of the weighing.                               | Gate\t\t\t\t\t|\r\n| TareWeight\t\t\t\t\t\t\t\t\t\t\t| The TareWeight of the weighing.                                | MaterialSale\t\t    |\r\n| MaterialGUID                                          | The GUID of the material.                                      | Yes\t\t\t\t\t|\r\n| VehicleGUID                                           | The GUID of vechicle.\t\t\t\t\t\t\t\t\t\t\t | Yes\t\t\t\t\t|\r\n| WeighingDate                                          | The WeighingDate if null value set to current datetime.        | No\t\t\t\t\t|\r\n| WeighingGUID\t\t\t\t\t\t\t\t\t\t\t| The WeighingGUID if has value update existing record.          | No\t\t\t\t\t|\r\n| WeighingDetails[]                                     | The WeighingDetails of weighing.\t\t\t\t\t             | No\t\t\t\t\t|\r\n| WeighingDetails[].MaterialGUID\t\t\t\t\t\t| The GUID of the material.\t\t\t\t\t\t\t\t\t\t | No\t\t\t\t\t|\r\n| TransferDetails[]\t\t\t\t\t\t\t\t\t\t| The TransferDetails use for weighing type TransferOut.\t     | No\t\t\t\t\t|\r\n| TransferDetails[].SourceSupplierSiteGUID\t\t\t\t| The GUID of the suppliersite.                                  | No\t\t\t\t\t|\r\n| TransferDetails[].DestinationSupplierSiteGUID\t\t\t| The GUID of the suppliersite.                                  | No\t\t\t\t\t|\r\n| TransferDetails[].IsPassThrough\t\t\t\t\t\t| The IsPassThrough of the weighing.                             | No\t\t\t\t\t|\r\n| TransferDetails[].LoadReference\t\t\t\t\t\t| The LoadReference of the weighing.                             | No\t\t\t\t\t|\r\n\r\n## Extra validations\r\n\r\n| Condition\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t| Error message\t\t\t\t\t\t\t\t|\r\n|---------------------------------------------------------------------------|-------------------------------------------|\r\n| IF SiteOrderGUID IS NULL and WeighingType Gate/MaterialSale.\t\t\t\t| SiteOrderGUID must supply.\t\t\t\t|\r\n| IF RouteGUID IS NULL and WeighingType Route.\t\t\t\t\t\t\t\t| RouteGUID must supply.\t\t\t\t\t|\r\n| IF GrossWeight IS NULL and WeighingType Gate.\t\t\t\t\t\t\t\t| GrossWeight must supply\t\t\t\t\t|\r\n| IF TareWeight IS NULL and WeighingType MaterialSale.\t\t\t\t\t\t| TareWeight must supply.\t\t\t\t\t|\r\n| IF WeighingTypeGUID IS NULL.\t\t\t\t\t\t\t\t\t\t\t\t| WeightTypeGUID must supply.\t\t\t\t|\r\n| IF not exist WeighingGUID.\t\t\t\t\t\t\t\t\t\t\t\t| Invalid WeighingGUID.\t\t\t\t\t\t|\r\n| IF not exist WeightTypeGUID.\t\t\t\t\t\t\t\t\t\t\t\t| Invalid WeightTypeGUID.\t\t\t\t\t|\r\n| IF VehicleGUID IS NULL.\t\t\t\t\t\t\t\t\t\t\t\t\t| VehicleGUID must supply.\t\t\t\t\t|\r\n| IF MaterialGUID IS NULL.\t\t\t\t\t\t\t\t\t\t\t\t\t| MaterialGUID must supply.\t\t\t\t\t|\r\n| IF TransferDetails IS NULL and WeighingType TransferOut.  \t\t\t\t| TransferDetails must supply.\t\t\t\t|\r\n| IF SourceSupplierSiteGUIDNotFound IS NULL and WeighingType TransferOut.\t| SourceSupplierSiteGUID must supply.\t\t|\r\n| IF SourceSupplierSiteGUIDNotFound IS NULL and WeighingType TransferOut.\t| DestinationSupplierSiteGUID must supply.\t|\r\n| IF WeighingDetail is not empty and MaterialGUID IS NULL.\t\t\t\t\t| WeighingDetail MaterialGUID must supply.\t|\r\n",
+                "operationId": "Weighing_Create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceId"
+                        }
+                    }
+                }
+            }},
         "/integrator/weightBlobs": {
             "post": {
                 "consumes": [
