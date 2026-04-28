@@ -2433,6 +2433,11 @@
             ],
             "example": "CANCEL",
             "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/AMCSPayResult",
+            "nullable": true,
+            "description": "AMCS Pay standardised result code and message returned by the payment provider."
           }
         }
       },
@@ -3432,6 +3437,11 @@
             ],
             "example": "CANCEL",
             "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/AMCSPayResult",
+            "nullable": true,
+            "description": "AMCS Pay standardised result code and message returned by the payment provider."
           }
         },
         "additionalProperties": false
@@ -3614,6 +3624,11 @@
             "nullable": true,
             "example": "Joe Bloggs",
             "description": "The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response)."
+          },
+          "result": {
+            "$ref": "#/components/schemas/AMCSPayResult",
+            "nullable": true,
+            "description": "AMCS Pay standardised result code and message returned by the payment provider."
           }
         },
         "additionalProperties": false
@@ -3838,6 +3853,11 @@
             ],
             "type": "string",
             "description": "The Transaction Status associated to the AMCS Pay transaction."
+          },
+          "result": {
+            "$ref": "#/components/schemas/AMCSPayResult",
+            "nullable": true,
+            "description": "AMCS Pay standardised result code and message returned by the payment provider."
           }
         },
         "additionalProperties": false
@@ -4093,6 +4113,11 @@
             ],
             "example": "Success",
             "nullable": false
+          },
+          "result": {
+            "$ref": "#/components/schemas/AMCSPayResult",
+            "nullable": true,
+            "description": "AMCS Pay standardised result code and message returned by the payment provider."
           }
         },
         "additionalProperties": false
@@ -4160,9 +4185,33 @@
             "example": "Success",
             "nullable": false,
             "description": "The Transaction Status associated to the refund response."
+          },
+          "result": {
+            "$ref": "#/components/schemas/AMCSPayResult",
+            "nullable": true,
+            "description": "AMCS Pay standardised result code and message returned by the payment provider."
           }
         },
         "additionalProperties": false
+      },
+      "AMCSPayResult": {
+        "type": "object",
+        "nullable": true,
+        "description": "AMCS Pay standardised result code and message returned by the payment provider.\n\n**Success example:**\n```json\n{\n  \"code\": \"000.000.000\",\n  \"message\": \"Transaction succeeded\"\n}\n```\n\n**Error example:**\n```json\n{\n  \"code\": \"200.300.404\",\n  \"message\": \"invalid or missing parameter\"\n}\n```",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true,
+            "description": "Provider result code.",
+            "example": "000.000.000"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "description": "Human-readable description of the payment outcome.",
+            "example": "Transaction succeeded"
+          }
+        }
       },
       "AMCSPayDisbursementAddSupplierRequest": {
         "type": "object",
