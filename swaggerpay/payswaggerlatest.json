@@ -3960,6 +3960,11 @@
             "example": "MM/YY",
             "description": "<span style='color: rgb(212, 31, 28)'>Required if payment type is elavon terminalPay.</span>"
 
+          },
+          "customerInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/AMCSPayCustomerInfo",
+            "nullable": true
           }
         }
       },
@@ -4118,6 +4123,11 @@
             "$ref": "#/components/schemas/AMCSPayResult",
             "nullable": true,
             "description": "AMCS Pay standardised result code and message returned by the payment provider."
+          },
+          "customerInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/AMCSPayCustomerInfo",
+            "nullable": true
           }
         },
         "additionalProperties": false
