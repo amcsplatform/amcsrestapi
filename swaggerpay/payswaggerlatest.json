@@ -3964,7 +3964,8 @@
           "customerInfo": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayCustomerInfo",
-            "nullable": true
+            "nullable": true,
+            "description": "The customer details associated to the refund request."
           }
         }
       },
@@ -4127,7 +4128,8 @@
           "customerInfo": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayCustomerInfo",
-            "nullable": true
+            "nullable": true,
+            "description": "The customer details associated to the refund response."
           }
         },
         "additionalProperties": false
