@@ -973,6 +973,59 @@
         }
       }
     },
+    "/ExternalTransaction/RetryTransaction": {
+      "post": {
+        "tags": [
+          "ExternalTransaction"
+        ],
+        "summary": "Retry Transaction",
+        "description": "This endpoint is used to retry a previously failed transaction via AmcsPay",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AMCSPayRetryTransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayRetryTransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ExternalTransaction/CreateCustomer": {
       "post": {
         "tags": [
@@ -4491,6 +4544,125 @@
           }
         },
         "additionalProperties": false
+      },
+      "AMCSPayRetryTransactionRequest": {
+        "required": [
+          "callerTransactionIdentifier",
+          "paymentChannelId"
+        ],
+        "type": "object",
+        "properties": {
+          "callerTransactionIdentifier": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "nullable": false,
+            "description": "The RequestId when making One Off Payment or Refund"
+          },
+          "paymentChannelId": {
+            "type": "string",
+            "enum": [
+              "ACICards"
+            ],
+            "example": "ACICards",
+            "nullable": false,
+            "description": "The payment channel/provider to use for the retry."
+          }
+        }
+      },
+      "AMCSPayRetryTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "callerTransactionGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "00000000-0000-0000-0000-000000000000",
+            "nullable": true,
+            "description": "The RequestId when making One Off Payment or Refund"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "example": "Transaction retried successfully.",
+            "description": "The message associated to the response."
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-01-15T10:30:00Z",
+            "nullable": true,
+            "description": "The date and time when the retried transaction was created."
+          },
+          "statusCode": {
+            "type": "string",
+            "enum": [
+              "Initiated",
+              "Success",
+              "Failure",
+              "InvalidCardInformation",
+              "Exception",
+              "Cancelled",
+              "Processing"
+            ],
+            "example": "Success",
+            "nullable": true,
+            "description": "The status of the retry response."
+          },
+          "payPortalResponseMessage": {
+            "type": "string",
+            "nullable": true,
+            "description": "The parsed provider specific response associated to the retried transaction."
+          },
+          "payPortalCreditCardVaultResponseMessage": {
+            "type": "string",
+            "nullable": true,
+            "description": "The parsed provider specific credit card vault response (optional)."
+          },
+          "requestType": {
+            "type": "string",
+            "enum": [
+              "Payment",
+              "Refund",
+              "AutoPay"
+            ],
+            "example": "Payment",
+            "nullable": true,
+            "description": "The request type associated to the retried transaction."
+          },
+          "serviceFeeResponse": {
+            "$ref": "#/components/schemas/AMCSPayServiceFeePaymentDetails"
+          }
+        }
+      },
+      "AMCSPayServiceFeePaymentDetails": {
+        "type": "object",
+        "description": "The service fee details associated to the transaction.",
+        "properties": {
+          "principalAmount": {
+            "type": "number",
+            "format": "double",
+            "example": 10,
+            "nullable": true,
+            "description": "The base amount associated to the payment request."
+          },
+          "serviceFeeAmount": {
+            "type": "number",
+            "format": "double",
+            "example": 0.2,
+            "nullable": true,
+            "description": "The service fee amount associated to the payment request."
+          },
+          "total": {
+            "type": "number",
+            "format": "double",
+            "example": 10.2,
+            "nullable": true,
+            "description": "The total amount associated to the payment request."
+          },
+          "termsAndConditions": {
+            "$ref": "#/components/schemas/TermsAndConditions"
+          }
+        }
       },
       "AMCS.Pay.Entity.Api.Payments.ExternalTransaction.ApiErrorResponse": {
         "type": "object",
