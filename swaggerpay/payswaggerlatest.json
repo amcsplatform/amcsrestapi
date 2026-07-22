@@ -4411,6 +4411,15 @@
           },
           "paymentAccount": {
             "$ref": "#/components/schemas/AMCSPayCreatePaymentAccountResponse"
+          },
+          "amcsPayCustomerMappingId": {
+            "type": "string",
+            "nullable": true,
+            "example": "669c9d3d-0dff-4ad2-9ec9-b48d0089b8ef",
+            "description": "The unique identifier in AMCS Pay for this create customer account request."
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/AMCSPayCreateCustomerDetail"
           }
         },
         "additionalProperties": false
@@ -4541,6 +4550,12 @@
             "nullable": false,
             "example": "Jane Doe",
             "description": "The full name of the customer being created."
+          },
+          "customerAccountCode": {
+            "type": "string",
+            "nullable": false,
+            "example": "ACC000123",
+            "description": "The account code of the customer being created."
           }
         },
         "additionalProperties": false
