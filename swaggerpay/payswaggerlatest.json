@@ -395,7 +395,7 @@
           "ExternalTransaction"
         ],
         "summary": "Immediate OneOff Payment",
-        "description": "This endpoint is used to make an immediate payment/tokenization request.\n\n## Request\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n| RequestType                      |Request Type can be any of \"OneOffPayment\", \"Tokenization\".                            |\r\n| PaymentType               | Payment Type can be any of \"ACH\", \"EFT\".                      |\r\n| CallerIdentifier               | The Caller Identification associated to the Payment request.             |\r\n| RequestId               | The Caller supplied GUID associated to the Payment request.        |\r\n| ProviderType                   |Provide Type can be \"EftCanada\"        |\r\n| ConfigurationId                      |The configuration id associated to the Tenant.                            |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| Addresses                         | The List of addresses associated to the customer mandate for 3ds transaction (Billing address is mandatory for 3ds enabled transaction).        |\r\n| Addresses[0].AddressType                         | The AddressType associated to the address can be any of \"Billing\", \"Shipping\".        |\r\n| Addresses[0].StreetAddress1                         | The StreetAddress Line1 associated to the address.        |\r\n| Addresses[0].StreetAddress2                         | The StreetAddress Line2 associated to the address.        |\r\n| Addresses[0].StreetAddress3                         | The StreetAddress Line3 associated to the address (Conditionally required).        |\r\n| Addresses[0].City                         | The City associated to the address.        |\r\n| Addresses[0].State                         | The State associated to the address.        |\r\n| Addresses[0].PostCode                         | The PostCode associated to the address.        |\r\n| Addresses[0].Country                         | The Country associated to the address.        |\r\n| Addresses[0].ISO3166Numeric                         | The ISO3166Numeric associated to the address (Conditionally required).        |\r\n| Contacts                         | The Contacts associated to the customer mandate for 3ds transaction (Contact type 'Mobile' and 'Email' are mandatory for 3ds enabled transaction).        |\r\n| Contacts[0].ContactType                         | The Contact Type associated to the contact can be any of type \"Email\", \"Mobile\".        |\r\n| Contacts[0].ContactValue                         | The Contact Value associated to the contact type.        |\r\n| CustomerInfo                         | The Details associated to the customer mandate for risk assessment (Conditionally required for making payments using EftCanada).        |\r\n| CustomerInfo.CustomerName                         | The Customer Name associated to the customer(Conditionally required for making payments using EftCanada).        |\r\n| CustomerInfo.CustomerId                         | The Customer Id associated to the customer.        |\r\n| CustomerInfo.CustomerIP                         | The Customer Ip associated to the customer.        |\r\n| CustomerInfo.CustomerStatus                         | The Customer Status associated to the customer.        |\r\n| CustomerInfo.WebsiteUrl                         | The Website Url associated to the customer.        |\r\n| BankInfo                         | The Bank Info associated to the customer.        |\r\n| BankInfo.Ach                         | The Ach Bank Info associated to the customer (Required when Payment Type is ACH).        |\r\n| BankInfo.Ach.AccountNumber                         | The Ach Account Number associated to the customer.        |\r\n| BankInfo.Ach.AccountType                         | The Ach Account Type associated to the customer and could be one of \"PersonalSavings\", \"PersonalCheckings\", \"BusinessSavings\", \"BusinessCheckings\".        |\r\n| BankInfo.Ach.RoutingNumber                         | The Ach Routing Number associated to the customer.        |\r\n| BankInfo.Eft                         | The Eft Bank Info associated to the customer (Required when Payment Type is EFT).        |\r\n| BankInfo.Eft.AccountNumber                         | The Eft Account Number associated to the customer.        |\r\n| BankInfo.Eft.TransitNumber                         | The Eft Transit Number associated to the customer.        |\r\n| BankInfo.Eft.InstitutionNumber                         | The Eft Institution Number associated to the customer.\n\n## Response\n\n| Property                  | Description  |\r\n| ------------------------- | ------------------------------------------------------------------------|\r\n|CallerTransactionId | The AMCS generated Request GUID associated to the payments. |\n| AMCSPayReferenceId | The AMCS generated Response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| Notes | More information associated to the payment. |\n| ProviderAuthCode | The authorization code associated to the payment provider.  |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Initiated\", \"Success\", \"Failure\", \"Timeout\", \"Cancelled\". |\n| TokenReference | The Token Reference sent by the provider associated to the original payment (Tokenisation Response). |\n| HistoryReference | The history reference data sent by the provider associated to the original payment (Tokenisation Response). |\n| MaskedProfileNumber | The Profile/Card Number sent by the provider associated to the original payment (Tokenisation Response) (Conditionally required). |\n| ProfileType | The Profile/Card Type sent by the provider associated to the original payment (Tokenisation Response). |\n| ProfileHolder | The Profile/Card Holder Name sent by the provider associated to the original payment (Tokenisation Response). |\r\n| TransactionAmount                     |The amount associated to the payment request.        |\r\n| TransactionAmount.PrincipalAmount                     |The base amount associated to the payment request (This field is optional for Tokenization).        |\r\n| TransactionAmount.Currency                     |The currency associated to the payment request.        |\r\n| ErrorCondition                     |The error condition associated to the payment request.    ",
+        "description": "This endpoint is used to make an immediate bank-transfer payment/tokenization request (ACH/EFT via EftCanada). See the request/response schema below for field-level guidance.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -737,7 +737,7 @@
           "ExternalTransaction"
         ],
         "summary": "Terminal Payment",
-        "description": "This endpoint is used to make a card payment using a terminal device.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | Provide Type can be any of \"TerminalPay\", \"ElavonTerminalPay\", and \"Stripe\". |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| TerminalId | The Terminal Id is the verifone terminal identity like a device serial number or a friendly name. |\n| TransactionAmount | The Amount associated to the payment request. |\n| TransactionAmount.PrincipalAmount | The Principal Amount associated to the payment request. |\n| TransactionAmount.Currency | The Currency associated to the payment request. |\n| CardEntryMode | The Card entry mode of the payment instrument information. |\n| EmailAddress | The e-mail address associated to the payment requestor. |\n\n## Response\n\n| **Property** | **Description** |\n| --- | --- |\n| TransactionStatus | The Transaction Status associated to the payment can be any of type \"Success\", \"Failure\", \"Partial\". For Partial, Check the device if payment is processed, Poll it. |\n| AMCSPayReferenceId | The AMCS generated response GUID associated to the Payment request. |\n| ProviderReference | The reference number associated to the payment provider. |\n| ProviderResponseCode | The response code associated to the payment provider. |\n| ProviderAuthCode | The authorization code associated to the payment provider. |\n| TokenValue | The Token value associated to the payment. |\n| ResponseTimeStamp | The Timestamp of the payment response payload. |\n| Notes | More information associated to the payment transaction. |\n| TransactionAmount | The Amount associated to the payment response. |\n| TransactionAmount.PrincipalAmount | The Principal Amount associated to the payment response. |\n| TransactionAmount.Currency | The Currency associated to the payment response. |\n| MaskedProfileNumber | The Profile/Card Number sent by the provider associated to the original payment. |\n| ProfileHolder | The Profile/Card Holder Name sent by the provider associated to the original payment. |\n| ProfileExpiryDate | The Profile/Card expiry date sent by the  provider associated to the original payment in (MM/YY) format. |\n| CallerTransactionId | The AMCS generated Request GUID associated to the hosted payments page. |\n| ErrorCondition                     |The error condition associated to the payment request. |",
+        "description": "This endpoint is used to make a card payment using a terminal device (TerminalPay, ElavonTerminalPay, or Stripe Terminal). See the request/response schema below for field-level guidance, including which values `providerType` accepts.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -790,7 +790,7 @@
           "ExternalTransaction"
         ],
         "summary": "Terminal Payment Abort",
-        "description": "This endpoint is a signal used to abort a card payment requested using a terminal device.\n\n## Request\n\n| Property | Description |\n| --- | --- |\n| ProviderType | Provide Type can be any of \"ElavonTerminalPay\", \"TerminalPay\", and \"Stripe\". |\n| CallerIdentifier | The Caller Identification associated to the Payment request. |\n| RequestId | The Caller supplied Request GUID associated to the Payment request. |\n| RequestType | Request Type is \"Abort\". |\n| TerminalId | The Terminal Id is the verifone terminal device serial number. |\n| EmailAddress | The e-mail address associated to the abort request. |\n| Reason | The reason associated to the abort request is conditionally required. |\n| OriginalRequestId | The Caller supplied Request GUID associated to the original terminal payment request being aborted. |",
+        "description": "This endpoint is a signal used to abort a card payment requested using a terminal device (TerminalPay, ElavonTerminalPay, or Stripe Terminal). See the request schema below for field-level guidance, including which values `providerType` accepts.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1632,7 +1632,8 @@
             "enum": [
               "OneOffPayment"
             ],
-            "nullable": false
+            "nullable": false,
+            "description": "Request type for this endpoint. Always \"OneOffPayment\"."
           },
           "providerType": {
             "type": "string",
@@ -1642,28 +1643,33 @@
               "Stripe"
             ],
             "nullable": false,
-            "example": "TerminalPay"
+            "example": "TerminalPay",
+            "description": "The terminal payment provider.\n\n- **TerminalPay** — Verifone terminal device payments.\n- **ElavonTerminalPay** — Elavon terminal device payments.\n- **Stripe** — Stripe Terminal (card-present) payments."
           },
           "callerIdentifier": {
             "type": "string",
             "example": "client-name",
-            "nullable": false
+            "nullable": false,
+            "description": "The Caller Identification associated to the Payment request."
           },
           "requestId": {
             "type": "string",
             "format": "uuid",
             "example": "0d920c06-b568-442b-94cc-afe60176708f",
-            "nullable": false
+            "nullable": false,
+            "description": "The Caller supplied Request GUID associated to the Payment request."
           },
           "terminalId": {
             "type": "string",
             "example": "450-829-523",
-            "nullable": false
+            "nullable": false,
+            "description": "The Terminal Id is the verifone terminal identity like a device serial number or a friendly name."
           },
           "transactionAmount": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayAmount",
-            "nullable": false
+            "nullable": false,
+            "description": "The Amount associated to the payment request."
           },
           "cardEntryMode": {
             "type": "string",
@@ -1681,12 +1687,14 @@
               "Mobile"
             ],
             "nullable": false,
-            "example": "Keyed"
+            "example": "Keyed",
+            "description": "The card entry mode of the payment instrument information (how the card details were captured on the terminal device)."
           },
           "emailAddress": {
             "type": "string",
             "nullable": true,
-            "example": "amcspayuser@email.com"
+            "example": "amcspayuser@email.com",
+            "description": "The e-mail address associated to the payment requestor. Optional."
           }
         },
         "additionalProperties": false
@@ -1706,7 +1714,8 @@
             "enum": [
               "Abort"
             ],
-            "nullable": false
+            "nullable": false,
+            "description": "Request type for this endpoint. Always \"Abort\"."
           },
           "providerType": {
             "type": "string",
@@ -1716,37 +1725,44 @@
               "Stripe"
             ],
             "nullable": false,
-            "example": "TerminalPay"
+            "example": "TerminalPay",
+            "description": "The terminal payment provider.\n\n- **TerminalPay** — Verifone terminal device payments.\n- **ElavonTerminalPay** — Elavon terminal device payments.\n- **Stripe** — Stripe Terminal (card-present) payments."
           },
           "callerIdentifier": {
             "type": "string",
             "example": "client-name",
-            "nullable": false
+            "nullable": false,
+            "description": "The Caller Identification associated to the Payment request."
           },
           "requestId": {
             "type": "string",
             "format": "uuid",
             "example": "0d920c06-b568-442b-94cc-afe60176708f",
-            "nullable": false
+            "nullable": false,
+            "description": "The Caller supplied Request GUID associated to the Payment request."
           },
           "terminalId": {
             "type": "string",
             "example": "450-829-523",
-            "nullable": false
+            "nullable": false,
+            "description": "The Terminal Id is the verifone terminal device serial number."
           },
           "emailAddress": {
             "type": "string",
             "nullable": true,
-            "example": "amcspayuser@email.com"
+            "example": "amcspayuser@email.com",
+            "description": "The e-mail address associated to the abort request. Optional."
           },
           "reason": {
             "type": "string",
             "example": "Cancelled By POS",
-            "nullable": true
+            "nullable": true,
+            "description": "The reason associated to the abort request. Conditionally required."
           },
           "originalRequestId": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "description": "The Caller supplied Request GUID associated to the original terminal payment request being aborted."
           }
         },
         "additionalProperties": false
@@ -2053,7 +2069,8 @@
               "OneOffPayment",
               "Tokenization"
             ],
-            "nullable": false
+            "nullable": false,
+            "description": "Determines what kind of operation this request performs.\n\n- **OneOffPayment** — Process a single bank-transfer payment immediately.\n- **Tokenization** — Capture and store bank account details for future Vault payments, without processing a payment now."
           },
           "paymentType": {
             "type": "string",
@@ -2061,59 +2078,69 @@
               "ACH",
               "EFT"
             ],
-            "nullable": false
+            "nullable": false,
+            "description": "The payment instrument type for this request.\n\n- **ACH** — US bank account transfer (Automated Clearing House).\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer)."
           },
           "callerIdentifier": {
             "type": "string",
-            "nullable": false
+            "nullable": false,
+            "description": "The Caller Identification associated to the Payment request."
           },
           "requestId": {
             "type": "string",
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
-            "nullable": false
+            "nullable": false,
+            "description": "The Caller supplied GUID associated to the Payment request."
           },
           "providerType": {
             "type": "string",
             "enum": [
               "EftCanada"
             ],
-            "nullable": false
+            "nullable": false,
+            "description": "The payment provider used to process this request. This endpoint only supports \"EftCanada\"."
           },
           "configurationId": {
             "type": "string",
             "format": "uuid",
             "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
-            "nullable": true
+            "nullable": true,
+            "description": "The configuration id associated to the Tenant. Optional — only used when the tenant's provider-configuration migration feature is enabled; if omitted (or the feature is disabled), the request is resolved using `providerType` alone."
           },
           "transactionAmount": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayAmount",
-            "nullable": false
+            "nullable": false,
+            "description": "The amount associated to the payment request."
           },
           "addresses": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AMCSPayAddress"
             },
-            "nullable": true
+            "nullable": true,
+            "description": "The list of addresses associated to the customer mandate for 3DS transactions. Optional unless 3DS is enabled, in which case a Billing address is mandatory."
           },
           "contacts": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AMCSPayContact"
             },
-            "nullable": true
+            "nullable": true,
+            "description": "The contacts associated to the customer mandate for 3DS transactions. Optional unless 3DS is enabled, in which case Email and Mobile contact types are both mandatory."
           },
           "customerInfo": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayCustomerInfo",
-            "nullable": true
+            "nullable": true,
+            "description": "The details associated to the customer mandate for risk assessment. Required for making payments using EftCanada."
           },
           "bankInfo": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayBankInfo",
-            "nullable": true
+            "nullable": true,
+            "description": "The bank account details for this request. Required — supply `ach` when paymentType is ACH, or `eft` when paymentType is EFT."
           }
         }
       },
@@ -2545,72 +2572,86 @@
             "type": "string",
             "enum": [
               "Success",
-              "Failure"
+              "Failure",
+              "Partial"
             ],
             "example": "Success",
-            "nullable": false
+            "nullable": false,
+            "description": "The Transaction Status associated to the payment.\n\n- **Success** — The payment completed successfully.\n- **Failure** — The payment did not complete; check `notes`/`result` for details.\n- **Partial** — The terminal did not confirm the outcome. Check the device to see if the payment was processed, or poll for the final status using GET /ExternalTransaction/Poll."
           },
           "amcsPayReferenceId": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
-            "example": "c4521490-c0dd-40e5-94c6-afe90073aa1b"
+            "example": "c4521490-c0dd-40e5-94c6-afe90073aa1b",
+            "description": "The AMCS generated response GUID associated to the Payment request."
           },
           "providerReference": {
             "type": "string",
             "nullable": true,
-            "example": "710718500049"
+            "example": "710718500049",
+            "description": "The reference number associated to the payment provider."
           },
           "providerResponseCode": {
             "type": "string",
             "nullable": true,
-            "example": "Success"
+            "example": "Success",
+            "description": "The response code associated to the payment provider."
           },
           "providerAuthCode": {
             "type": "string",
             "nullable": true,
-            "example": "DEMO684"
+            "example": "DEMO684",
+            "description": "The authorization code associated to the payment provider."
           },
           "tokenValue": {
             "type": "string",
             "nullable": true,
-            "example": "iLGOd76VSiaAQBcZswQf"
+            "example": "iLGOd76VSiaAQBcZswQf",
+            "description": "The Token value associated to the payment."
           },
           "responseTimeStamp": {
             "type": "string",
             "format": "datetime",
             "example": "2022-07-27 18:54:18.6767965 +08:00",
-            "nullable": true
+            "nullable": true,
+            "description": "The Timestamp of the payment response payload."
           },
           "notes": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "description": "More information associated to the payment transaction."
           },
           "callerTransactionId": {
             "format": "uuid",
             "example": "00000000-0000-0000-0000-000000000000",
-            "type": "string"
+            "type": "string",
+            "description": "The AMCS generated Request GUID associated to the hosted payments page."
           },
           "transactionAmount": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayAmount",
-            "nullable": false
+            "nullable": false,
+            "description": "The Amount associated to the payment response."
           },
           "maskedProfileNumber": {
             "type": "string",
             "nullable": true,
-            "example": "XXXXX"
+            "example": "XXXXX",
+            "description": "The Profile/Card Number sent by the provider associated to the original payment."
           },
           "profileExpiryDate": {
             "type": "string",
             "nullable": true,
             "format": "datetime",
-            "example": "MM/YY"
+            "example": "MM/YY",
+            "description": "The Profile/Card expiry date sent by the provider associated to the original payment, in (MM/YY) format."
           },
           "profileHolder": {
             "type": "string",
             "nullable": true,
-            "example": "Roofus Summers"
+            "example": "Roofus Summers",
+            "description": "The Profile/Card Holder Name sent by the provider associated to the original payment."
           },
           "errorCondition": {
             "type": "string",
@@ -2634,7 +2675,8 @@
               "WRONGPIN"
             ],
             "example": "CANCEL",
-            "nullable": true
+            "nullable": true,
+            "description": "The error condition returned by the payment provider or terminal device when a transaction does not complete."
           },
           "result": {
             "$ref": "#/components/schemas/AMCSPayResult",
@@ -2676,7 +2718,8 @@
           "message": {
             "type": "string",
             "example": "info message",
-            "nullable": true
+            "nullable": true,
+            "description": "A human-readable message describing the result of the request."
           }
         }
       },
@@ -3306,12 +3349,14 @@
           "eft": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayEftBankInfo",
-            "nullable": true
+            "nullable": true,
+            "description": "The Eft Bank Info associated to the customer. Required when paymentType is EFT."
           },
           "ach": {
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayAchBankInfo",
-            "nullable": true
+            "nullable": true,
+            "description": "The Ach Bank Info associated to the customer. Required when paymentType is ACH."
           }
         },
         "additionalProperties": false
