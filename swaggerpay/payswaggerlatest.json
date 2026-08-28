@@ -1932,7 +1932,6 @@
           "requestType",
           "paymentType",
           "transactionOrigin",
-          "providerType",
           "transactionAmount",
           "callerIdentifier",
           "requestId"
@@ -1990,15 +1989,15 @@
               "EftCanada",
               "Stripe"
             ],
-            "nullable": false,
-            "description": "The payment provider used to process this request.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+            "nullable": true,
+            "description": "The payment provider used to process this request. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
           },
           "configurationId": {
             "type": "string",
             "format": "uuid",
             "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
             "nullable": true,
-            "description": "The configuration id associated to the Tenant. Optional — only used when the tenant's provider-configuration migration feature is enabled; if omitted (or the feature is disabled), the request is resolved using `providerType` alone."
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
@@ -2055,7 +2054,6 @@
         "required": [
           "requestType",
           "paymentType",
-          "providerType",
           "transactionAmount",
           "callerIdentifier",
           "requestId",
@@ -2098,15 +2096,15 @@
             "enum": [
               "EftCanada"
             ],
-            "nullable": false,
-            "description": "The payment provider used to process this request. This endpoint only supports \"EftCanada\"."
+            "nullable": true,
+            "description": "The payment provider used to process this request. This endpoint only supports \"EftCanada\". Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider."
           },
           "configurationId": {
             "type": "string",
             "format": "uuid",
             "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
             "nullable": true,
-            "description": "The configuration id associated to the Tenant. Optional — only used when the tenant's provider-configuration migration feature is enabled; if omitted (or the feature is disabled), the request is resolved using `providerType` alone."
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
@@ -4245,7 +4243,6 @@
           "transactionOrigin",
           "callerIdentifier",
           "requestId",
-          "providerType",
           "transactionAmount",
           "originalPaymentReference",
           "originalAmount"
@@ -4311,8 +4308,15 @@
               "Stripe"
             ],
             "example": "ACICards",
-            "nullable": false,
-            "description": "The payment provider that processed the original payment. Stripe card refunds are fully supported through this endpoint.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **TerminalPay** — Verifone terminal device payments.\n- **ElavonTerminalPay** — Elavon terminal device payments.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+            "nullable": true,
+            "description": "The payment provider that processed the original payment. Stripe card refunds are fully supported through this endpoint. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **TerminalPay** — Verifone terminal device payments.\n- **ElavonTerminalPay** — Elavon terminal device payments.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+          },
+          "configurationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
+            "nullable": true,
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
@@ -4362,7 +4366,6 @@
           "transactionOrigin",
           "callerIdentifier",
           "requestId",
-          "providerType",
           "tokenReference"
         ],
         "type": "object",
@@ -4423,8 +4426,15 @@
               "Stripe"
             ],
             "example": "ACICards",
-            "nullable": false,
-            "description": "The payment provider used to process this request.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+            "nullable": true,
+            "description": "The payment provider used to process this request. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+          },
+          "configurationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
+            "nullable": true,
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
