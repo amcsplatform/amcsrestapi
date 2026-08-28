@@ -57,6 +57,109 @@
         }
       }
     },
+    "/tenants/feature-flag/{flag}": {
+      "get": {
+        "tags": [
+          "FeatureFlag"
+        ],
+        "summary": "Check Feature Flag (Own Tenant)",
+        "description": "Checks whether a named feature flag is currently enabled for the calling tenant — resolved from your session token, no `tenantGuid` needed. Use this to confirm which provider-resolution behavior applies to your tenant before relying on it:\n\n- **ExternalApiOmittedProviderTypeResolution** — when enabled, an omitted `providerType` on `AMCSPayInitiatePaymentRequest`/`AMCSPayImmediatePaymentRequest`/`AMCSPayRefundRequest`/`AMCSPayVaultRequest` resolves automatically to the tenant's first configured provider (and, in that case, any supplied `configurationId` is ignored).\n- **MigrateProviderFromErpToPay** — when enabled, a supplied `configurationId` is used to resolve the provider (only when `providerType` is also supplied — see the `providerType` field description on the request schemas above).",
+        "parameters": [
+          {
+            "name": "flag",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "ExternalApiOmittedProviderTypeResolution",
+              "description": "The feature flag name to check. Relevant to provider resolution on the endpoints above: `ExternalApiOmittedProviderTypeResolution`, `MigrateProviderFromErpToPay`."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayFeatureFlagResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/tenants/{tenantGuid}/feature-flag/{flag}": {
+      "get": {
+        "tags": [
+          "FeatureFlag"
+        ],
+        "summary": "Check Feature Flag (By Tenant Id)",
+        "description": "Checks whether a named feature flag is currently enabled for the given tenant. Equivalent to `GET /tenants/feature-flag/{flag}`, but takes an explicit `tenantGuid` instead of resolving it from your session token — useful if you manage more than one AMCS Pay tenant and want to check a specific one.",
+        "parameters": [
+          {
+            "name": "tenantGuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
+              "description": "The tenant GUID to check the flag for."
+            }
+          },
+          {
+            "name": "flag",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "ExternalApiOmittedProviderTypeResolution",
+              "description": "The feature flag name to check. Relevant to provider resolution: `ExternalApiOmittedProviderTypeResolution`, `MigrateProviderFromErpToPay`."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayFeatureFlagResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AMCSPayErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/disbursement/AddSupplier": {
       "post": {
         "tags": [
@@ -1462,6 +1565,27 @@
           }
         }
       },
+      "AMCSPayFeatureFlagResponse": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
+            "description": "The tenant GUID this result applies to."
+          },
+          "featureFlag": {
+            "type": "string",
+            "example": "ExternalApiOmittedProviderTypeResolution",
+            "description": "The feature flag that was checked, echoed back by name."
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "example": true,
+            "description": "Whether the flag is currently enabled for this tenant."
+          }
+        }
+      },
       "AMCSPayMobillsIvrRequest": {
         "type": "object",
         "required": [
@@ -1990,14 +2114,14 @@
               "Stripe"
             ],
             "nullable": true,
-            "description": "The payment provider used to process this request. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+            "description": "The payment provider used to process this request. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider. You can check whether this automatic resolution is active for your tenant via `GET /tenants/feature-flag/ExternalApiOmittedProviderTypeResolution`.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
           },
           "configurationId": {
             "type": "string",
             "format": "uuid",
             "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
             "nullable": true,
-            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied and the tenant's provider-configuration migration feature is enabled (flag `MigrateProviderFromErpToPay` — check via `GET /tenants/feature-flag/MigrateProviderFromErpToPay`); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead (flag `ExternalApiOmittedProviderTypeResolution`), regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
@@ -2097,14 +2221,14 @@
               "EftCanada"
             ],
             "nullable": true,
-            "description": "The payment provider used to process this request. This endpoint only supports \"EftCanada\". Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider."
+            "description": "The payment provider used to process this request. This endpoint only supports \"EftCanada\". Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider. You can check whether this automatic resolution is active for your tenant via `GET /tenants/feature-flag/ExternalApiOmittedProviderTypeResolution`."
           },
           "configurationId": {
             "type": "string",
             "format": "uuid",
             "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
             "nullable": true,
-            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied and the tenant's provider-configuration migration feature is enabled (flag `MigrateProviderFromErpToPay` — check via `GET /tenants/feature-flag/MigrateProviderFromErpToPay`); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead (flag `ExternalApiOmittedProviderTypeResolution`), regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
@@ -4309,14 +4433,14 @@
             ],
             "example": "ACICards",
             "nullable": true,
-            "description": "The payment provider that processed the original payment. Stripe card refunds are fully supported through this endpoint. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **TerminalPay** — Verifone terminal device payments.\n- **ElavonTerminalPay** — Elavon terminal device payments.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+            "description": "The payment provider that processed the original payment. Stripe card refunds are fully supported through this endpoint. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider. You can check whether this automatic resolution is active for your tenant via `GET /tenants/feature-flag/ExternalApiOmittedProviderTypeResolution`.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **TerminalPay** — Verifone terminal device payments.\n- **ElavonTerminalPay** — Elavon terminal device payments.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
           },
           "configurationId": {
             "type": "string",
             "format": "uuid",
             "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
             "nullable": true,
-            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied and the tenant's provider-configuration migration feature is enabled (flag `MigrateProviderFromErpToPay` — check via `GET /tenants/feature-flag/MigrateProviderFromErpToPay`); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead (flag `ExternalApiOmittedProviderTypeResolution`), regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
@@ -4427,14 +4551,14 @@
             ],
             "example": "ACICards",
             "nullable": true,
-            "description": "The payment provider used to process this request. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
+            "description": "The payment provider used to process this request. Optional — if omitted, AMCS Pay resolves it automatically from the tenant's configured payment provider(s), using the first configured provider; `configurationId` is ignored in that case, even if supplied. This is convenient for the common case of a tenant with exactly one enabled provider; for a tenant with more than one enabled provider (e.g. mid-migration between bank-transfer providers), which one gets picked depends on configuration order, not business intent — supply this field explicitly if you need a specific provider. You can check whether this automatic resolution is active for your tenant via `GET /tenants/feature-flag/ExternalApiOmittedProviderTypeResolution`.\n\n- **ACICards** — ACI Worldwide card processing.\n- **ACIElectronic** — ACI Worldwide ACH/electronic processing.\n- **Heartland** — Heartland Payment Systems.\n- **MerchantPartners** — Merchant Partners.\n- **PaymentExpress** — Payment Express (Windcave).\n- **Realex** — Realex/Global Payments.\n- **EftCanada** — EFT Canada bank transfers.\n- **Stripe** — Stripe card processing. `transactionOrigin` is required when using Stripe — the APG/EFT Canada exemption from that requirement does not apply."
           },
           "configurationId": {
             "type": "string",
             "format": "uuid",
             "example": "928a3c6c-b80d-493d-a6aa-0fb8d2579860",
             "nullable": true,
-            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied (and the tenant's provider-configuration migration feature is enabled); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead, regardless of whether `configurationId` was supplied."
+            "description": "The configuration id associated to the Tenant. Optional — only takes effect when `providerType` is also explicitly supplied and the tenant's provider-configuration migration feature is enabled (flag `MigrateProviderFromErpToPay` — check via `GET /tenants/feature-flag/MigrateProviderFromErpToPay`); if `providerType` is omitted, this field is ignored and the request resolves via `providerType`'s automatic first-match behavior instead (flag `ExternalApiOmittedProviderTypeResolution`), regardless of whether `configurationId` was supplied."
           },
           "transactionAmount": {
             "type": "object",
