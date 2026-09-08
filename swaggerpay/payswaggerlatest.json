@@ -2075,10 +2075,11 @@
             "enum": [
               "CARD",
               "ACH",
-              "EFT"
+              "EFT",
+              "CREDIT_TRANSFER"
             ],
             "nullable": false,
-            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House).\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer)."
+            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). When `providerType` is `Stripe`, must be paired with `currency: USD`.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). When `providerType` is `Stripe`, must be paired with `currency: CAD`.\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
           },
           "transactionOrigin": {
             "type": "string",
@@ -4156,10 +4157,12 @@
               "CARD",
               "ACH",
               "GOOGLEPAY",
-              "APPLEPAY"
+              "APPLEPAY",
+              "EFT",
+              "CREDIT_TRANSFER"
             ],
             "type": "string",
-            "description": "The payment instrument type of the saved profile being deleted.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House).\n- **GOOGLEPAY** — Google Pay wallet.\n- **APPLEPAY** — Apple Pay wallet."
+            "description": "The payment instrument type of the saved profile being deleted.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). (The Stripe USD-only restriction on new payments does not apply when deleting a saved profile.)\n- **GOOGLEPAY** — Google Pay wallet.\n- **APPLEPAY** — Apple Pay wallet.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). (The Stripe CAD-only restriction on new payments does not apply when deleting a saved profile.)\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
           },
           "transactionOrigin": {
             "enum": [
@@ -4388,11 +4391,12 @@
               "CARD",
               "ACH",
               "EFT",
-              "TERMINAL"
+              "TERMINAL",
+              "CREDIT_TRANSFER"
             ],
             "example": "CARD",
             "nullable": false,
-            "description": "The payment instrument type of the original payment being refunded.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House).\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer).\n- **TERMINAL** — A card-present payment taken on a physical terminal device."
+            "description": "The payment instrument type of the original payment being refunded.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). (The Stripe USD-only restriction on new payments does not apply when refunding an existing payment.)\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). (The Stripe CAD-only restriction on new payments does not apply when refunding an existing payment.)\n- **TERMINAL** — A card-present payment taken on a physical terminal device.\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
           },
           "transactionOrigin": {
             "type": "string",
@@ -4508,11 +4512,12 @@
             "enum": [
               "CARD",
               "ACH",
-              "EFT"
+              "EFT",
+              "CREDIT_TRANSFER"
             ],
             "example": "CARD",
             "nullable": false,
-            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House).\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer)."
+            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). When `providerType` is `Stripe`, must be paired with `currency: USD`.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). When `providerType` is `Stripe`, must be paired with `currency: CAD`.\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
           },
           "transactionOrigin": {
             "type": "string",
