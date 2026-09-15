@@ -734,7 +734,7 @@
           "ExternalTransaction"
         ],
         "summary": "Refund Payment",
-        "description": "This endpoint is used to request a refund for a Card/ACH payment already processed via AmcsPay, including payments made via Stripe. See the request/response schema below for field-level guidance, including which values `providerType` and `transactionOrigin` accept and when to use each.",
+        "description": "This endpoint is used to request a refund for a Card, ACH (US), or EFT/PAD (Canada) payment already processed via AmcsPay, including payments made via Stripe. Full and partial refunds are both supported — only the refund amount changes, the request shape is otherwise identical. See the request/response schema below for field-level guidance, including which values `providerType` and `transactionOrigin` accept and when to use each.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -787,7 +787,7 @@
           "ExternalTransaction"
         ],
         "summary": "Vault Payment",
-        "description": "This endpoint is used to make a payment using the saved profile(Card / ACH) via AmcsPay.",
+        "description": "This endpoint is used to make an AutoPay/repeat payment using a previously saved profile (Card, ACH (US), or EFT/PAD (Canada)) via AmcsPay, including payments made via Stripe. See the request/response schema below for field-level guidance, including the ACH=USD/EFT=CAD currency pairing required for new Stripe payments.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1039,7 +1039,7 @@
           "ExternalTransaction"
         ],
         "summary": "Get Token Vault",
-        "description": "This endpoint is used to retrieve the active saved payment profiles (tokens) stored for a customer.",
+        "description": "This endpoint is used to retrieve the active saved payment profiles (tokens) stored for a customer, including saved Card, SEPA, PayTo, BECS, ACH (US), and EFT/PAD (Canada) profiles. See `AMCSPayTokenVaultResponse` below for the `paymentTypeName`/`isDirectDebit`/`maskedAccountNumber` shape returned for each.",
         "parameters": [
           {
             "name": "customerId",
@@ -4300,7 +4300,8 @@
           "maskedAccountNumber": {
             "type": "string",
             "nullable": true,
-            "description": "The masked card/account number associated with this saved payment profile."
+            "example": "XXXXXXXXXXXX1234",
+            "description": "The masked card/account number associated with this saved payment profile. For ACH/EFT saved bank accounts, this is formatted as `XXXXXXXXXXXX<last4>` — 12 `X` characters followed by the last 4 digits of the bank account number."
           },
           "expiryDate": {
             "type": "string",
@@ -4312,7 +4313,7 @@
           "isDirectDebit": {
             "type": "boolean",
             "example": true,
-            "description": "Whether this saved payment profile is a direct debit mandate rather than a card/ACH profile."
+            "description": "Whether this saved payment profile is a direct debit mandate rather than a card profile. `true` for SEPA, PayTo, BECS, ACH (US), and EFT/PAD (Canada) saved profiles; `false` for CARD."
           },
           "paymentTypeId": {
             "type": "integer",
@@ -4323,7 +4324,8 @@
           "paymentTypeName": {
             "type": "string",
             "nullable": true,
-            "description": "The name of the payment type for this saved payment profile (e.g. \"CARD\")."
+            "example": "ACH",
+            "description": "The name of the payment type for this saved payment profile (e.g. \"CARD\", \"ACH\", \"EFT\"). For a Stripe-saved bank account, this is \"ACH\" (US) or \"EFT\" (Canadian PAD/`acss_debit`), with `isDirectDebit: true`."
           },
           "paymentProviderId": {
             "type": "integer",
