@@ -3946,7 +3946,8 @@
               "ACH",
               "GOOGLEPAY",
               "APPLEPAY",
-              "EFT"
+              "EFT",
+              "BECS"
             ],
             "type": "string",
             "nullable": true,
