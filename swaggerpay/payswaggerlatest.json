@@ -561,7 +561,7 @@
               "type": "string",
               "format": "uuid",
               "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
-              "description": "Required for all payments."
+              "description": "Provide exactly one of `callerTransactionId` or `requestId` — not both. Either one is sufficient to poll any payment type; `requestId` is not restricted to terminal payments."
             }
           },
           {
@@ -572,7 +572,7 @@
               "type": "string",
               "format": "uuid",
               "example": "827b7e68-2c52-43aa-9820-b02f006fa971",
-              "description": "Required for terminal payments if a response is not received."
+              "description": "Provide exactly one of `callerTransactionId` or `requestId` — not both. Either one is sufficient to poll any payment type; this is not restricted to terminal payments."
             }
           }
         ],
@@ -734,7 +734,7 @@
           "ExternalTransaction"
         ],
         "summary": "Refund Payment",
-        "description": "This endpoint is used to request a refund for a Card/ACH payment already processed via AmcsPay, including payments made via Stripe. See the request/response schema below for field-level guidance, including which values `providerType` and `transactionOrigin` accept and when to use each.",
+        "description": "This endpoint is used to request a refund for a Card, ACH (US), or EFT/PAD (Canada) payment already processed via AmcsPay, including payments made via Stripe. Full and partial refunds are both supported — only the refund amount changes, the request shape is otherwise identical. See the request/response schema below for field-level guidance, including which values `providerType` and `transactionOrigin` accept and when to use each.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -787,7 +787,7 @@
           "ExternalTransaction"
         ],
         "summary": "Vault Payment",
-        "description": "This endpoint is used to make a payment using the saved profile(Card / ACH) via AmcsPay.",
+        "description": "This endpoint is used to make an AutoPay/repeat payment using a previously saved profile (Card, ACH (US), or EFT/PAD (Canada)) via AmcsPay, including payments made via Stripe. See the request/response schema below for field-level guidance, including the ACH=USD/EFT=CAD currency pairing required for new Stripe payments.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1039,7 +1039,7 @@
           "ExternalTransaction"
         ],
         "summary": "Get Token Vault",
-        "description": "This endpoint is used to retrieve the active saved payment profiles (tokens) stored for a customer.",
+        "description": "This endpoint is used to retrieve the active saved payment profiles (tokens) stored for a customer, including saved Card, SEPA, PayTo, BECS, ACH (US), and EFT/PAD (Canada) profiles. See `AMCSPayTokenVaultResponse` below for the `paymentTypeName`/`isDirectDebit`/`maskedAccountNumber` shape returned for each.",
         "parameters": [
           {
             "name": "customerId",
@@ -1881,7 +1881,7 @@
             "type": "string",
             "example": "Cancelled By POS",
             "nullable": true,
-            "description": "The reason associated to the abort request. Conditionally required."
+            "description": "The reason associated to the abort request. Required when `providerType` is `TerminalPay`; optional for `ElavonTerminalPay` and `Stripe`."
           },
           "originalRequestId": {
             "type": "string",
@@ -2076,10 +2076,12 @@
               "CARD",
               "ACH",
               "EFT",
+              "PAYTO",
+              "BECS",
               "CREDIT_TRANSFER"
             ],
             "nullable": false,
-            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). When `providerType` is `Stripe`, must be paired with `currency: USD`.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). When `providerType` is `Stripe`, must be paired with `currency: CAD`.\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
+            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). When `providerType` is `Stripe`, must be paired with `currency: USD`.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). When `providerType` is `Stripe`, must be paired with `currency: CAD`.\n- **PAYTO** — Australian PayTo direct debit. For Stripe, rejected when `transactionOrigin` is `ECOM` (must be `MOTO`); for a `OneOffPayment` request, `canStoreProfile` must also be `true`.\n- **BECS** — Australian/NZ BECS Direct Debit. For Stripe, rejected when `transactionOrigin` is `ECOM` (must be `MOTO`).\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN). Not supported for Stripe on this endpoint — for Stripe, `CREDIT_TRANSFER` is only accepted on `POST /ExternalTransaction/Refund`; VBAN/CREDIT_TRANSFER accounts are created via `POST /ExternalTransaction/CreateCustomer` instead."
           },
           "transactionOrigin": {
             "type": "string",
@@ -2134,7 +2136,7 @@
             "type": "boolean",
             "example": false,
             "nullable": true,
-            "description": "Whether to store the payment profile to the vault for future Vault payments. Optional — defaults to false (profile is not stored) if omitted."
+            "description": "Whether to store the payment profile to the vault for future Vault payments. Optional — defaults to false (profile is not stored) if omitted. Must be `true` when `providerType` is `Stripe` and `paymentType` is `PAYTO` for a `OneOffPayment` request — omitting it or setting it to `false` is rejected in that case."
           },
           "completionURL": {
             "type": "string",
@@ -2257,7 +2259,7 @@
             "type": "object",
             "$ref": "#/components/schemas/AMCSPayCustomerInfo",
             "nullable": true,
-            "description": "The details associated to the customer mandate for risk assessment. Required for making payments using EftCanada."
+            "description": "The details associated to the customer mandate for risk assessment. Required for making payments using EftCanada — specifically, `customerName` must be non-empty."
           },
           "bankInfo": {
             "type": "object",
@@ -3486,32 +3488,34 @@
       },
       "AMCSPayEftBankInfo": {
         "type": "object",
+        "description": "Required in full (all three fields) whenever `bankInfo.eft` is supplied.",
         "properties": {
           "accountNumber": {
             "type": "string",
             "nullable": true,
-            "description": "EFT Account Number"
+            "description": "EFT Account Number. Required when `eft` is supplied."
           },
           "transitNumber": {
             "type": "string",
             "nullable": true,
-            "description": "EFT Transit Number"
+            "description": "EFT Transit Number. Required when `eft` is supplied."
           },
           "institutionNumber": {
             "type": "string",
             "nullable": true,
-            "description": "EFT Institution Number"
+            "description": "EFT Institution Number. Required when `eft` is supplied."
           }
         },
         "additionalProperties": false
       },
       "AMCSPayAchBankInfo": {
         "type": "object",
+        "description": "Required in full (all three fields) whenever `bankInfo.ach` is supplied.",
         "properties": {
           "accountNumber": {
             "type": "string",
             "nullable": true,
-            "description": "ACH Account Number"
+            "description": "ACH Account Number. Required when `ach` is supplied."
           },
           "accountType": {
             "type": "string",
@@ -3522,12 +3526,12 @@
               "BusinessCheckings"
             ],
             "nullable": true,
-            "description": "ACH Account Type"
+            "description": "ACH Account Type. Required when `ach` is supplied."
           },
           "routingNumber": {
             "type": "string",
             "nullable": true,
-            "description": "ACH Routing Number"
+            "description": "ACH Routing Number. Required when `ach` is supplied."
           }
         },
         "additionalProperties": false
@@ -4159,10 +4163,12 @@
               "GOOGLEPAY",
               "APPLEPAY",
               "EFT",
+              "PAYTO",
+              "BECS",
               "CREDIT_TRANSFER"
             ],
             "type": "string",
-            "description": "The payment instrument type of the saved profile being deleted.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). (The Stripe USD-only restriction on new payments does not apply when deleting a saved profile.)\n- **GOOGLEPAY** — Google Pay wallet.\n- **APPLEPAY** — Apple Pay wallet.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). (The Stripe CAD-only restriction on new payments does not apply when deleting a saved profile.)\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
+            "description": "The payment instrument type of the saved profile being deleted.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). (The Stripe USD-only restriction on new payments does not apply when deleting a saved profile.)\n- **GOOGLEPAY** — Google Pay wallet.\n- **APPLEPAY** — Apple Pay wallet.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). (The Stripe CAD-only restriction on new payments does not apply when deleting a saved profile.)\n- **PAYTO** — Australian PayTo direct debit. (The Stripe ECOM/MOTO restriction on new payments does not apply when deleting a saved profile.)\n- **BECS** — Australian/NZ BECS Direct Debit. (The Stripe ECOM/MOTO restriction on new payments does not apply when deleting a saved profile.)\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN). Not supported for Stripe on this endpoint — for Stripe, `CREDIT_TRANSFER` is only accepted on `POST /ExternalTransaction/Refund`; VBAN/CREDIT_TRANSFER accounts are created via `POST /ExternalTransaction/CreateCustomer` instead."
           },
           "transactionOrigin": {
             "enum": [
@@ -4300,7 +4306,8 @@
           "maskedAccountNumber": {
             "type": "string",
             "nullable": true,
-            "description": "The masked card/account number associated with this saved payment profile."
+            "example": "XXXXXXXXXXXX1234",
+            "description": "The masked card/account number associated with this saved payment profile. For ACH/EFT saved bank accounts, this is formatted as `XXXXXXXXXXXX<last4>` — 12 `X` characters followed by the last 4 digits of the bank account number."
           },
           "expiryDate": {
             "type": "string",
@@ -4312,7 +4319,7 @@
           "isDirectDebit": {
             "type": "boolean",
             "example": true,
-            "description": "Whether this saved payment profile is a direct debit mandate rather than a card/ACH profile."
+            "description": "Whether this saved payment profile is a direct debit mandate rather than a card profile. `true` for SEPA, PayTo, BECS, ACH (US), and EFT/PAD (Canada) saved profiles; `false` for CARD."
           },
           "paymentTypeId": {
             "type": "integer",
@@ -4323,7 +4330,8 @@
           "paymentTypeName": {
             "type": "string",
             "nullable": true,
-            "description": "The name of the payment type for this saved payment profile (e.g. \"CARD\")."
+            "example": "ACH",
+            "description": "The name of the payment type for this saved payment profile (e.g. \"CARD\", \"ACH\", \"EFT\"). For a Stripe-saved bank account, this is \"ACH\" (US) or \"EFT\" (Canadian PAD/`acss_debit`), with `isDirectDebit: true`."
           },
           "paymentProviderId": {
             "type": "integer",
@@ -4392,11 +4400,13 @@
               "ACH",
               "EFT",
               "TERMINAL",
+              "PAYTO",
+              "BECS",
               "CREDIT_TRANSFER"
             ],
             "example": "CARD",
             "nullable": false,
-            "description": "The payment instrument type of the original payment being refunded.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). (The Stripe USD-only restriction on new payments does not apply when refunding an existing payment.)\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). (The Stripe CAD-only restriction on new payments does not apply when refunding an existing payment.)\n- **TERMINAL** — A card-present payment taken on a physical terminal device.\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
+            "description": "The payment instrument type of the original payment being refunded.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). (The Stripe USD-only restriction on new payments does not apply when refunding an existing payment.)\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). (The Stripe CAD-only restriction on new payments does not apply when refunding an existing payment.)\n- **TERMINAL** — A card-present payment taken on a physical terminal device.\n- **PAYTO** — Australian PayTo direct debit. (The Stripe ECOM/MOTO restriction on new payments does not apply when refunding an existing payment.)\n- **BECS** — Australian/NZ BECS Direct Debit. (The Stripe ECOM/MOTO restriction on new payments does not apply when refunding an existing payment.)\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN). For Stripe, this is the only endpoint `CREDIT_TRANSFER` is supported on — `OneOff`, `Vault`, and `DeleteToken` reject it; VBAN/CREDIT_TRANSFER accounts are created via `POST /ExternalTransaction/CreateCustomer` instead."
           },
           "transactionOrigin": {
             "type": "string",
@@ -4513,11 +4523,13 @@
               "CARD",
               "ACH",
               "EFT",
+              "PAYTO",
+              "BECS",
               "CREDIT_TRANSFER"
             ],
             "example": "CARD",
             "nullable": false,
-            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). When `providerType` is `Stripe`, must be paired with `currency: USD`.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). When `providerType` is `Stripe`, must be paired with `currency: CAD`.\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN)."
+            "description": "The payment instrument type for this request.\n\n- **CARD** — Card payment (credit/debit).\n- **ACH** — US bank account transfer (Automated Clearing House). When `providerType` is `Stripe`, must be paired with `currency: USD`.\n- **EFT** — Canadian bank account transfer (Electronic Funds Transfer). When `providerType` is `Stripe`, must be paired with `currency: CAD`.\n- **PAYTO** — Australian PayTo direct debit. (The Stripe ECOM/MOTO restriction on new payments does not apply to Vault/AutoPay charges.)\n- **BECS** — Australian/NZ BECS Direct Debit. (The Stripe ECOM/MOTO restriction on new payments does not apply to Vault/AutoPay charges.)\n- **CREDIT_TRANSFER** — A provider-generated bank transfer / virtual account payment (e.g. Stripe VBAN). Not supported for Stripe on this endpoint — for Stripe, `CREDIT_TRANSFER` is only accepted on `POST /ExternalTransaction/Refund`; VBAN/CREDIT_TRANSFER accounts are created via `POST /ExternalTransaction/CreateCustomer` instead."
           },
           "transactionOrigin": {
             "type": "string",
@@ -4593,7 +4605,7 @@
             "type": "string",
             "example": "5454XXXXXXXX5454",
             "nullable": true,
-            "description": "The Masked Profile/Card Number sent by the provider associated to the original payment (Conditionally required)."
+            "description": "The Masked Profile/Card Number sent by the provider associated to the original payment. Required when `providerType` is `MerchantPartners`; optional otherwise."
           }
         }
       },
@@ -4979,8 +4991,8 @@
           "currency",
           "country"
         ],
-        "type": "object", 
-        "description": "Details of the payment account to create if <b>isCreatePaymentAccount</b> is set to <b>true</b>.",
+        "type": "object",
+        "description": "Details of the payment account to create if <b>isCreatePaymentAccount</b> is set to <b>true</b>. Only supported for <b>providerType: Stripe</b>. <b>country</b> and <b>currency</b> must be paired correctly: AU with AUD; DE, FR, IE, or NL with EUR. Any other country/currency combination, or any other provider, is rejected.",
         "properties": {
           "paymentType": {
             "enum": [
@@ -4988,7 +5000,7 @@
             ],
             "type": "string",
             "example": "CREDIT_TRANSFER",
-            "description": "The type of payment account to create. For example, <b>\"CREDIT_TRANSFER\"</b> indicates that a credit transfer account will be created."
+            "description": "The type of payment account to create. <b>\"CREDIT_TRANSFER\"</b> is the only supported value."
           },
           "currency": {
             "enum": [
@@ -4997,7 +5009,7 @@
             ],
             "type": "string",
             "example": "AUD",
-            "description": "The currency code for the payment account. For example, <b>\"AUD\"</b> indicates that the account will operate in Australian Dollars."
+            "description": "The currency code for the payment account. Must be paired with a matching <b>country</b>: <b>AUD</b> with AU; <b>EUR</b> with DE, FR, IE, or NL."
           },
           "country": {
             "enum": [
@@ -5009,7 +5021,7 @@
             ],
             "type": "string",
             "example": "AU",
-            "description": "The two-letter ISO country code representing the country where the payment account is held. For example, <b>\"AU\"</b> indicates Australia."
+            "description": "The two-letter ISO country code representing the country where the payment account is held. Must be paired with a matching <b>currency</b>: AU with <b>AUD</b>; DE, FR, IE, or NL with <b>EUR</b>."
           }
         },
         "additionalProperties": false
