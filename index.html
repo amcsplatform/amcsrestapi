@@ -81,8 +81,13 @@
 	<script src="https://cdn.jsdelivr.net/npm/redoc@2.0.0-rc.56/bundles/redoc.standalone.min.js"></script>
     <script>
         function intRedoc(component,version) {
+            var specUrl = component === "visionai"
+                ? "https://eu1-tracker-dev-app.azurewebsites.net/swagger/external/swagger.json"
+                : component === "tlv"
+                ? "https://eu1-mba-dev-app.azurewebsites.net/swagger/external/swagger.json"
+                : "./swagger" + component + "/" + component + "swagger" + version + ".json";
             Redoc.init(
-                "./swagger" + component + "/" + component + "swagger" + version + ".json",
+                specUrl,
                 {
                     scrollYOffset: 120,
                     expandResponses: "200",
