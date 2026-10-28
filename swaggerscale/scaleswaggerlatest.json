@@ -587,6 +587,252 @@
                 }
             }
         },
+        "/integrator/scheduledLoads": {
+            "get": {
+                "tags": [
+                    "ScheduledLoad"
+                ],
+                "summary": "Find with Filters",
+                "description": "Returns the loads scheduled today +/- 1 day for a vehicle or waste flow number at one outlet, so an unattended weighbridge can identify the load of an arriving vehicle. Loads already weighed, voided or rejected are not returned. Read only. Story 810202. Gated by feature flag `u_810202_unattended_weighing_integrator_apis`: when the flag is OFF the endpoint returns 200 OK with an empty resource collection for every request. Filters go in the standard filter query parameter (values in single quotes, \"and\" between filters). Validation errors answer 200 OK with an errors payload, like the other integrator endpoints. At most 200 rows are returned per call. \"Today\" is the server local date.\r\n\r\n**Filters**\r\n\r\n| Name | Description |\r\n| --- | --- |\r\n| CompanyOutletGUID | Required. The company outlet (weighbridge site). |\r\n| LicencePlate | One of LicencePlate / WasteFlowNumber is required. Also matches a vehicle linked to a third party carrier when the load has no vehicle. |\r\n| WasteFlowNumber | One of LicencePlate / WasteFlowNumber is required. Cannot be combined with LicencePlate. Material sale slots are not returned. |\r\n| MaterialSlotNumber | Optional. Additional filter on material sale slot jobs. Only valid together with LicencePlate; alone or with WasteFlowNumber it is rejected. |\r\n\r\n**Properties**\r\n\r\n| Name | Description |\r\n| --- | --- |\r\n| TypeOfJob | ScheduledJob, Route, EbaPreAnnouncement, TransferOut, TransferIn or MaterialSaleSlot. |\r\n| JobGUID | GUID of the underlying job, route or transfer weighing. |\r\n| JobTicketNo | The job ticket number (route number for a route, weighing ticket number for a transfer). |\r\n| JobDate | The date of the load. |\r\n| LicencePlate | The licence plate of the vehicle. |\r\n| DriverName | The driver name. |\r\n| WasteFlowNumber | The waste flow number of the load, when there is one. |\r\n| WasteFlowNumberGUID | The GUID of that waste flow number. |\r\n| MaterialProfile | The material (profile) description. |\r\n| MaterialSlotNumber | The slot number, for a MaterialSaleSlot load. |\r\n| Source | Where the load comes from: Name, Address, PostalCode, City. |\r\n| Destination | Where the load goes to: Name, Address, PostalCode, City. |\r\n",
+                "operationId": "ScheduledLoad_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiScheduledLoadResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/gateArrivals": {
+            "get": {
+                "tags": [
+                    "GateArrival"
+                ],
+                "summary": "Find with Filters",
+                "description": "Returns the inbound work orders (gate arrivals) of one outlet that are valid today for a customer or waste flow number, for a vehicle that arrives without a scheduled load. Read only. Story 810202. Gated by feature flag `u_810202_unattended_weighing_integrator_apis`: when the flag is OFF the endpoint returns 200 OK with an empty resource collection for every request. Filters go in the standard filter query parameter (values in single quotes, \"and\" between filters). Validation errors answer 200 OK with an errors payload, like the other integrator endpoints. At most 200 rows are returned per call. \"Today\" is the server local date.\r\n\r\n**Filters**\r\n\r\n| Name | Description |\r\n| --- | --- |\r\n| CompanyOutletGUID | Required. The company outlet (weighbridge site). |\r\n| CustomerReference | Required unless WasteFlowNumber is supplied. A single customer: the customer GUID, account code or customer number. |\r\n| ServiceLocationReferences | Optional. Comma separated service location (customer site) GUIDs, at most 50. |\r\n| WasteFlowNumber | Optional additional filter. When supplied without a CustomerReference it is the only filter needed. |\r\n\r\n**Properties**\r\n\r\n| Name | Description |\r\n| --- | --- |\r\n| WorkOrderGUID | GUID of the work order. |\r\n| WorkOrderNumber | The work order number. |\r\n| WasteFlowNumber | The waste flow number of the work order, when there is one. |\r\n| WasteFlowNumberGUID | The GUID of that waste flow number. |\r\n| MaterialProfile | The default material (the site order material profile). |\r\n| Source | The customer and service location: Name, Address, PostalCode, City. |\r\n| Destination | The company outlet: Name, Address, PostalCode, City. |\r\n",
+                "operationId": "GateArrival_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiGateArrivalResource]"
+                        }
+                    }
+                }
+            }
+        },
+        "/integrator/weighingTickets": {
+            "get": {
+                "tags": [
+                    "WeighingTicket"
+                ],
+                "summary": "Find with Filters",
+                "description": "Returns the weigh tickets of today and yesterday, not voided, for a ticket number or licence plate, so an unattended weighbridge can show the driver the status and weights. A separate entity from /integrator/weighings, whose contract is unchanged. Read only. Story 810202. Gated by feature flag `u_810202_unattended_weighing_integrator_apis`: when the flag is OFF the endpoint returns 200 OK with an empty resource collection for every request. Filters go in the standard filter query parameter (values in single quotes, \"and\" between filters). Validation errors answer 200 OK with an errors payload, like the other integrator endpoints. At most 200 rows are returned per call. \"Today\" is the server local date.\r\n\r\n**Filters**\r\n\r\n| Name | Description |\r\n| --- | --- |\r\n| WeighTicketNumber | Exactly one of WeighTicketNumber / LicencePlate is required. |\r\n| LicencePlate | Exactly one of WeighTicketNumber / LicencePlate is required. |\r\n| CompanyOutletGUID | Optional. Only tickets weighed at this company outlet. |\r\n\r\n**Properties**\r\n\r\n| Name | Description |\r\n| --- | --- |\r\n| WeighTicketNumber | The weigh ticket number. |\r\n| WeighingGUID | GUID of the weighing. |\r\n| Status | Staged, Complete, or InProgress. |\r\n| JobTicketNo | The ticket number of the job. |\r\n| LicencePlate | The licence plate of the vehicle. |\r\n| DriverName | The driver name. |\r\n| WasteFlowNumber | The waste flow number, when there is one. |\r\n| WasteFlowNumberGUID | The GUID of that waste flow number. |\r\n| MaterialProfile | The material (profile) description. |\r\n| Gross | DateTime, Weight and UnitOfMeasure of the gross weight. |\r\n| Tare | DateTime, Weight and UnitOfMeasure of the tare weight, and IsGeneratedFromStoredTare (true when generated from a stored tare). |\r\n| YardLocation | The yard location, when there is one. |\r\n",
+                "operationId": "WeighingTicket_GetCollection",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "max",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "includeCount",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "includeDeleted",
+                        "in": "query",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "links",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "udf",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResourceResultCollection[ApiWeighingTicketResource]"
+                        }
+                    }
+                }
+            }
+        },
         "/integrator/validateVehicles": {
             "get": {
                 "tags": [
@@ -1999,6 +2245,252 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/ApiWeighingTypeResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiScheduledLoadResource": {
+            "type": "object",
+            "properties": {
+                "CompanyOutletGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "TypeOfJob": {
+                    "type": "string"
+                },
+                "JobGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "JobTicketNo": {
+                    "type": "string"
+                },
+                "JobDate": {
+                    "format": "dateTime",
+                    "type": "string",
+                    "example": "2000-01-01 00:00:00.000"
+                },
+                "LicencePlate": {
+                    "type": "string"
+                },
+                "DriverName": {
+                    "type": "string"
+                },
+                "WasteFlowNumber": {
+                    "type": "string"
+                },
+                "WasteFlowNumberGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "MaterialProfile": {
+                    "type": "string"
+                },
+                "MaterialSlotNumber": {
+                    "type": "string"
+                },
+                "Source": {
+                    "$ref": "#/definitions/ApiUnattendedWeighingAddressResource"
+                },
+                "Destination": {
+                    "$ref": "#/definitions/ApiUnattendedWeighingAddressResource"
+                }
+            }
+        },
+        "ApiGateArrivalResource": {
+            "type": "object",
+            "properties": {
+                "CompanyOutletGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "WorkOrderGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "WorkOrderNumber": {
+                    "type": "string"
+                },
+                "WasteFlowNumber": {
+                    "type": "string"
+                },
+                "WasteFlowNumberGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "MaterialProfile": {
+                    "type": "string"
+                },
+                "Source": {
+                    "$ref": "#/definitions/ApiUnattendedWeighingAddressResource"
+                },
+                "Destination": {
+                    "$ref": "#/definitions/ApiUnattendedWeighingAddressResource"
+                }
+            }
+        },
+        "ApiWeighingTicketResource": {
+            "type": "object",
+            "properties": {
+                "WeighTicketNumber": {
+                    "type": "string"
+                },
+                "WeighingGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "JobTicketNo": {
+                    "type": "string"
+                },
+                "LicencePlate": {
+                    "type": "string"
+                },
+                "DriverName": {
+                    "type": "string"
+                },
+                "WasteFlowNumber": {
+                    "type": "string"
+                },
+                "WasteFlowNumberGUID": {
+                    "format": "uuid",
+                    "type": "string",
+                    "example": "00000000-0000-0000-0000-000000000000"
+                },
+                "MaterialProfile": {
+                    "type": "string"
+                },
+                "Gross": {
+                    "$ref": "#/definitions/ApiWeighingTicketWeightResource"
+                },
+                "Tare": {
+                    "$ref": "#/definitions/ApiWeighingTicketTareResource"
+                },
+                "YardLocation": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiUnattendedWeighingAddressResource": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "Address": {
+                    "type": "string"
+                },
+                "PostalCode": {
+                    "type": "string"
+                },
+                "City": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiWeighingTicketWeightResource": {
+            "type": "object",
+            "properties": {
+                "DateTime": {
+                    "format": "dateTime",
+                    "type": "string",
+                    "example": "2000-01-01 00:00:00.000"
+                },
+                "Weight": {
+                    "format": "double",
+                    "type": "number"
+                },
+                "UnitOfMeasure": {
+                    "type": "string"
+                }
+            }
+        },
+        "ApiWeighingTicketTareResource": {
+            "type": "object",
+            "properties": {
+                "DateTime": {
+                    "format": "dateTime",
+                    "type": "string",
+                    "example": "2000-01-01 00:00:00.000"
+                },
+                "Weight": {
+                    "format": "double",
+                    "type": "number"
+                },
+                "UnitOfMeasure": {
+                    "type": "string"
+                },
+                "IsGeneratedFromStoredTare": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiScheduledLoadResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiScheduledLoadResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiGateArrivalResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiGateArrivalResource"
+                    }
+                },
+                "extra": {
+                    "$ref": "#/definitions/ApiResourceResultCollectionExtra"
+                },
+                "errors": {
+                    "$ref": "#/definitions/ApiResourceErrors"
+                },
+                "status": {
+                    "$ref": "#/definitions/ApiResourceStatus"
+                }
+            }
+        },
+        "ApiResourceResultCollection[ApiWeighingTicketResource]": {
+            "type": "object",
+            "properties": {
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ApiWeighingTicketResource"
                     }
                 },
                 "extra": {
