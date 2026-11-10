@@ -734,7 +734,7 @@
           "ExternalTransaction"
         ],
         "summary": "Get Updated Payment Response Details",
-        "description": "This endpoint is used to get the payment transactions whose payment response was last modified between DateFrom and the optional DateTo (both inclusive; DateTo defaults to the current time). The window from DateFrom to DateTo (or to CurrentDate when DateTo is omitted) can be at most 48 hours, otherwise the call returns 400. Transactions that were never modified are not returned, unless the payment failed. The results cover all payment channels, are ordered by transaction id ascending and contain one row per transaction.",
+        "description": "This endpoint retrieves payment transactions whose payment response was last modified between `DateFrom` and the optional `DateTo` values (both inclusive). If `DateTo` is not provided, it defaults to the current time.<br/>The period between `DateFrom` and `DateTo` (or the current time when `DateTo` is omitted) must not exceed `48 hours`. Requests exceeding this limit will return a `400 Bad Request` response.<br/>Transactions that have never been modified are not returned, except for transactions with a failed payment status.<br/>Results include transactions from all payment channels, are ordered by `ModifiedTimestamp` then `TransactionId` in ascending order, and contain a single record per transaction.",
         "parameters": [
           {
             "name": "DateFrom",
