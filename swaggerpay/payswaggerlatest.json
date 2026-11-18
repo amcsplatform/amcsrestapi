@@ -3738,6 +3738,13 @@
             "example": "EUR",
             "nullable": false,
             "description": "The currency associated to the payment request."
+          },
+          "mandateLimit": {
+            "type": "number",
+            "format": "decimal",
+            "example": 100.00,
+            "nullable": true,
+            "description": "The maximum amount that can be debited under the mandate. Required for Stripe PayTo payments, where it must be greater than 0 and greater than or equal to the principalAmount; not applicable to other payment types."
           }
         }
       },
