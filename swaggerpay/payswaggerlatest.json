@@ -4106,12 +4106,15 @@
               "AptPay",
               "PaymentExpress",
               "EftCanada",
-              "TerminalPay"
+              "APG",
+              "TerminalPay",
+              "ElavonTerminalPay",
+              "Stripe"
             ],
             "type": "string",
             "nullable": true,
             "example": "ACICards",
-            "description": "The payment provider type."
+            "description": "The payment provider type. Payments submitted with `EftCanada` are returned as `APG`."
           },
           "customerInfo": {
             "$ref": "#/components/schemas/AMCSPayCustomerInfo"
@@ -4191,12 +4194,15 @@
               "AptPay",
               "PaymentExpress",
               "EftCanada",
-              "TerminalPay"
+              "APG",
+              "TerminalPay",
+              "ElavonTerminalPay",
+              "Stripe"
             ],
             "type": "string",
             "nullable": true,
             "example": "ACICards",
-            "description": "The payment provider type."
+            "description": "The payment provider type. Payments submitted with `EftCanada` are returned as `APG`."
           },
           "requestType": {
             "enum": [
